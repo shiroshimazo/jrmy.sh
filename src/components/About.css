@@ -1,0 +1,150 @@
+.about__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-lg);
+  margin-bottom: var(--s-xl);
+}
+
+.about__pane {
+  background: var(--c-surface);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-md);
+}
+
+.about__pane-title {
+  color: var(--c-primary);
+}
+
+.about__facts {
+  margin: var(--s-md) 0 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-md);
+  padding-top: var(--s-md);
+  border-top: 1px solid var(--c-line);
+}
+
+.about__facts div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.about__fact {
+  color: var(--c-primary);
+}
+
+.skills {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--s-md);
+}
+
+.skills__group {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: var(--s-md);
+  align-items: baseline;
+  padding-block: var(--s-sm);
+  border-top: 1px solid var(--c-line);
+}
+
+.skills__group:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.skills__items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-sm);
+}
+
+.skills__item {
+  border: 1px solid var(--c-line-strong);
+  padding: 4px 10px;
+  font-family: var(--f-mono);
+  font-size: var(--t-label);
+  letter-spacing: 0.08em;
+}
+
+.about__timeline {
+  border-top: 1px solid var(--c-line);
+  padding-top: var(--s-lg);
+}
+
+.about__timeline-head {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--s-lg);
+}
+
+.about__count {
+  color: var(--c-secondary);
+}
+
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0;
+}
+
+.timeline__row {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: var(--s-lg);
+  padding-block: var(--s-lg);
+  border-top: 1px solid var(--c-line);
+  transition: background-color var(--dur) var(--ease);
+}
+
+.timeline__row:last-child {
+  border-bottom: 1px solid var(--c-line);
+}
+
+.timeline__row:hover {
+  background-color: var(--c-surface);
+}
+
+.timeline__period {
+  color: var(--c-secondary);
+  padding-top: 6px;
+}
+
+.timeline__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-sm);
+}
+
+.timeline__company {
+  color: var(--c-secondary);
+}
+
+@media (max-width: 720px) {
+  .about__grid {
+    grid-template-columns: 1fr;
+  }
+  .about__facts {
+    grid-template-columns: 1fr 1fr;
+  }
+  .skills__group {
+    grid-template-columns: 1fr;
+    gap: var(--s-sm);
+  }
+  .timeline__row {
+    grid-template-columns: 1fr;
+    gap: var(--s-sm);
+  }
+}

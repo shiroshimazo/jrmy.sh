@@ -1,0 +1,57 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-sm);
+  padding: 12px 20px;
+  border-radius: var(--r-md);
+  font-family: var(--f-mono);
+  font-size: var(--t-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1;
+  transition:
+    background-color var(--dur) var(--ease),
+    color var(--dur) var(--ease),
+    border-color var(--dur) var(--ease),
+    transform var(--dur) var(--ease);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+/* primary — the single reserved interaction (tertiary white on black) */
+.btn--primary {
+  background: var(--c-tertiary);
+  color: var(--c-on-primary);
+  border: 1px solid var(--c-tertiary);
+}
+.btn--primary:hover {
+  background: transparent;
+  color: var(--c-primary);
+}
+
+/* ghost — secondary surface action */
+.btn--ghost {
+  background: transparent;
+  color: var(--c-primary);
+  border: 1px solid var(--c-line-strong);
+}
+.btn--ghost:hover {
+  border-color: var(--c-primary);
+}
+
+/* link — inline text-like */
+.btn--link {
+  padding: 0;
+  background: transparent;
+  color: var(--c-primary);
+  border: 0;
+  border-bottom: 1px solid var(--c-line-strong);
+}
+.btn--link:hover {
+  border-bottom-color: var(--c-primary);
+}

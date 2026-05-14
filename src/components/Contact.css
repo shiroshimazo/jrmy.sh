@@ -1,0 +1,80 @@
+.contact__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: var(--s-lg);
+  align-items: start;
+}
+
+.contact__mail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-md);
+  padding: var(--s-lg);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-lg);
+  background: var(--c-surface);
+}
+
+.contact__email {
+  font-size: clamp(1.5rem, 5vw, 3rem);
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  border-bottom: 1px solid var(--c-line-strong);
+  padding-bottom: var(--s-sm);
+  word-break: break-word;
+  transition: border-color var(--dur) var(--ease);
+}
+.contact__email:hover {
+  border-bottom-color: var(--c-primary);
+}
+
+.contact__actions {
+  margin-top: var(--s-md);
+}
+
+.contact__side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-lg);
+}
+
+.contact__block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-sm);
+  padding-top: var(--s-md);
+  border-top: 1px solid var(--c-line);
+}
+
+.contact__socials {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.contact__social {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-block: var(--s-md);
+  border-bottom: 1px solid var(--c-line);
+  font-family: var(--f-sans);
+  font-size: 1.1rem;
+  transition: padding var(--dur) var(--ease);
+}
+
+.contact__social:hover {
+  padding-left: var(--s-sm);
+}
+
+.contact__note {
+  max-width: 38ch;
+}
+
+@media (max-width: 720px) {
+  .contact__grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,137 @@
+.hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--c-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--c-line) 1px, transparent 1px);
+  background-size: 80px 80px;
+  mask-image: radial-gradient(
+    ellipse at 50% 30%,
+    rgba(0, 0, 0, 0.7) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.hero__grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(140px, 1fr) minmax(0, 3fr) minmax(140px, 1fr);
+  gap: var(--s-lg);
+  align-items: end;
+  min-height: 60svh;
+}
+
+.hero__meta,
+.hero__side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-md);
+  padding-top: var(--s-lg);
+  border-top: 1px solid var(--c-line);
+}
+
+.hero__meta-line {
+  color: var(--c-secondary);
+  line-height: 2;
+}
+
+.hero__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-lg);
+  padding-bottom: var(--s-lg);
+}
+
+.hero__eyebrow {
+  color: var(--c-primary);
+}
+
+.hero__display {
+  text-transform: none;
+}
+
+.hero__dot {
+  color: var(--c-primary);
+}
+
+.hero__tagline {
+  max-width: 52ch;
+  font-size: 1.05rem;
+}
+
+.hero__cta {
+  display: flex;
+  gap: var(--s-md);
+  flex-wrap: wrap;
+  margin-top: var(--s-md);
+}
+
+.hero__stat {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.hero__stat .h2 {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-sm);
+}
+
+.hero__pulse {
+  width: 8px;
+  height: 8px;
+  background: var(--c-primary);
+  display: inline-block;
+  position: relative;
+}
+
+.hero__pulse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--c-primary);
+  animation: pulse 2.4s var(--ease) infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+.hero__foot {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--s-xl);
+  padding-top: var(--s-md);
+  border-top: 1px solid var(--c-line);
+}
+
+@media (max-width: 960px) {
+  .hero__grid {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+  .hero__side {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--s-lg);
+  }
+  .hero__meta {
+    display: none;
+  }
+}

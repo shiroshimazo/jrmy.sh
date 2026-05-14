@@ -1,0 +1,89 @@
+.card {
+  background: var(--c-surface);
+  color: var(--c-primary);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-md);
+  transition:
+    border-color var(--dur) var(--ease),
+    transform var(--dur) var(--ease),
+    background-color var(--dur) var(--ease);
+  min-height: 100%;
+}
+
+.card:hover {
+  border-color: var(--c-line-strong);
+  transform: translateY(-2px);
+}
+
+.card__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.card__year {
+  color: var(--c-secondary);
+}
+
+.card__title {
+  letter-spacing: -0.02em;
+}
+
+.card__desc {
+  margin: 0;
+}
+
+.card__stack {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-sm);
+}
+
+.card__chip {
+  border: 1px solid var(--c-line-strong);
+  padding: 4px 8px;
+  color: var(--c-primary);
+}
+
+.card__actions {
+  margin-top: auto;
+  padding-top: var(--s-md);
+  border-top: 1px solid var(--c-line);
+  display: flex;
+  gap: var(--s-lg);
+}
+
+.card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--f-mono);
+  font-size: var(--t-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-primary);
+  transition: color var(--dur) var(--ease);
+}
+
+.card__link--muted {
+  color: var(--c-secondary);
+}
+
+.card__link:hover {
+  color: var(--c-primary);
+}
+
+.card__link svg {
+  transition: transform var(--dur) var(--ease);
+}
+
+.card__link:hover svg {
+  transform: translate(2px, -2px);
+}
