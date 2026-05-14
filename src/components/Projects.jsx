@@ -1,7 +1,18 @@
+import { motion } from "framer-motion";
 import SectionTitle from "./SectionTitle";
 import ProjectCard from "./ProjectCard";
 import { projects } from "../data/content";
+import { EASE, VIEWPORT } from "./motion/motion-presets";
 import "./Projects.css";
+
+const container = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.1 } },
+};
+const item = {
+  hidden: { opacity: 0, y: 30 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE } },
+};
 
 export default function Projects() {
   return (
@@ -14,13 +25,21 @@ export default function Projects() {
           lead="A short index of recent work. Each shipped end-to-end with attention to typography, performance, and information density."
         />
 
-        <ul className="projects__grid" role="list">
+        <motion.ul
+          className="projects__grid"
+          role="list"
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          exit="hidden"
+          viewport={VIEWPORT}
+        >
           {projects.map((p) => (
-            <li key={p.title}>
+            <motion.li key={p.title} variants={item}>
               <ProjectCard project={p} />
-            </li>
+            </motion.li>
           ))}
-        </ul>
+        </motion.ul>
       </div>
     </section>
   );

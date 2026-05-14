@@ -1,17 +1,35 @@
+import { motion } from "framer-motion";
 import { profile } from "../data/content";
+import { EASE, VIEWPORT } from "./motion/motion-presets";
 import "./Footer.css";
+
+const row = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.08 } },
+};
+const col = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
+};
 
 export default function Footer() {
   const year = new Date().getFullYear();
   return (
     <footer className="footer">
-      <div className="container footer__row">
-        <div className="footer__col">
+      <motion.div
+        className="container footer__row"
+        variants={row}
+        initial="hidden"
+        whileInView="show"
+        exit="hidden"
+        viewport={VIEWPORT}
+      >
+        <motion.div className="footer__col" variants={col}>
           <span className="label">Index</span>
           <span className="h2 footer__brand">{profile.name}.</span>
-        </div>
+        </motion.div>
 
-        <div className="footer__col">
+        <motion.div className="footer__col" variants={col}>
           <span className="label">Sections</span>
           <ul className="footer__list">
             <li>
@@ -27,9 +45,9 @@ export default function Footer() {
               <a href="#contact">Contact</a>
             </li>
           </ul>
-        </div>
+        </motion.div>
 
-        <div className="footer__col">
+        <motion.div className="footer__col" variants={col}>
           <span className="label">Elsewhere</span>
           <ul className="footer__list">
             {profile.socials.map((s) => (
@@ -40,14 +58,16 @@ export default function Footer() {
               </li>
             ))}
           </ul>
-        </div>
+        </motion.div>
 
-        <div className="footer__col footer__col--end">
+        <motion.div className="footer__col footer__col--end" variants={col}>
           <span className="label">Meta</span>
-          <span className="body footer__meta">© {year} {profile.name}</span>
+          <span className="body footer__meta">
+            © {year} {profile.name}
+          </span>
           <span className="body footer__meta">All rights reserved</span>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       <div className="container footer__bar">
         <span className="label">v2026.01 — Built with React + Vite</span>

@@ -14,7 +14,7 @@
   --f-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --f-mono: "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
 
-  --t-display: clamp(2.75rem, 8vw, 5rem);
+  --t-display: clamp(3.25rem, 10vw, 6.25rem);
   --t-h1: clamp(1.75rem, 4vw, 2.4rem);
   --t-h2: clamp(1.25rem, 2.5vw, 1.6rem);
   --t-body: 0.95rem;

@@ -78,7 +78,7 @@ export default function Navbar() {
             aria-label="Home"
           >
             <span className="nav__brand-mark" aria-hidden="true" />
-            <span className="label nav__brand-name">SHIRO / PORTFOLIO</span>
+            <span className="label nav__brand-name">JEREMY / PORTFOLIO</span>
           </a>
 
           <nav aria-label="Primary" className="nav__menu">

@@ -51,8 +51,10 @@
 }
 
 .hero__tagline {
-  max-width: 52ch;
-  font-size: 1.05rem;
+  max-width: 56ch;
+  font-size: 1.18rem;
+  line-height: 1.5;
+  color: var(--c-primary);
 }
 
 .hero__cta {
@@ -106,10 +108,10 @@
     min-height: 0;
   }
 
-  /* On mobile, portrait sits on top — small and centered-left. */
+  /* On mobile, portrait sits on top — a touch larger than before. */
   .hero__portrait {
     order: -1;
-    width: 140px;
+    width: 200px;
     align-self: flex-start;
   }
 
@@ -124,6 +126,6 @@
 
 @media (max-width: 420px) {
   .hero__portrait {
-    width: 112px;
+    width: 168px;
   }
 }

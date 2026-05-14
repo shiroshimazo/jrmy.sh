@@ -1,6 +1,22 @@
+import { motion } from "framer-motion";
 import SectionTitle from "./SectionTitle";
 import { profile, skills, experience } from "../data/content";
+import { EASE, VIEWPORT } from "./motion/motion-presets";
 import "./About.css";
+
+const grid = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.1 } },
+};
+const cell = {
+  hidden: { opacity: 0, y: 26 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE } },
+};
+
+const timelineRow = {
+  hidden: { opacity: 0, x: -24 },
+  show: { opacity: 1, x: 0, transition: { duration: 0.6, ease: EASE } },
+};
 
 export default function About() {
   return (
@@ -13,8 +29,15 @@ export default function About() {
           lead={profile.intro}
         />
 
-        <div className="about__grid">
-          <div className="about__pane">
+        <motion.div
+          className="about__grid"
+          variants={grid}
+          initial="hidden"
+          whileInView="show"
+          exit="hidden"
+          viewport={VIEWPORT}
+        >
+          <motion.div className="about__pane" variants={cell}>
             <span className="label about__pane-title">Profile</span>
             <p className="body">
               I work across the stack but care most about the surface where
@@ -35,9 +58,9 @@ export default function About() {
                 <dd className="body about__fact">Selective freelance</dd>
               </div>
             </dl>
-          </div>
+          </motion.div>
 
-          <div className="about__pane">
+          <motion.div className="about__pane" variants={cell}>
             <span className="label about__pane-title">Skills</span>
             <ul className="skills">
               {skills.map((g) => (
@@ -53,8 +76,8 @@ export default function About() {
                 </li>
               ))}
             </ul>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         <div className="about__timeline">
           <div className="about__timeline-head">
@@ -64,18 +87,29 @@ export default function About() {
             </span>
           </div>
 
-          <ol className="timeline">
+          <motion.ol
+            className="timeline"
+            variants={grid}
+            initial="hidden"
+            whileInView="show"
+            exit="hidden"
+            viewport={VIEWPORT}
+          >
             {experience.map((e) => (
-              <li key={e.role + e.period} className="timeline__row">
+              <motion.li
+                key={e.role + e.period}
+                className="timeline__row"
+                variants={timelineRow}
+              >
                 <span className="label timeline__period">{e.period}</span>
                 <div className="timeline__body">
                   <h3 className="h2 timeline__role">{e.role}</h3>
                   <span className="label timeline__company">{e.company}</span>
                   <p className="body">{e.summary}</p>
                 </div>
-              </li>
+              </motion.li>
             ))}
-          </ol>
+          </motion.ol>
         </div>
       </div>
     </section>

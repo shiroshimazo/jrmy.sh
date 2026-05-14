@@ -1,7 +1,18 @@
+import { motion } from "framer-motion";
 import SectionTitle from "./SectionTitle";
 import Button from "./Button";
 import { profile } from "../data/content";
+import { EASE, VIEWPORT } from "./motion/motion-presets";
 import "./Contact.css";
+
+const grid = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.12 } },
+};
+const item = {
+  hidden: { opacity: 0, y: 26 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE } },
+};
 
 export default function Contact() {
   return (
@@ -14,8 +25,15 @@ export default function Contact() {
           lead="I take on a small number of engagements each quarter. Send a short note describing what you're building and I'll reply within two business days."
         />
 
-        <div className="contact__grid">
-          <div className="contact__mail">
+        <motion.div
+          className="contact__grid"
+          variants={grid}
+          initial="hidden"
+          whileInView="show"
+          exit="hidden"
+          viewport={VIEWPORT}
+        >
+          <motion.div className="contact__mail" variants={item}>
             <span className="label">Direct</span>
             <a
               className="display contact__email"
@@ -28,9 +46,9 @@ export default function Contact() {
                 Send Email
               </Button>
             </div>
-          </div>
+          </motion.div>
 
-          <aside className="contact__side">
+          <motion.aside className="contact__side" variants={item}>
             <div className="contact__block">
               <span className="label">Elsewhere</span>
               <ul className="contact__socials" role="list">
@@ -57,8 +75,8 @@ export default function Contact() {
                 email and I'll forward a template.
               </p>
             </div>
-          </aside>
-        </div>
+          </motion.aside>
+        </motion.div>
       </div>
     </section>
   );
