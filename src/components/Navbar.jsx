@@ -40,83 +40,132 @@ export default function Navbar() {
     return () => io.disconnect();
   }, []);
 
+  // Lock body scroll while drawer open + close on Escape.
+  useEffect(() => {
+    if (!open) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
   const handleNav = (e, id) => {
     e.preventDefault();
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
     setOpen(false);
+    // defer scroll until after drawer close paints
+    requestAnimationFrame(() => {
+      document.getElementById(id)?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    });
   };
 
   return (
-    <header className={`nav ${scrolled ? "nav--scrolled" : ""}`}>
-      <div className="container nav__row">
-        <a
-          href="#home"
-          className="nav__brand"
-          onClick={(e) => handleNav(e, "home")}
-          aria-label="Home"
-        >
-          <span className="nav__brand-mark" aria-hidden="true" />
-          <span className="label nav__brand-name">SHIRO / PORTFOLIO</span>
-        </a>
+    <>
+      <header className={`nav ${scrolled || open ? "nav--scrolled" : ""}`}>
+        <div className="container nav__row">
+          <a
+            href="#home"
+            className="nav__brand"
+            onClick={(e) => handleNav(e, "home")}
+            aria-label="Home"
+          >
+            <span className="nav__brand-mark" aria-hidden="true" />
+            <span className="label nav__brand-name">SHIRO / PORTFOLIO</span>
+          </a>
 
-        <nav aria-label="Primary" className="nav__menu">
-          <ul className="nav__list">
+          <nav aria-label="Primary" className="nav__menu">
+            <ul className="nav__list">
+              {links.map((l, i) => (
+                <li key={l.id}>
+                  <a
+                    href={`#${l.id}`}
+                    onClick={(e) => handleNav(e, l.id)}
+                    className={`nav__link label ${
+                      active === l.id ? "is-active" : ""
+                    }`}
+                  >
+                    <span className="nav__num">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span>{l.label}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <button
+            className={`nav__toggle ${open ? "is-open" : ""}`}
+            aria-expanded={open}
+            aria-controls="nav-drawer"
+            aria-label={open ? "Close menu" : "Open menu"}
+            onClick={() => setOpen((v) => !v)}
+          >
+            <span className="nav__toggle-bar" />
+            <span className="nav__toggle-bar" />
+            <span className="nav__toggle-bar" />
+          </button>
+        </div>
+      </header>
+
+      {/* Drawer is rendered as a sibling so backdrop-filter on .nav
+          does not create a containing block that traps position:fixed. */}
+      <div
+        id="nav-drawer"
+        className={`drawer ${open ? "is-open" : ""}`}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Navigation"
+        aria-hidden={!open}
+      >
+        <button
+          type="button"
+          className="drawer__scrim"
+          aria-label="Close menu"
+          tabIndex={open ? 0 : -1}
+          onClick={() => setOpen(false)}
+        />
+
+        <div className="drawer__panel">
+          <div className="drawer__top">
+            <span className="label">Menu — 04 / 04</span>
+          </div>
+
+          <ul className="drawer__list">
             {links.map((l, i) => (
               <li key={l.id}>
                 <a
                   href={`#${l.id}`}
                   onClick={(e) => handleNav(e, l.id)}
-                  className={`nav__link label ${
-                    active === l.id ? "is-active" : ""
-                  }`}
+                  className="drawer__link"
+                  tabIndex={open ? 0 : -1}
                 >
-                  <span className="nav__num">
+                  <span className="label drawer__num">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <span>{l.label}</span>
+                  <span className="drawer__label">{l.label}</span>
+                  <span className="drawer__arrow" aria-hidden="true">
+                    ↗
+                  </span>
                 </a>
               </li>
             ))}
           </ul>
-        </nav>
 
-        <button
-          className={`nav__toggle ${open ? "is-open" : ""}`}
-          aria-expanded={open}
-          aria-controls="nav-drawer"
-          aria-label="Toggle menu"
-          onClick={() => setOpen((v) => !v)}
-        >
-          <span />
-          <span />
-        </button>
+          <div className="drawer__foot">
+            <span className="label">v2026.01</span>
+            <span className="label">© {new Date().getFullYear()}</span>
+          </div>
+        </div>
       </div>
-
-      <div
-        id="nav-drawer"
-        className={`nav__drawer ${open ? "is-open" : ""}`}
-        role="dialog"
-        aria-modal="true"
-        aria-hidden={!open}
-      >
-        <ul className="nav__drawer-list">
-          {links.map((l, i) => (
-            <li key={l.id}>
-              <a
-                href={`#${l.id}`}
-                onClick={(e) => handleNav(e, l.id)}
-                className="nav__drawer-link"
-              >
-                <span className="label nav__num">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span className="display-sm">{l.label}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </header>
+    </>
   );
 }

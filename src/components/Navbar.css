@@ -26,6 +26,8 @@
   display: inline-flex;
   align-items: center;
   gap: var(--s-sm);
+  position: relative;
+  z-index: 2;
 }
 
 .nav__brand-mark {
@@ -88,17 +90,27 @@
   font-family: var(--f-mono);
 }
 
+/* Hamburger button — 3 lines, animates to an X. */
 .nav__toggle {
   display: none;
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   position: relative;
+  z-index: 2;
+  border: 1px solid var(--c-line-strong);
+  border-radius: var(--r-md);
+  background: transparent;
+  transition: border-color var(--dur) var(--ease);
 }
 
-.nav__toggle span {
+.nav__toggle:hover {
+  border-color: var(--c-primary);
+}
+
+.nav__toggle-bar {
   position: absolute;
-  left: 4px;
-  right: 4px;
+  left: 9px;
+  right: 9px;
   height: 1px;
   background: var(--c-primary);
   transition:
@@ -107,63 +119,133 @@
     opacity var(--dur) var(--ease);
 }
 
-.nav__toggle span:nth-child(1) {
-  top: 11px;
+.nav__toggle-bar:nth-child(1) {
+  top: 13px;
 }
-.nav__toggle span:nth-child(2) {
+.nav__toggle-bar:nth-child(2) {
   top: 19px;
 }
+.nav__toggle-bar:nth-child(3) {
+  top: 25px;
+}
 
-.nav__toggle.is-open span:nth-child(1) {
-  top: 15px;
+.nav__toggle.is-open .nav__toggle-bar:nth-child(1) {
+  top: 19px;
   transform: rotate(45deg);
 }
-.nav__toggle.is-open span:nth-child(2) {
-  top: 15px;
+.nav__toggle.is-open .nav__toggle-bar:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.nav__toggle.is-open .nav__toggle-bar:nth-child(3) {
+  top: 19px;
   transform: rotate(-45deg);
 }
 
-.nav__drawer {
+/* --- Mobile drawer (rendered as sibling, outside .nav) --- */
+.drawer {
   position: fixed;
-  inset: 64px 0 0 0;
-  background: var(--c-neutral);
-  border-top: 1px solid var(--c-line);
-  transform: translateY(-8px);
-  opacity: 0;
+  inset: 0;
+  z-index: 60;
   pointer-events: none;
-  transition:
-    opacity var(--dur) var(--ease),
-    transform var(--dur) var(--ease);
+  visibility: hidden;
 }
 
-.nav__drawer.is-open {
-  opacity: 1;
-  transform: none;
+.drawer.is-open {
   pointer-events: auto;
+  visibility: visible;
 }
 
-.nav__drawer-list {
-  list-style: none;
-  margin: 0;
-  padding: var(--s-lg);
+.drawer__scrim {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease);
+}
+
+.drawer.is-open .drawer__scrim {
+  opacity: 1;
+}
+
+.drawer__panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(420px, 100%);
+  background: var(--c-neutral);
+  border-left: 1px solid var(--c-line);
   display: flex;
   flex-direction: column;
-  gap: var(--s-lg);
+  padding: calc(64px + var(--s-lg)) var(--s-lg) var(--s-lg);
+  transform: translateX(100%);
+  transition: transform var(--dur) var(--ease);
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
-.nav__drawer-link {
+.drawer.is-open .drawer__panel {
+  transform: none;
+}
+
+.drawer__top {
+  padding-bottom: var(--s-md);
+  border-bottom: 1px solid var(--c-line);
+  margin-bottom: var(--s-md);
+}
+
+.drawer__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
+  flex-direction: column;
+}
+
+.drawer__link {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: baseline;
   gap: var(--s-md);
+  padding-block: var(--s-md);
   border-bottom: 1px solid var(--c-line);
-  padding-bottom: var(--s-md);
+  color: var(--c-primary);
+  transition: padding-left var(--dur) var(--ease);
 }
 
-.display-sm {
-  font-size: clamp(1.75rem, 7vw, 2.4rem);
+.drawer__link:hover {
+  padding-left: var(--s-sm);
+}
+
+.drawer__num {
+  color: var(--c-secondary);
+}
+
+.drawer__label {
+  font-family: var(--f-sans);
+  font-size: clamp(1.75rem, 8vw, 2.4rem);
   font-weight: 300;
   letter-spacing: -0.03em;
   line-height: 1;
+}
+
+.drawer__arrow {
+  color: var(--c-secondary);
+  font-family: var(--f-mono);
+}
+
+.drawer__foot {
+  margin-top: auto;
+  padding-top: var(--s-md);
+  border-top: 1px solid var(--c-line);
+  display: flex;
+  justify-content: space-between;
 }
 
 @media (max-width: 720px) {
@@ -172,5 +254,13 @@
   }
   .nav__toggle {
     display: inline-block;
+  }
+}
+
+@media (min-width: 721px) {
+  /* Make absolutely sure the drawer never appears on desktop, even if
+     React state somehow gets toggled (e.g. resize from mobile). */
+  .drawer {
+    display: none;
   }
 }
