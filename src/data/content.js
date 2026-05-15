@@ -77,7 +77,7 @@ export const projects = [
     year: "2026",
     description:
       "Web-based system for managing orders with enhanced features and user interface.",
-    stack: ["Java", "JavaFX"],
+    stack: ["Java", "JavaFX", "MySQL"],
     repo: "https://github.com/shiroshimazo/order-management-system-v2",
   },
   {

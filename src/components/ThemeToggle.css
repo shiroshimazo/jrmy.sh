@@ -1,0 +1,28 @@
+.theme-toggle {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--c-primary);
+  border: 1px solid var(--c-line-strong);
+  border-radius: var(--r-md);
+  background: transparent;
+  transition:
+    border-color var(--dur) var(--ease),
+    color var(--dur) var(--ease),
+    background-color var(--dur) var(--ease);
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  border-color: var(--c-primary);
+  background: var(--c-surface);
+}
+
+.theme-toggle svg {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+}

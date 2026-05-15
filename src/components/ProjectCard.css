@@ -90,7 +90,7 @@
 
 /* Disabled "Open" — coming-soon state. */
 .card__link--disabled {
-  color: rgba(255, 255, 255, 0.32);
+  color: var(--c-muted);
   cursor: not-allowed;
   pointer-events: none;
   display: inline-flex;
@@ -103,6 +103,6 @@
 .card__link-sub {
   font-size: 0.62rem;
   letter-spacing: 0.08em;
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--c-muted-2);
   text-transform: none;
 }

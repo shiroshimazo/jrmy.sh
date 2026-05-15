@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import ThemeToggle from "./ThemeToggle";
 import "./Navbar.css";
 
 const links = [
@@ -81,38 +82,42 @@ export default function Navbar() {
             <span className="label nav__brand-name">JEREMY / PORTFOLIO</span>
           </a>
 
-          <nav aria-label="Primary" className="nav__menu">
-            <ul className="nav__list">
-              {links.map((l, i) => (
-                <li key={l.id}>
-                  <a
-                    href={`#${l.id}`}
-                    onClick={(e) => handleNav(e, l.id)}
-                    className={`nav__link label ${
-                      active === l.id ? "is-active" : ""
-                    }`}
-                  >
-                    <span className="nav__num">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span>{l.label}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          <div className="nav__cluster">
+            <nav aria-label="Primary" className="nav__menu">
+              <ul className="nav__list">
+                {links.map((l, i) => (
+                  <li key={l.id}>
+                    <a
+                      href={`#${l.id}`}
+                      onClick={(e) => handleNav(e, l.id)}
+                      className={`nav__link label ${
+                        active === l.id ? "is-active" : ""
+                      }`}
+                    >
+                      <span className="nav__num">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <span>{l.label}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
 
-          <button
-            className={`nav__toggle ${open ? "is-open" : ""}`}
-            aria-expanded={open}
-            aria-controls="nav-drawer"
-            aria-label={open ? "Close menu" : "Open menu"}
-            onClick={() => setOpen((v) => !v)}
-          >
-            <span className="nav__toggle-bar" />
-            <span className="nav__toggle-bar" />
-            <span className="nav__toggle-bar" />
-          </button>
+            <ThemeToggle />
+
+            <button
+              className={`nav__toggle ${open ? "is-open" : ""}`}
+              aria-expanded={open}
+              aria-controls="nav-drawer"
+              aria-label={open ? "Close menu" : "Open menu"}
+              onClick={() => setOpen((v) => !v)}
+            >
+              <span className="nav__toggle-bar" />
+              <span className="nav__toggle-bar" />
+              <span className="nav__toggle-bar" />
+            </button>
+          </div>
         </div>
       </header>
 
