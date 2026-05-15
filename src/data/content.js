@@ -54,43 +54,40 @@ export const experience = [
 
 export const projects = [
   {
-    title: "Atlas",
-    tag: "Interface system",
-    year: "2025",
-    description:
-      "A typography-first dashboard kit. Tokens, primitives, and dense data layouts engineered for clarity at scale.",
-    stack: ["React", "TypeScript", "Vite"],
-    href: "#",
-    repo: "#",
-  },
-  {
-    title: "Signal",
-    tag: "Realtime app",
-    year: "2025",
-    description:
-      "Latency-sensitive collaboration layer with operational-transform sync and presence. Sub-frame input handling.",
-    stack: ["Node", "WebSocket", "Postgres"],
-    href: "#",
-    repo: "#",
-  },
-  {
-    title: "Mono",
-    tag: "CLI tool",
+    title: "Order Management System",
+    tag: "Application System",
     year: "2024",
     description:
-      "A monorepo task runner with deterministic caching. Designed for fast feedback and predictable CI.",
-    stack: ["Go", "BoltDB"],
-    href: "#",
-    repo: "#",
+      "A desktop application for managing customer orders, inventory, and transactions.",
+    stack: ["Java", "JavaSwing", "MySQL"],
+    repo: "https://github.com/shiroshimazo/OMS",
   },
   {
-    title: "Specimen",
-    tag: "Type tester",
-    year: "2024",
+    title: "Employee Management System",
+    tag: "CLI-Based System",
+    year: "2026",
     description:
-      "Browser-based typeface specimen tool. Variable-axis controls, OpenType inspection, exportable layouts.",
-    stack: ["React", "Canvas"],
-    href: "#",
-    repo: "#",
+      "A command-line application to manage employee records and payroll.",
+    stack: ["C++"],
+    repo: "https://github.com/shiroshimazo/employee-payroll-system",
+  },
+  {
+    title: "Order Management System V2",
+    tag: "Web-Based System",
+    year: "2026",
+    description:
+      "Web-based system for managing orders with enhanced features and user interface.",
+    stack: ["Java", "JavaFX"],
+    repo: "https://github.com/shiroshimazo/order-management-system-v2",
+  },
+  {
+    title: "Barbershop Management System",
+    tag: "Web-Based System",
+    year: "Ongoing",
+    description:
+      "Upcoming web app for scheduling, customer management, and services tracking.",
+    stack: ["React", "Supabase"],
+    repo: "https://github.com/shiroshimazo/barbershop-management-system",
+    upcoming: true,
   },
 ];

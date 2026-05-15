@@ -1,9 +1,11 @@
 import "./ProjectCard.css";
 
 export default function ProjectCard({ project }) {
-  const { title, tag, year, description, stack, href, repo } = project;
+  const { title, tag, year, description, stack, href, repo, upcoming } =
+    project;
+
   return (
-    <article className="card">
+    <article className={`card ${upcoming ? "card--upcoming" : ""}`}>
       <div className="card__head">
         <span className="label">{tag}</span>
         <span className="label card__year">{year}</span>
@@ -21,7 +23,18 @@ export default function ProjectCard({ project }) {
       </ul>
 
       <div className="card__actions">
-        {href && (
+        {upcoming && (
+          <span
+            className="card__link card__link--disabled"
+            aria-disabled="true"
+            title="Coming soon"
+          >
+            <span>Open</span>
+            <span className="card__link-sub">(upcoming)</span>
+          </span>
+        )}
+
+        {href && !upcoming && (
           <a
             className="card__link"
             href={href}
@@ -33,9 +46,10 @@ export default function ProjectCard({ project }) {
             <Arrow />
           </a>
         )}
+
         {repo && (
           <a
-            className="card__link card__link--muted"
+            className={`card__link ${upcoming ? "" : "card__link--muted"}`}
             href={repo}
             target="_blank"
             rel="noreferrer"
