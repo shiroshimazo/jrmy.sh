@@ -1,23 +1,24 @@
 export const profile = {
   name: "Jeremy",
-  role: "Software Engineer",
+  role: "Web Developer",
+  status: "Student",
   tagline: "Building precise, minimal interfaces and resilient systems.",
   intro:
     "I design and ship full-stack products with an emphasis on clarity, performance, and craft. Currently focused on developer-facing tools and interface systems.",
   location: "Remote",
-  email: "shiroshiimazo@gmail.com",
+  email: "jrmymln@gmail.com",
   socials: [
-    { label: "GitHub", href: "https://github.com/" },
-    { label: "LinkedIn", href: "https://linkedin.com/" },
-    { label: "X", href: "https://x.com/" },
+    { label: "GitHub", href: "https://github.com/shiroshimazo" },
+    { label: "Instagram", href: "https://www.instagram.com/jrmymlna" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/jrmymlna/" },
   ],
 };
 
 export const skills = [
-  { group: "Languages", items: ["TypeScript", "JavaScript", "Python", "Go"] },
+  { group: "Languages", items: ["Java", "C", "C++", "PHP", "JavaScript"] },
   { group: "Frontend", items: ["React", "Vite", "Next.js", "CSS Architecture"] },
-  { group: "Backend", items: ["Node.js", "PostgreSQL", "Redis", "REST / GraphQL"] },
-  { group: "Tooling", items: ["Git", "Docker", "CI/CD", "Vitest"] },
+  { group: "Backend", items: ["Node.js", "Supabase", "mySQL"] },
+  { group: "Tooling", items: ["Git"] },
 ];
 
 export const experience = [

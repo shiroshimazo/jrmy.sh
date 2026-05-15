@@ -48,7 +48,7 @@ export default function Hero() {
           animate="show"
         >
           <motion.span variants={item} className="label hero__eyebrow">
-            ▍ {profile.role} — {profile.location}
+            ▍ {profile.role} — {profile.status}
           </motion.span>
 
           <motion.h1 variants={item} className="display hero__display">
