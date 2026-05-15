@@ -23,25 +23,32 @@ export const skills = [
 
 export const experience = [
   {
+    period: "2025 — Present",
+    role: "2nd Year College — BSIT",
+    company: "BestLink College of the Philippines",
+    summary:
+      "Currently pursuing a Bachelor of Science in Information Technology, focusing on software development and digital technologies.",
+  },
+  {
     period: "2024 — Present",
-    role: "Frontend Engineer",
-    company: "Independent",
+    role: "V.A / Freelancing",
+    company: "Product Listing · Ads (Pinterest & Facebook) · Creatives",
     summary:
-      "Designing and building portfolio-grade interfaces, internal tools, and component systems for client projects.",
+      "Managing online product listings, creating engaging ads, and designing visual content for social media platforms.",
   },
   {
-    period: "2022 — 2024",
-    role: "Full-Stack Developer",
-    company: "Self-directed",
+    period: "2024 — 2025",
+    role: "Grade 12 SHS — I.C.T",
+    company: "With High Honors",
     summary:
-      "Shipped end-to-end web apps in React + Node, with a focus on performance, accessibility, and clean information design.",
+      "Completed Senior High School with specialization in Information and Communications Technology, gaining strong skills in programming, networking, and digital tools.",
   },
   {
-    period: "2020 — 2022",
-    role: "B.Sc. Computer Science",
-    company: "University",
+    period: "2023 — 2024",
+    role: "Grade 11 SHS — I.C.T",
+    company: "With High Honors",
     summary:
-      "Foundations in algorithms, systems, distributed computing, and human-computer interaction.",
+      "Studied junior year of Senior High School in ICT, developing foundational knowledge in computing, multimedia, and IT concepts.",
   },
 ];
 
