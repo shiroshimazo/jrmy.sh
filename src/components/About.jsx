@@ -1,4 +1,6 @@
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
+import { AnimatePresence, motion } from "framer-motion";
 import SectionTitle from "./SectionTitle";
 import { profile, skills, experience } from "../data/content";
 import { EASE, VIEWPORT } from "./motion/motion-presets";
@@ -19,6 +21,22 @@ const timelineRow = {
 };
 
 export default function About() {
+  // The currently open certificate ({ src, role }), or null when closed.
+  const [cert, setCert] = useState(null);
+
+  // Close on Escape and lock body scroll while the modal is open.
+  useEffect(() => {
+    if (!cert) return;
+    const onKey = (e) => e.key === "Escape" && setCert(null);
+    window.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [cert]);
+
   return (
     <section id="about" className="section about">
       <div className="container">
@@ -106,12 +124,77 @@ export default function About() {
                   <h3 className="h2 timeline__role">{e.role}</h3>
                   <span className="label timeline__company">{e.company}</span>
                   <p className="body">{e.summary}</p>
+                  {e.cert && (
+                    <button
+                      type="button"
+                      className="label timeline__cert-btn"
+                      onClick={() => setCert({ src: e.cert, role: e.role })}
+                    >
+                      View Cert
+                      <Arrow />
+                    </button>
+                  )}
                 </div>
               </motion.li>
             ))}
           </motion.ol>
         </div>
       </div>
+
+      {createPortal(
+        <AnimatePresence>
+          {cert && (
+            <motion.div
+              className="cert-modal"
+              role="dialog"
+              aria-modal="true"
+              aria-label={`${cert.role} certificate`}
+              onClick={() => setCert(null)}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2, ease: EASE }}
+            >
+              <motion.div
+                className="cert-modal__frame"
+                onClick={(e) => e.stopPropagation()}
+                initial={{ opacity: 0, scale: 0.94, y: 12 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.96, y: 8 }}
+                transition={{ duration: 0.26, ease: EASE }}
+              >
+                <button
+                  type="button"
+                  className="label cert-modal__close"
+                  onClick={() => setCert(null)}
+                  aria-label="Close"
+                >
+                  Close ✕
+                </button>
+                <img
+                  className="cert-modal__img"
+                  src={cert.src}
+                  alt={`${cert.role} certificate`}
+                />
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </section>
+  );
+}
+
+function Arrow() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+      <path
+        d="M3 11L11 3M11 3H4.5M11 3V9.5"
+        stroke="currentColor"
+        strokeWidth="1"
+        strokeLinecap="square"
+      />
+    </svg>
   );
 }

@@ -8,8 +8,6 @@
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--s-lg);
-  padding-bottom: var(--s-xl);
-  border-bottom: 1px solid var(--c-line);
 }
 
 .footer__col {
@@ -45,20 +43,6 @@
 
 .footer__meta {
   color: var(--c-secondary);
-}
-
-.footer__bar {
-  display: flex;
-  justify-content: space-between;
-  padding-top: var(--s-md);
-}
-
-.footer__top {
-  color: var(--c-secondary);
-  transition: color var(--dur) var(--ease);
-}
-.footer__top:hover {
-  color: var(--c-primary);
 }
 
 @media (max-width: 720px) {

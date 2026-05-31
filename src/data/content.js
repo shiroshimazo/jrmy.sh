@@ -1,3 +1,6 @@
+import gr11cert from "../assets/gr11cert.jpg";
+import gr12cert from "../assets/gr12cert.jpg";
+
 export const profile = {
   name: "Jeremy",
   role: "Web Developer",
@@ -42,6 +45,7 @@ export const experience = [
     company: "With High Honors",
     summary:
       "Completed Senior High School with specialization in Information and Communications Technology, gaining strong skills in programming, networking, and digital tools.",
+    cert: gr12cert,
   },
   {
     period: "2023 — 2024",
@@ -49,6 +53,7 @@ export const experience = [
     company: "With High Honors",
     summary:
       "Studied junior year of Senior High School in ICT, developing foundational knowledge in computing, multimedia, and IT concepts.",
+    cert: gr11cert,
   },
 ];
 

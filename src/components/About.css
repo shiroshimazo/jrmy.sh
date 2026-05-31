@@ -132,6 +132,72 @@
   color: var(--c-secondary);
 }
 
+/* View-cert trigger — mirrors the project card link idiom. */
+.timeline__cert-btn {
+  align-self: flex-start;
+  margin-top: 6px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--c-primary);
+  text-transform: uppercase;
+  transition: color var(--dur) var(--ease);
+}
+
+.timeline__cert-btn svg {
+  transition: transform var(--dur) var(--ease);
+}
+
+.timeline__cert-btn:hover svg {
+  transform: translate(2px, -2px);
+}
+
+/* Certificate modal — backdrop + 4:5 frame, portaled to body. */
+.cert-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--s-lg);
+  background: var(--c-scrim);
+  backdrop-filter: blur(4px);
+}
+
+.cert-modal__frame {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  height: min(86vh, 760px);
+  max-width: 100%;
+  background: var(--c-surface);
+  border: 1px solid var(--c-line-strong);
+  border-radius: var(--r-lg);
+  box-shadow: 0 24px 80px var(--c-scrim);
+}
+
+.cert-modal__img {
+  width: 100%;
+  height: 100%;
+  /* contain — show the full certificate, no cropping. */
+  object-fit: contain;
+  border-radius: var(--r-lg);
+}
+
+.cert-modal__close {
+  position: absolute;
+  top: -36px;
+  right: 0;
+  color: var(--c-primary);
+  text-transform: uppercase;
+  transition: opacity var(--dur) var(--ease);
+}
+
+.cert-modal__close:hover {
+  opacity: 0.6;
+}
+
 @media (max-width: 720px) {
   .about__grid {
     grid-template-columns: 1fr;

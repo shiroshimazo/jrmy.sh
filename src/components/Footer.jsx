@@ -68,13 +68,6 @@ export default function Footer() {
           <span className="body footer__meta">All rights reserved</span>
         </motion.div>
       </motion.div>
-
-      <div className="container footer__bar">
-        <span className="label">v2026.01 — Built with React + Vite</span>
-        <a href="#home" className="label footer__top">
-          ↑ Top
-        </a>
-      </div>
     </footer>
   );
 }
