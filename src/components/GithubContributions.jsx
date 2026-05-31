@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 import { fadeUp } from "./motion/motion-presets";
 import { profile } from "../data/content";
@@ -47,11 +48,37 @@ const githubUrl =
   profile.socials.find((s) => s.label === "GitHub")?.href ??
   `https://github.com/${USERNAME}`;
 
+// "3 contributions on Jun 17, 2025"
+function tipText(date, count) {
+  const when = new Date(date).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+  const n = Number(count);
+  return `${n} contribution${n === 1 ? "" : "s"} on ${when}`;
+}
+
 export default function GithubContributions() {
   const [data, setData] = useState(null);
   const [error, setError] = useState(false);
   // Bumped on each scroll-in to remount the grid and replay the cell sweep.
   const [runId, setRunId] = useState(0);
+  // One shared tooltip, positioned in viewport coords via event delegation.
+  const [tip, setTip] = useState(null);
+
+  // Read the hovered cell's data-* and place the tooltip above it.
+  // Hovering a gap/empty cell keeps the last tip so it glides, not flickers.
+  function handlePointer(e) {
+    const cell = e.target.closest(".ghc__cell[data-date]");
+    if (!cell) return;
+    const r = cell.getBoundingClientRect();
+    setTip({
+      text: tipText(cell.dataset.date, cell.dataset.count),
+      x: r.left + r.width / 2,
+      y: r.top,
+    });
+  }
 
   useEffect(() => {
     let alive = true;
@@ -119,7 +146,14 @@ export default function GithubContributions() {
             ))}
           </div>
 
-          <div key={runId} className="ghc__grid" role="img" aria-label={`${total} contributions`}>
+          <div
+            key={runId}
+            className="ghc__grid"
+            role="img"
+            aria-label={`${total} contributions`}
+            onPointerMove={handlePointer}
+            onPointerLeave={() => setTip(null)}
+          >
             {weeks.map((week, w) =>
               week.map((day, d) => (
                 <span
@@ -127,11 +161,8 @@ export default function GithubContributions() {
                   className="ghc__cell"
                   style={{ "--i": w * 7 + d }}
                   data-level={day ? day.level : "empty"}
-                  title={
-                    day
-                      ? `${day.count} contribution${day.count === 1 ? "" : "s"} on ${day.date}`
-                      : undefined
-                  }
+                  data-date={day ? day.date : undefined}
+                  data-count={day ? day.count : undefined}
                 />
               ))
             )}
@@ -148,6 +179,18 @@ export default function GithubContributions() {
           <span>More</span>
         </div>
       )}
+
+      {tip &&
+        createPortal(
+          <div
+            className="ghc__tip"
+            role="tooltip"
+            style={{ left: tip.x, top: tip.y }}
+          >
+            {tip.text}
+          </div>,
+          document.body
+        )}
     </motion.section>
   );
 }

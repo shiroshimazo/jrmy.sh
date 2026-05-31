@@ -11,6 +11,9 @@
     border-color var(--dur) var(--ease),
     transform var(--dur) var(--ease),
     background-color var(--dur) var(--ease);
+  /* Fill the flex <li> on both axes — without flex:1 a low-content
+     card (e.g. one chip) shrinks to its content width. */
+  flex: 1;
   min-height: 100%;
 }
 
