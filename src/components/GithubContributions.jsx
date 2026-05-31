@@ -50,6 +50,8 @@ const githubUrl =
 export default function GithubContributions() {
   const [data, setData] = useState(null);
   const [error, setError] = useState(false);
+  // Bumped on each scroll-in to remount the grid and replay the cell sweep.
+  const [runId, setRunId] = useState(0);
 
   useEffect(() => {
     let alive = true;
@@ -71,6 +73,7 @@ export default function GithubContributions() {
       className="ghc"
       aria-label="GitHub contributions"
       {...fadeUp(0, 28)}
+      viewport={{ once: true, margin: "-12% 0px -12% 0px" }}
     >
       <div className="ghc__head">
         <span className="label">GitHub Activity</span>
@@ -99,12 +102,14 @@ export default function GithubContributions() {
       )}
 
       {!error && data && (
-        <a
+        <motion.a
           className="ghc__scroll"
           href={githubUrl}
           target="_blank"
           rel="noreferrer"
           aria-label={`${total.toLocaleString()} contributions in the last year — open ${USERNAME} on GitHub`}
+          onViewportEnter={() => setRunId((n) => n + 1)}
+          viewport={{ once: false, margin: "-8% 0px -8% 0px" }}
         >
           <div className="ghc__months" aria-hidden="true">
             {labels.map(({ col, name }) => (
@@ -114,7 +119,7 @@ export default function GithubContributions() {
             ))}
           </div>
 
-          <div className="ghc__grid" role="img" aria-label={`${total} contributions`}>
+          <div key={runId} className="ghc__grid" role="img" aria-label={`${total} contributions`}>
             {weeks.map((week, w) =>
               week.map((day, d) => (
                 <span
@@ -131,7 +136,7 @@ export default function GithubContributions() {
               ))
             )}
           </div>
-        </a>
+        </motion.a>
       )}
 
       {!error && data && (

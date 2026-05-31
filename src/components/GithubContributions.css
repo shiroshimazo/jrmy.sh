@@ -79,26 +79,47 @@
   aspect-ratio: 1;
   width: 100%;
   border-radius: var(--r-lg);
-  background: var(--c-primary);
-  opacity: 0.06;
+  /* Intensity lives on background so opacity is free for the fade-in. */
+  background: color-mix(in srgb, var(--c-primary) 6%, transparent);
 }
 
-/* Five intensity steps via opacity of the primary ink. */
-.ghc__cell[data-level="0"] { opacity: 0.06; }
-.ghc__cell[data-level="1"] { opacity: 0.28; }
-.ghc__cell[data-level="2"] { opacity: 0.5; }
-.ghc__cell[data-level="3"] { opacity: 0.72; }
-.ghc__cell[data-level="4"] { opacity: 1; }
+/* Five intensity steps via color-mix of the primary ink. */
+.ghc__cell[data-level="0"] { background: color-mix(in srgb, var(--c-primary) 6%, transparent); }
+.ghc__cell[data-level="1"] { background: color-mix(in srgb, var(--c-primary) 28%, transparent); }
+.ghc__cell[data-level="2"] { background: color-mix(in srgb, var(--c-primary) 50%, transparent); }
+.ghc__cell[data-level="3"] { background: color-mix(in srgb, var(--c-primary) 72%, transparent); }
+.ghc__cell[data-level="4"] { background: var(--c-primary); }
 /* Padding cells before the first / after the last day stay invisible. */
-.ghc__cell[data-level="empty"] { opacity: 0; }
+.ghc__cell[data-level="empty"] { background: transparent; }
+
+/* Staggered fade-in — each cell lights up in turn, start → end.
+   `both` keeps cells hidden through their delay and holds the final
+   state after, so the grid doesn't snap back to opacity 0. */
+.ghc__grid:not(.ghc__grid--skeleton) .ghc__cell {
+  opacity: 0;
+  animation: ghc-fade-in 0.45s var(--ease) both;
+  animation-delay: calc(var(--i, 0) * 6ms);
+}
+
+@keyframes ghc-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.55);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
 
 .ghc__grid--skeleton .ghc__cell {
+  background: color-mix(in srgb, var(--c-primary) 6%, transparent);
   animation: ghc-pulse 1.4s var(--ease) infinite;
 }
 
 @keyframes ghc-pulse {
-  0%, 100% { opacity: 0.04; }
-  50% { opacity: 0.12; }
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.9; }
 }
 
 .ghc__legend {
