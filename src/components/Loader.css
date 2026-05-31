@@ -1,0 +1,65 @@
+/* Full-screen intro loader — wave bars in the monochrome design language. */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--c-neutral);
+}
+
+.loader__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-md);
+}
+
+.loader__brand {
+  color: var(--c-secondary);
+}
+
+/* Wave — 5 bars, ~12.5% wide each, scaling vertically. */
+.loader__wave {
+  --duration: 1s;
+  --delay: 110ms;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 88px;
+  height: 44px;
+  color: var(--c-primary);
+}
+
+.loader__bar {
+  display: inline-block;
+  width: 7px;
+  border-radius: 999px;
+  background: currentColor;
+  transform-origin: center;
+  animation: loader-wave var(--duration) ease-in-out infinite;
+}
+
+@keyframes loader-wave {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.6);
+  }
+}
+
+.loader__caption {
+  color: var(--c-muted-2);
+  letter-spacing: 0.2em;
+}
+
+/* Reduced motion — hold bars steady, the brand/caption still convey state. */
+@media (prefers-reduced-motion: reduce) {
+  .loader__bar {
+    animation: none;
+  }
+}
