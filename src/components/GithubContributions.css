@@ -160,6 +160,7 @@
   font-family: var(--f-mono);
   font-size: 0.66rem;
   letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
   white-space: nowrap;
   pointer-events: none;
   box-shadow: 0 6px 20px var(--c-scrim);

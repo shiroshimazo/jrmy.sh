@@ -106,11 +106,17 @@
   border: 1px solid var(--c-line-strong);
   border-radius: var(--r-md);
   background: transparent;
-  transition: border-color var(--dur) var(--ease);
+  transition:
+    border-color var(--dur) var(--ease),
+    transform var(--dur) var(--ease);
 }
 
 .nav__toggle:hover {
   border-color: var(--c-primary);
+}
+
+.nav__toggle:active {
+  transform: scale(0.96);
 }
 
 .nav__toggle-bar {

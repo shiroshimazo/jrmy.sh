@@ -142,6 +142,7 @@ button {
   line-height: 0.95;
   margin: 0;
   color: var(--c-primary);
+  text-wrap: balance;
 }
 
 .h1 {
@@ -151,6 +152,7 @@ button {
   letter-spacing: -0.02em;
   line-height: 1.1;
   margin: 0;
+  text-wrap: balance;
 }
 
 .h2 {
@@ -160,6 +162,7 @@ button {
   letter-spacing: -0.01em;
   line-height: 1.2;
   margin: 0;
+  text-wrap: balance;
 }
 
 .body {
@@ -168,6 +171,7 @@ button {
   line-height: 1.55;
   color: var(--c-secondary);
   margin: 0;
+  text-wrap: pretty;
 }
 
 .label {
@@ -176,6 +180,7 @@ button {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--c-secondary);
+  font-variant-numeric: tabular-nums;
 }
 
 /* layout */

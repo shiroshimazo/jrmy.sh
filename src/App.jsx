@@ -20,7 +20,9 @@ export default function App() {
 
   return (
     <MotionConfig reducedMotion="user">
-      <AnimatePresence>{loading && <Loader key="loader" />}</AnimatePresence>
+      <AnimatePresence initial={false}>
+        {loading && <Loader key="loader" />}
+      </AnimatePresence>
 
       <div className="app">
         <a className="visually-hidden" href="#home">

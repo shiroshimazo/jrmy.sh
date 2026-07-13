@@ -20,7 +20,7 @@
 }
 
 .btn:active {
-  transform: translateY(1px);
+  transform: scale(0.96);
 }
 
 /* primary — the single reserved interaction (tertiary white on black) */
