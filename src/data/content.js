@@ -95,4 +95,14 @@ export const projects = [
     repo: "https://github.com/shiroshimazo/barbershop-management-system",
     upcoming: true,
   },
+  {
+    title: "Pet Adoption System",
+    tag: "Web-Based System",
+    year: "Ongoing",
+    description:
+      "Upcoming web-based system for managing pet listings, adoption applications, and adopter records.",
+    stack: ["React", "MySQL"],
+    repo: "https://github.com/shiroshimazo/pet-adoption-system",
+    upcoming: true,
+  },
 ];
