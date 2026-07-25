@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import SectionTitle from "./SectionTitle";
 import { profile, skills, experience } from "../data/content";
+import { skillIcons } from "../data/skillIcons";
 import { EASE, VIEWPORT } from "./motion/motion-presets";
 import { useClickSound } from "../hooks/useClickSound";
 import "./About.css";
@@ -86,11 +87,15 @@ export default function About() {
                 <li key={g.group} className="skills__group">
                   <span className="label skills__group-title">{g.group}</span>
                   <ul className="skills__items">
-                    {g.items.map((s) => (
-                      <li key={s} className="skills__item">
-                        {s}
-                      </li>
-                    ))}
+                    {g.items.map((s) => {
+                      const Icon = skillIcons[s];
+                      return (
+                        <li key={s} className="skills__item">
+                          {Icon && <Icon className="skills__icon" aria-hidden="true" />}
+                          {s}
+                        </li>
+                      );
+                    })}
                   </ul>
                 </li>
               ))}

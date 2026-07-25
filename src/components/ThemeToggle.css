@@ -6,11 +6,10 @@
   align-items: center;
   justify-content: center;
   color: var(--c-primary);
-  border: 1px solid var(--c-line-strong);
+  border: none;
   border-radius: var(--r-md);
   background: transparent;
   transition:
-    border-color var(--dur) var(--ease),
     color var(--dur) var(--ease),
     background-color var(--dur) var(--ease),
     transform var(--dur) var(--ease);
@@ -28,7 +27,6 @@
 }
 
 .theme-toggle:hover {
-  border-color: var(--c-primary);
   background: var(--c-surface);
 }
 
