@@ -3,6 +3,7 @@ import SectionTitle from "./SectionTitle";
 import Button from "./Button";
 import { profile } from "../data/content";
 import { EASE, VIEWPORT } from "./motion/motion-presets";
+import { useClickSound } from "../hooks/useClickSound";
 import "./Contact.css";
 
 const grid = {
@@ -15,6 +16,7 @@ const item = {
 };
 
 export default function Contact() {
+  const play = useClickSound();
   return (
     <section id="contact" className="section contact">
       <div className="container">
@@ -38,6 +40,7 @@ export default function Contact() {
             <a
               className="display contact__email"
               href={`mailto:${profile.email}`}
+              onClick={() => play("tap")}
             >
               {profile.email}
             </a>
@@ -59,6 +62,7 @@ export default function Contact() {
                       href={s.href}
                       target="_blank"
                       rel="noreferrer"
+                      onClick={() => play("tap")}
                     >
                       <span>{s.label}</span>
                       <span aria-hidden="true">↗</span>

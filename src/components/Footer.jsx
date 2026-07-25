@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { profile } from "../data/content";
 import { EASE, VIEWPORT } from "./motion/motion-presets";
+import { useClickSound } from "../hooks/useClickSound";
 import "./Footer.css";
 
 const row = {
@@ -14,6 +15,7 @@ const col = {
 
 export default function Footer() {
   const year = new Date().getFullYear();
+  const play = useClickSound();
   return (
     <footer className="footer">
       <motion.div
@@ -33,16 +35,16 @@ export default function Footer() {
           <span className="label">Sections</span>
           <ul className="footer__list">
             <li>
-              <a href="#home">Home</a>
+              <a href="#home" onClick={() => play("tap")}>Home</a>
             </li>
             <li>
-              <a href="#about">About</a>
+              <a href="#about" onClick={() => play("tap")}>About</a>
             </li>
             <li>
-              <a href="#projects">Projects</a>
+              <a href="#projects" onClick={() => play("tap")}>Projects</a>
             </li>
             <li>
-              <a href="#contact">Contact</a>
+              <a href="#contact" onClick={() => play("tap")}>Contact</a>
             </li>
           </ul>
         </motion.div>
@@ -52,7 +54,7 @@ export default function Footer() {
           <ul className="footer__list">
             {profile.socials.map((s) => (
               <li key={s.label}>
-                <a href={s.href} target="_blank" rel="noreferrer">
+                <a href={s.href} target="_blank" rel="noreferrer" onClick={() => play("tap")}>
                   {s.label}
                 </a>
               </li>

@@ -6,7 +6,7 @@
 
 .footer__row {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: 1fr 1fr;
   gap: var(--s-lg);
 }
 
@@ -21,7 +21,9 @@
 }
 
 .footer__brand {
-  letter-spacing: -0.02em;
+  font-family: var(--f-display);
+  font-weight: 400;
+  letter-spacing: -0.01em;
 }
 
 .footer__list {
@@ -45,9 +47,9 @@
   color: var(--c-secondary);
 }
 
-@media (max-width: 720px) {
+@media (max-width: 480px) {
   .footer__row {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: var(--s-md);
   }
 }

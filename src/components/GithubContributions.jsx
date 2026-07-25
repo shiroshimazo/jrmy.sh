@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 import { fadeUp } from "./motion/motion-presets";
 import { profile } from "../data/content";
+import { useClickSound } from "../hooks/useClickSound";
 import "./GithubContributions.css";
 
 const USERNAME = "shiroshimazo";
@@ -62,10 +63,9 @@ function tipText(date, count) {
 export default function GithubContributions() {
   const [data, setData] = useState(null);
   const [error, setError] = useState(false);
-  // Bumped on each scroll-in to remount the grid and replay the cell sweep.
   const [runId, setRunId] = useState(0);
-  // One shared tooltip, positioned in viewport coords via event delegation.
   const [tip, setTip] = useState(null);
+  const play = useClickSound();
 
   // Read the hovered cell's data-* and place the tooltip above it.
   // Hovering a gap/empty cell keeps the last tip so it glides, not flickers.
@@ -114,7 +114,7 @@ export default function GithubContributions() {
       {error && (
         <p className="body ghc__msg">
           Couldn’t load the contribution graph.{" "}
-          <a className="ghc__link" href={githubUrl} target="_blank" rel="noreferrer">
+          <a className="ghc__link" href={githubUrl} target="_blank" rel="noreferrer" onClick={() => play("tap")}>
             View on GitHub ↗
           </a>
         </p>
@@ -135,6 +135,7 @@ export default function GithubContributions() {
           target="_blank"
           rel="noreferrer"
           aria-label={`${total.toLocaleString()} contributions in the last year — open ${USERNAME} on GitHub`}
+          onClick={() => play("tap")}
           onViewportEnter={() => setRunId((n) => n + 1)}
           viewport={{ once: false, margin: "-8% 0px -8% 0px" }}
         >

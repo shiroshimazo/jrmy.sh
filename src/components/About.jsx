@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import SectionTitle from "./SectionTitle";
 import { profile, skills, experience } from "../data/content";
 import { EASE, VIEWPORT } from "./motion/motion-presets";
+import { useClickSound } from "../hooks/useClickSound";
 import "./About.css";
 
 const grid = {
@@ -21,8 +22,8 @@ const timelineRow = {
 };
 
 export default function About() {
-  // The currently open certificate ({ src, role }), or null when closed.
   const [cert, setCert] = useState(null);
+  const play = useClickSound();
 
   // Close on Escape and lock body scroll while the modal is open.
   useEffect(() => {
@@ -128,7 +129,7 @@ export default function About() {
                     <button
                       type="button"
                       className="label timeline__cert-btn"
-                      onClick={() => setCert({ src: e.cert, role: e.role })}
+                      onClick={() => { play("expand"); setCert({ src: e.cert, role: e.role }); }}
                     >
                       View Cert
                       <Arrow />
@@ -149,7 +150,7 @@ export default function About() {
               role="dialog"
               aria-modal="true"
               aria-label={`${cert.role} certificate`}
-              onClick={() => setCert(null)}
+              onClick={() => { play("collapse"); setCert(null); }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -166,7 +167,7 @@ export default function About() {
                 <button
                   type="button"
                   className="label cert-modal__close"
-                  onClick={() => setCert(null)}
+                  onClick={() => { play("collapse"); setCert(null); }}
                   aria-label="Close"
                 >
                   Close ✕

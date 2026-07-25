@@ -5,8 +5,8 @@
   --c-primary: #ffffff;
   --c-secondary: #9a9a9a;
   --c-tertiary: #ffffff;
-  --c-neutral: #000000;
-  --c-surface: #050505;
+  --c-neutral: #0f0f0f;
+  --c-surface: #141414;
   --c-on-primary: #000000;
   --c-line: rgba(255, 255, 255, 0.08);
   --c-line-strong: rgba(255, 255, 255, 0.16);
@@ -23,7 +23,7 @@
   --c-secondary: #6b6b6b;
   --c-tertiary: #0a0a0a;
   --c-neutral: #ffffff;
-  --c-surface: #f6f6f6;
+  --c-surface: #f4f4f4;
   --c-on-primary: #ffffff;
   --c-line: rgba(0, 0, 0, 0.08);
   --c-line-strong: rgba(0, 0, 0, 0.18);
@@ -38,6 +38,7 @@
   /* typography */
   --f-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --f-mono: "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
+  --f-display: "Instrument Serif", Georgia, serif;
 
   --t-display: clamp(3.25rem, 10vw, 6.25rem);
   --t-h1: clamp(1.75rem, 4vw, 2.4rem);
@@ -63,7 +64,7 @@
 
   font-family: var(--f-sans);
   font-size: var(--t-body);
-  line-height: 1.55;
+  line-height: 1.65;
   color: var(--c-primary);
   background: var(--c-neutral);
   -webkit-font-smoothing: antialiased;
@@ -135,10 +136,10 @@ button {
 
 /* type primitives */
 .display {
-  font-family: var(--f-sans);
+  font-family: var(--f-display);
   font-size: var(--t-display);
-  font-weight: 300;
-  letter-spacing: -0.04em;
+  font-weight: 400;
+  letter-spacing: -0.02em;
   line-height: 0.95;
   margin: 0;
   color: var(--c-primary);
@@ -187,12 +188,10 @@ button {
 .section {
   width: 100%;
   padding-block: var(--s-2xl);
-  border-top: 1px solid var(--c-line);
   scroll-margin-top: 72px;
 }
 
 .section--hero {
-  border-top: 0;
   min-height: 100svh;
   display: flex;
   align-items: center;
@@ -201,9 +200,9 @@ button {
 
 .container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 720px;
   margin-inline: auto;
-  padding-inline: var(--s-lg);
+  padding-inline: clamp(var(--s-lg), 4vw, 48px);
 }
 
 @media (max-width: 720px) {

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { EASE } from "./motion/motion-presets";
+import { useClickSound } from "../hooks/useClickSound";
 import "./ThemeToggle.css";
 
 const STORAGE_KEY = "jrmy-theme";
@@ -16,6 +17,7 @@ function getInitialTheme() {
 
 export default function ThemeToggle() {
   const [theme, setTheme] = useState(getInitialTheme);
+  const play = useClickSound();
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -33,7 +35,7 @@ export default function ThemeToggle() {
     <button
       type="button"
       className="theme-toggle"
-      onClick={() => setTheme(next)}
+      onClick={() => { play(isDark ? "toggle-off" : "toggle-on"); setTheme(next); }}
       aria-label={`Switch to ${next} theme`}
       title={`Switch to ${next} theme`}
     >

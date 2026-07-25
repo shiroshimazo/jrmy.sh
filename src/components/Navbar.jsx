@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import ThemeToggle from "./ThemeToggle";
+import { useClickSound } from "../hooks/useClickSound";
 import "./Navbar.css";
 
 const links = [
@@ -13,6 +14,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("home");
   const [scrolled, setScrolled] = useState(false);
+  const play = useClickSound();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -58,6 +60,7 @@ export default function Navbar() {
 
   const handleNav = (e, id) => {
     e.preventDefault();
+    play("tap");
     setOpen(false);
     // defer scroll until after drawer close paints
     requestAnimationFrame(() => {
@@ -111,7 +114,7 @@ export default function Navbar() {
               aria-expanded={open}
               aria-controls="nav-drawer"
               aria-label={open ? "Close menu" : "Open menu"}
-              onClick={() => setOpen((v) => !v)}
+              onClick={() => { play(open ? "toggle-off" : "toggle-on"); setOpen((v) => !v); }}
             >
               <span className="nav__toggle-bar" />
               <span className="nav__toggle-bar" />
@@ -136,7 +139,7 @@ export default function Navbar() {
           className="drawer__scrim"
           aria-label="Close menu"
           tabIndex={open ? 0 : -1}
-          onClick={() => setOpen(false)}
+          onClick={() => { play("collapse"); setOpen(false); }}
         />
 
         <div className="drawer__panel">

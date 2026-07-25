@@ -1,8 +1,10 @@
+import { useClickSound } from "../hooks/useClickSound";
 import "./ProjectCard.css";
 
 export default function ProjectCard({ project }) {
   const { title, tag, year, description, stack, href, repo, upcoming } =
     project;
+  const play = useClickSound();
 
   return (
     <article className={`card ${upcoming ? "card--upcoming" : ""}`}>
@@ -41,6 +43,7 @@ export default function ProjectCard({ project }) {
             target="_blank"
             rel="noreferrer"
             aria-label={`Open ${title}`}
+            onClick={() => play("tap")}
           >
             <span>Open</span>
             <Arrow />
@@ -54,6 +57,7 @@ export default function ProjectCard({ project }) {
             target="_blank"
             rel="noreferrer"
             aria-label={`${title} source`}
+            onClick={() => play("tap")}
           >
             <span>Source</span>
             <Arrow />

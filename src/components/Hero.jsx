@@ -25,9 +25,9 @@ export default function Hero() {
       <div className="container hero__grid">
         <motion.figure
           className="hero__portrait"
-          initial={{ opacity: 0, x: 40, scale: 0.98 }}
-          animate={{ opacity: 1, x: 0, scale: 1 }}
-          transition={{ duration: 1, ease: EASE, delay: 0.15 }}
+          initial={{ opacity: 0, y: 20, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.9, ease: EASE, delay: 0.1 }}
         >
           <img
             src={profileImg}
