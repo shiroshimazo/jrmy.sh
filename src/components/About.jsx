@@ -13,13 +13,13 @@ const grid = {
   show: { transition: { staggerChildren: 0.1 } },
 };
 const cell = {
-  hidden: { opacity: 0, y: 26 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE } },
+  hidden: { opacity: 0, y: 18 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
 };
 
 const timelineRow = {
-  hidden: { opacity: 0, x: -24 },
-  show: { opacity: 1, x: 0, transition: { duration: 0.6, ease: EASE } },
+  hidden: { opacity: 0, x: -18 },
+  show: { opacity: 1, x: 0, transition: { duration: 0.58, ease: EASE } },
 };
 
 export default function About() {
@@ -54,7 +54,6 @@ export default function About() {
           variants={grid}
           initial="hidden"
           whileInView="show"
-          exit="hidden"
           viewport={VIEWPORT}
         >
           <motion.div className="about__pane" variants={cell}>
@@ -116,7 +115,6 @@ export default function About() {
             variants={grid}
             initial="hidden"
             whileInView="show"
-            exit="hidden"
             viewport={VIEWPORT}
           >
             {experience.map((e) => (
@@ -155,6 +153,7 @@ export default function About() {
               role="dialog"
               aria-modal="true"
               aria-label={`${cert.role} certificate`}
+              data-lenis-prevent
               onClick={() => { play("collapse"); setCert(null); }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}

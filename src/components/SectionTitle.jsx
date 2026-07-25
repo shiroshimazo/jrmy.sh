@@ -7,8 +7,8 @@ const container = {
   show: { transition: { staggerChildren: 0.08 } },
 };
 const item = {
-  hidden: { opacity: 0, y: 22 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.65, ease: EASE } },
+  hidden: { opacity: 0, y: 18 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
 };
 
 export default function SectionTitle({ index, label, title, lead }) {
@@ -18,7 +18,6 @@ export default function SectionTitle({ index, label, title, lead }) {
       variants={container}
       initial="hidden"
       whileInView="show"
-      exit="hidden"
       viewport={VIEWPORT}
     >
       <motion.div className="sect-title__meta" variants={item}>

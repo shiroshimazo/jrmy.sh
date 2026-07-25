@@ -9,8 +9,8 @@ const row = {
   show: { transition: { staggerChildren: 0.08 } },
 };
 const col = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: EASE } },
 };
 
 export default function Footer() {
@@ -23,7 +23,6 @@ export default function Footer() {
         variants={row}
         initial="hidden"
         whileInView="show"
-        exit="hidden"
         viewport={VIEWPORT}
       >
         <motion.div className="footer__col" variants={col}>

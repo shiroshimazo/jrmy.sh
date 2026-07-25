@@ -10,8 +10,8 @@ function Stagger({
   children,
   className,
   delay = 0,
-  step = 0.08,
-  once = false,
+  step = 0.07,
+  once = true,
   ...rest
 }) {
   const MotionTag = motion[as] || motion.div;
@@ -21,7 +21,6 @@ function Stagger({
       variants={staggerContainer(step, delay)}
       initial="hidden"
       whileInView="show"
-      exit="hidden"
       viewport={{ ...VIEWPORT, once }}
       {...rest}
     >
@@ -30,7 +29,7 @@ function Stagger({
   );
 }
 
-function Item({ as = "div", children, className, y = 22, duration = 0.6, ...rest }) {
+function Item({ as = "div", children, className, y = 18, duration = 0.58, ...rest }) {
   const MotionTag = motion[as] || motion.div;
   return (
     <MotionTag

@@ -99,8 +99,7 @@ export default function GithubContributions() {
     <motion.section
       className="ghc"
       aria-label="GitHub contributions"
-      {...fadeUp(0, 28)}
-      viewport={{ once: true, margin: "-12% 0px -12% 0px" }}
+      {...fadeUp()}
     >
       <div className="ghc__head">
         <span className="label">GitHub Activity</span>
@@ -137,7 +136,7 @@ export default function GithubContributions() {
           aria-label={`${total.toLocaleString()} contributions in the last year — open ${USERNAME} on GitHub`}
           onClick={() => play("tap")}
           onViewportEnter={() => setRunId((n) => n + 1)}
-          viewport={{ once: false, margin: "-8% 0px -8% 0px" }}
+          viewport={{ once: true, margin: "0px 0px -8% 0px" }}
         >
           <div className="ghc__months" aria-hidden="true">
             {labels.map(({ col, name }) => (

@@ -1,33 +1,42 @@
-// Smooth, design-system-friendly easing.
-export const EASE = [0.2, 0.65, 0.3, 0.9];
+// Fast out of the gate, then gently settles. This is the same family of
+// easing used by polished editorial/product sites for scroll reveals.
+export const EASE = [0.22, 1, 0.36, 1];
 
-export const VIEWPORT = { once: false, margin: "-12% 0px -12% 0px" };
-export const VIEWPORT_TIGHT = { once: false, margin: "-6% 0px -6% 0px" };
+// Reveal once and leave the content settled. Reversing dozens of elements as
+// they cross the viewport edge makes the page feel like it is chasing scroll.
+export const VIEWPORT = {
+  once: true,
+  amount: 0.14,
+  margin: "0px 0px -8% 0px",
+};
+export const VIEWPORT_TIGHT = {
+  once: true,
+  amount: 0.08,
+  margin: "0px 0px -4% 0px",
+};
 
-export const fadeUp = (delay = 0, y = 24, duration = 0.7) => ({
+export const fadeUp = (delay = 0, y = 18, duration = 0.6) => ({
   initial: { opacity: 0, y },
   whileInView: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y },
   transition: { duration, delay, ease: EASE },
   viewport: VIEWPORT,
 });
 
-export const fadeRight = (delay = 0, x = 28, duration = 0.7) => ({
+export const fadeRight = (delay = 0, x = 18, duration = 0.6) => ({
   initial: { opacity: 0, x: -x },
   whileInView: { opacity: 1, x: 0 },
-  exit: { opacity: 0, x: -x },
   transition: { duration, delay, ease: EASE },
   viewport: VIEWPORT,
 });
 
-export const staggerContainer = (staggerChildren = 0.08, delayChildren = 0) => ({
+export const staggerContainer = (staggerChildren = 0.07, delayChildren = 0) => ({
   hidden: {},
   show: {
     transition: { staggerChildren, delayChildren },
   },
 });
 
-export const staggerItem = (y = 22, duration = 0.6) => ({
+export const staggerItem = (y = 18, duration = 0.58) => ({
   hidden: { opacity: 0, y },
   show: {
     opacity: 1,

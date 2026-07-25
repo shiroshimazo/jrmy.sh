@@ -11,8 +11,8 @@ const grid = {
   show: { transition: { staggerChildren: 0.12 } },
 };
 const item = {
-  hidden: { opacity: 0, y: 26 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE } },
+  hidden: { opacity: 0, y: 18 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
 };
 
 export default function Contact() {
@@ -32,7 +32,6 @@ export default function Contact() {
           variants={grid}
           initial="hidden"
           whileInView="show"
-          exit="hidden"
           viewport={VIEWPORT}
         >
           <motion.div className="contact__mail" variants={item}>

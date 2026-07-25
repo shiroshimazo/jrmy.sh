@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { useLenis } from "lenis/react";
 import ThemeToggle from "./ThemeToggle";
 import { useClickSound } from "../hooks/useClickSound";
+import { scrollToSection } from "../utils/scrollToSection";
 import "./Navbar.css";
 
 const links = [
@@ -15,6 +17,7 @@ export default function Navbar() {
   const [active, setActive] = useState("home");
   const [scrolled, setScrolled] = useState(false);
   const play = useClickSound();
+  const lenis = useLenis();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -64,10 +67,7 @@ export default function Navbar() {
     setOpen(false);
     // defer scroll until after drawer close paints
     requestAnimationFrame(() => {
-      document.getElementById(id)?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
+      scrollToSection(id, lenis);
     });
   };
 
@@ -133,6 +133,7 @@ export default function Navbar() {
         aria-modal="true"
         aria-label="Navigation"
         aria-hidden={!open}
+        data-lenis-prevent
       >
         <button
           type="button"

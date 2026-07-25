@@ -7,6 +7,7 @@ import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import Loader from "./components/Loader";
+import SmoothScroll from "./components/motion/SmoothScroll";
 import "./App.css";
 
 export default function App() {
@@ -20,6 +21,8 @@ export default function App() {
 
   return (
     <MotionConfig reducedMotion="user">
+      <SmoothScroll />
+
       <AnimatePresence initial={false}>
         {loading && <Loader key="loader" />}
       </AnimatePresence>
