@@ -81,6 +81,7 @@
   border-radius: var(--r-lg);
   /* Intensity lives on background so opacity is free for the fade-in. */
   background: color-mix(in srgb, var(--c-primary) 6%, transparent);
+  transition: filter 0.18s var(--ease);
 }
 
 /* Five intensity steps via color-mix of the primary ink. */
@@ -91,6 +92,18 @@
 .ghc__cell[data-level="4"] { background: var(--c-primary); }
 /* Padding cells before the first / after the last day stay invisible. */
 .ghc__cell[data-level="empty"] { background: transparent; }
+
+/* Hovering a legend swatch isolates that shade: every other day recedes.
+   The dimming rides on `filter`, not `opacity`, because the fade-in
+   keyframes below own `opacity` and their `both` fill would outrank a
+   plain declaration. */
+.ghc__grid[data-focus="0"] .ghc__cell:not([data-level="0"]),
+.ghc__grid[data-focus="1"] .ghc__cell:not([data-level="1"]),
+.ghc__grid[data-focus="2"] .ghc__cell:not([data-level="2"]),
+.ghc__grid[data-focus="3"] .ghc__cell:not([data-level="3"]),
+.ghc__grid[data-focus="4"] .ghc__cell:not([data-level="4"]) {
+  filter: opacity(0.12);
+}
 
 /* Staggered fade-in — each cell lights up in turn, start → end.
    `both` keeps cells hidden through their delay and holds the final
@@ -139,6 +152,17 @@
   width: 11px;
   height: 11px;
   aspect-ratio: auto;
+}
+
+/* Swatches are hoverable, so they lift a little under the cursor. */
+.ghc__swatch {
+  transition:
+    transform 0.16s var(--ease),
+    filter 0.18s var(--ease);
+}
+
+.ghc__swatch:hover {
+  transform: scale(1.3);
 }
 
 @media (max-width: 720px) {

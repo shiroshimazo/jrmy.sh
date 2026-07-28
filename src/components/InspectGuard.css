@@ -1,0 +1,37 @@
+/* Warning shell for the inspect deterrent — sits above the drawer and the
+   cert modal (200), below the intro loader (1000). */
+.guard {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--s-lg);
+  background: var(--c-scrim);
+  backdrop-filter: blur(6px);
+}
+
+.guard__panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-sm);
+  text-align: center;
+  padding: var(--s-lg);
+  max-width: 420px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-line-strong);
+  border-radius: var(--r-lg);
+  box-shadow: 0 24px 80px var(--c-scrim);
+}
+
+.guard__msg {
+  margin: 0;
+  color: var(--c-primary);
+  letter-spacing: -0.02em;
+}
+
+.guard__hint {
+  color: var(--c-muted-2);
+}

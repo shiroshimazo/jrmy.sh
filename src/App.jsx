@@ -7,6 +7,7 @@ import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import Loader from "./components/Loader";
+import InspectGuard from "./components/InspectGuard";
 import SmoothScroll from "./components/motion/SmoothScroll";
 import { useHoverSound } from "./hooks/useHoverSound";
 import "./App.css";
@@ -26,6 +27,7 @@ export default function App() {
   return (
     <MotionConfig reducedMotion="user">
       <SmoothScroll />
+      <InspectGuard />
 
       <AnimatePresence initial={false}>
         {loading && <Loader key="loader" />}

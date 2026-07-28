@@ -60,11 +60,39 @@ function tipText(date, count) {
   return `${n} contribution${n === 1 ? "" : "s"} on ${when}`;
 }
 
+// The API hands out levels, not thresholds — so read the real count range
+// each shade covers straight off the year's data.
+function levelRanges(days) {
+  const ranges = {};
+  for (const day of days) {
+    const level = Number(day.level);
+    const count = Number(day.count);
+    const seen = ranges[level];
+    if (!seen) ranges[level] = { min: count, max: count };
+    else {
+      if (count < seen.min) seen.min = count;
+      if (count > seen.max) seen.max = count;
+    }
+  }
+  return ranges;
+}
+
+// "4–7 contributions" — what a legend swatch stands for.
+function swatchText(range) {
+  if (!range) return "No days at this level";
+  if (range.max === 0) return "No contributions";
+  if (range.min === range.max) {
+    return `${range.min} contribution${range.min === 1 ? "" : "s"}`;
+  }
+  return `${range.min}–${range.max} contributions`;
+}
+
 export default function GithubContributions() {
   const [data, setData] = useState(null);
   const [error, setError] = useState(false);
   const [runId, setRunId] = useState(0);
   const [tip, setTip] = useState(null);
+  const [focus, setFocus] = useState(null);
   const play = useClickSound();
 
   // Read the hovered cell's data-* and place the tooltip above it.
@@ -93,6 +121,7 @@ export default function GithubContributions() {
 
   const weeks = data ? toWeeks(data.contributions) : [];
   const labels = data ? monthLabels(weeks) : [];
+  const ranges = data ? levelRanges(data.contributions) : {};
   const total = data?.total?.lastYear ?? 0;
 
   return (
@@ -151,6 +180,7 @@ export default function GithubContributions() {
             className="ghc__grid"
             role="img"
             aria-label={`${total} contributions`}
+            data-focus={focus === null ? undefined : focus}
             onPointerMove={handlePointer}
             onPointerLeave={() => setTip(null)}
           >
@@ -171,10 +201,30 @@ export default function GithubContributions() {
       )}
 
       {!error && data && (
-        <div className="ghc__legend" aria-hidden="true">
+        <div
+          className="ghc__legend"
+          aria-hidden="true"
+          onPointerLeave={() => {
+            setFocus(null);
+            setTip(null);
+          }}
+        >
           <span>Less</span>
           {[0, 1, 2, 3, 4].map((l) => (
-            <span key={l} className="ghc__cell" data-level={l} />
+            <span
+              key={l}
+              className="ghc__cell ghc__swatch"
+              data-level={l}
+              onPointerEnter={(e) => {
+                const r = e.currentTarget.getBoundingClientRect();
+                setFocus(l);
+                setTip({
+                  text: swatchText(ranges[l]),
+                  x: r.left + r.width / 2,
+                  y: r.top,
+                });
+              }}
+            />
           ))}
           <span>More</span>
         </div>
