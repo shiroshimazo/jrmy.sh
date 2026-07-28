@@ -8,11 +8,15 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import Loader from "./components/Loader";
 import SmoothScroll from "./components/motion/SmoothScroll";
+import { useHoverSound } from "./hooks/useHoverSound";
 import "./App.css";
 
 export default function App() {
   // Intro loader runs on every mount (page open / refresh).
   const [loading, setLoading] = useState(true);
+
+  // Page-wide hover cues (GitHub activity graph excluded — see the hook).
+  useHoverSound();
 
   useEffect(() => {
     const t = setTimeout(() => setLoading(false), 1800);
