@@ -10,9 +10,14 @@ import {
   SiNodedotjs,
   SiSupabase,
   SiMysql,
+  SiFigma,
+  SiClaudecode,
+  SiOpencode,
   SiGit,
 } from "react-icons/si";
 import { FaJava } from "react-icons/fa";
+// Simple Icons carries no OpenAI mark, so Codex borrows Remix's.
+import { RiOpenaiFill } from "react-icons/ri";
 
 /**
  * Maps a skill label to its brand icon. Keys mirror the strings in
@@ -31,6 +36,10 @@ const icons = {
   "Node.js": SiNodedotjs,
   Supabase: SiSupabase,
   mySQL: SiMysql,
+  Figma: SiFigma,
+  Codex: RiOpenaiFill,
+  "Claude Code": SiClaudecode,
+  "Open Code": SiOpencode,
   Git: SiGit,
 };
 
