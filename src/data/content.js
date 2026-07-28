@@ -19,7 +19,7 @@ export const profile = {
 
 export const skills = [
   { group: "Languages", items: ["Java", "C", "C++", "PHP", "JavaScript"] },
-  { group: "Frontend", items: ["React", "Vite", "Next.js", "CSS Architecture"] },
+  { group: "Frontend", items: ["React", "Vite", "Next.js", "Tailwind"] },
   { group: "Backend", items: ["Node.js", "Supabase", "mySQL"] },
   { group: "Tooling", items: ["Git"] },
 ];
@@ -103,6 +103,16 @@ export const projects = [
       "Upcoming web-based system for managing pet listings, adoption applications, and adopter records.",
     stack: ["React", "MySQL"],
     repo: "https://github.com/shiroshimazo/pet-adoption-system",
+    upcoming: true,
+  },
+  {
+    title: "Quiz Application System",
+    tag: "Application System",
+    year: "Ongoing",
+    description:
+      "Upcoming desktop application for building quizzes, running timed attempts, and tracking scores.",
+    stack: ["Java", "JavaFX", "MySQL"],
+    repo: "https://github.com/shiroshimazo/Quiz-Application-System",
     upcoming: true,
   },
 ];

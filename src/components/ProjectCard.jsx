@@ -1,3 +1,4 @@
+import { getSkillIcon } from "../data/skillIcons";
 import { useClickSound } from "../hooks/useClickSound";
 import "./ProjectCard.css";
 
@@ -17,11 +18,15 @@ export default function ProjectCard({ project }) {
       <p className="body card__desc">{description}</p>
 
       <ul className="card__stack" aria-label="Stack">
-        {stack.map((s) => (
-          <li key={s} className="label card__chip">
-            {s}
-          </li>
-        ))}
+        {stack.map((s) => {
+          const Icon = getSkillIcon(s);
+          return (
+            <li key={s} className="label card__chip">
+              {Icon && <Icon className="card__chip-icon" aria-hidden="true" />}
+              {s}
+            </li>
+          );
+        })}
       </ul>
 
       <div className="card__actions">

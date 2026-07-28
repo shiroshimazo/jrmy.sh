@@ -6,7 +6,7 @@ import {
   SiReact,
   SiVite,
   SiNextdotjs,
-  SiCss,
+  SiTailwindcss,
   SiNodedotjs,
   SiSupabase,
   SiMysql,
@@ -15,10 +15,10 @@ import {
 import { FaJava } from "react-icons/fa";
 
 /**
- * Maps a skill label (exact string from content.js) to its brand icon.
- * Keys must match the strings in `skills[].items`.
+ * Maps a skill label to its brand icon. Keys mirror the strings in
+ * `skills[].items` and `projects[].stack` from content.js.
  */
-export const skillIcons = {
+const icons = {
   Java: FaJava,
   C: SiC,
   "C++": SiCplusplus,
@@ -27,9 +27,27 @@ export const skillIcons = {
   React: SiReact,
   Vite: SiVite,
   "Next.js": SiNextdotjs,
-  "CSS Architecture": SiCss,
+  Tailwind: SiTailwindcss,
   "Node.js": SiNodedotjs,
   Supabase: SiSupabase,
   mySQL: SiMysql,
   Git: SiGit,
 };
+
+/** Java's UI toolkits ship with the language and have no separate brand mark. */
+const aliases = {
+  javaswing: FaJava,
+  javafx: FaJava,
+};
+
+// Project stacks and the skills list don't always agree on case
+// ("MySQL" vs "mySQL"), so resolve on a lowercased key.
+const byKey = new Map(
+  Object.entries(icons).map(([label, Icon]) => [label.toLowerCase(), Icon])
+);
+
+/** Returns the icon component for a label, or undefined if it has none. */
+export function getSkillIcon(label) {
+  const key = label.toLowerCase();
+  return byKey.get(key) ?? aliases[key];
+}

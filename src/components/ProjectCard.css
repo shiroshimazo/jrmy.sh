@@ -38,9 +38,19 @@
 }
 
 .card__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
   border: 1px solid var(--c-line-strong);
   padding: 4px 8px;
   color: var(--c-primary);
+}
+
+.card__chip-icon {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+  color: currentColor;
 }
 
 .card__actions {
