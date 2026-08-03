@@ -117,4 +117,21 @@ export const projects = [
     repo: "https://github.com/shiroshimazo/Quiz-Application-System",
     upcoming: true,
   },
+  {
+    title: "RFID Student Attendance System",
+    tag: "IoT-Based System",
+    year: "Ongoing",
+    description:
+      "Upcoming RFID attendance system that logs successful and failed taps to a web dashboard and sends SMS notifications to parents.",
+    stack: [
+      "Next.js",
+      "TypeScript",
+      "Supabase",
+      "Tailwind CSS",
+      "C++",
+      "ESP32",
+    ],
+    repo: "https://github.com/shiroshimazo/RFID-student-attendance-system",
+    upcoming: true,
+  },
 ];

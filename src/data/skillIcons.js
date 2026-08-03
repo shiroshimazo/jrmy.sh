@@ -3,6 +3,7 @@ import {
   SiCplusplus,
   SiPhp,
   SiJavascript,
+  SiTypescript,
   SiReact,
   SiVite,
   SiNextdotjs,
@@ -10,6 +11,7 @@ import {
   SiNodedotjs,
   SiSupabase,
   SiMysql,
+  SiEspressif,
   SiFigma,
   SiClaudecode,
   SiOpencode,
@@ -29,6 +31,7 @@ const icons = {
   "C++": SiCplusplus,
   PHP: SiPhp,
   JavaScript: SiJavascript,
+  TypeScript: SiTypescript,
   React: SiReact,
   Vite: SiVite,
   "Next.js": SiNextdotjs,
@@ -36,6 +39,7 @@ const icons = {
   "Node.js": SiNodedotjs,
   Supabase: SiSupabase,
   mySQL: SiMysql,
+  ESP32: SiEspressif,
   Figma: SiFigma,
   Codex: RiOpenaiFill,
   "Claude Code": SiClaudecode,
@@ -43,10 +47,12 @@ const icons = {
   Git: SiGit,
 };
 
-/** Java's UI toolkits ship with the language and have no separate brand mark. */
+/** Labels that share a mark with an entry above. */
 const aliases = {
+  // Java's UI toolkits ship with the language and have no separate brand mark.
   javaswing: FaJava,
   javafx: FaJava,
+  "tailwind css": SiTailwindcss,
 };
 
 // Project stacks and the skills list don't always agree on case
