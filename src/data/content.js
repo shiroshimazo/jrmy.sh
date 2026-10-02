@@ -88,41 +88,29 @@ export const projects = [
     repo: "https://github.com/shiroshimazo/order-management-system-v2",
   },
   {
-    title: "Barbershop Management System",
-    tag: "Web-Based System",
-    year: "Ongoing",
-    description:
-      "Upcoming web app for scheduling, customer management, and services tracking.",
-    stack: ["React", "Supabase"],
-    repo: "https://github.com/shiroshimazo/barbershop-management-system",
-    upcoming: true,
-  },
-  {
     title: "Pet Adoption System",
-    tag: "Web-Based System",
+    tag: "UI Mockup",
     year: "Ongoing",
     description:
-      "Upcoming web-based system for managing pet listings, adoption applications, and adopter records.",
-    stack: ["React", "MySQL"],
+      "UI mockup only, made in Figma, for pet listings, adoption applications, and adopter records.",
+    stack: ["Figma"],
     repo: "https://github.com/shiroshimazo/pet-adoption-system",
-    upcoming: true,
   },
   {
     title: "Quiz Application System",
     tag: "Application System",
-    year: "Ongoing",
+    year: "2026",
     description:
-      "Upcoming desktop application for building quizzes, running timed attempts, and tracking scores.",
+      "Desktop application for building quizzes, running timed attempts, and tracking scores.",
     stack: ["Java", "JavaFX", "MySQL"],
     repo: "https://github.com/shiroshimazo/Quiz-Application-System",
-    upcoming: true,
   },
   {
     title: "RFID Student Attendance System",
     tag: "IoT-Based System",
-    year: "Ongoing",
+    year: "2026",
     description:
-      "Upcoming RFID attendance system that logs successful and failed taps to a web dashboard and sends SMS notifications to parents.",
+      "RFID attendance system that logs successful and failed taps to a web dashboard and sends SMS notifications to parents.",
     stack: [
       "Next.js",
       "TypeScript",
@@ -132,6 +120,5 @@ export const projects = [
       "ESP32",
     ],
     repo: "https://github.com/shiroshimazo/RFID-student-attendance-system",
-    upcoming: true,
   },
 ];
