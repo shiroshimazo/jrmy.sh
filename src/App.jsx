@@ -5,6 +5,7 @@ import Hero from "./components/Hero";
 import About from "./components/About";
 import Projects from "./components/Projects";
 import Contact from "./components/Contact";
+import Signature from "./components/Signature";
 import Footer from "./components/Footer";
 import Loader from "./components/Loader";
 import InspectGuard from "./components/InspectGuard";
@@ -44,6 +45,7 @@ export default function App() {
           <Projects />
           <Contact />
         </main>
+        <Signature />
         <Footer />
       </div>
     </MotionConfig>

@@ -1,0 +1,17 @@
+/* Standalone signature section above footer — whitespace + centered scribble. */
+.sig-section {
+  display: flex;
+  justify-content: center;
+  padding-block: var(--s-2xl);
+  color: var(--c-primary);
+}
+
+.sig-draw {
+  width: min(300px, 64vw);
+}
+
+.sig-draw svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
