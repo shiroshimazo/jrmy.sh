@@ -90,7 +90,7 @@ export const projects = [
   {
     title: "Pet Adoption System",
     tag: "UI Mockup",
-    year: "Ongoing",
+    year: "2026",
     description:
       "UI mockup only, made in Figma, for pet listings, adoption applications, and adopter records.",
     stack: ["Figma"],

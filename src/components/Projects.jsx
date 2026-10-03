@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import SectionTitle from "./SectionTitle";
 import ProjectCard from "./ProjectCard";
 import GithubContributions from "./GithubContributions";
+import AiUsage from "./AiUsage";
 import { projects } from "../data/content";
 import { EASE, VIEWPORT } from "./motion/motion-presets";
 import "./Projects.css";
@@ -42,6 +43,7 @@ export default function Projects() {
         </motion.ul>
 
         <GithubContributions />
+        <AiUsage />
       </div>
     </section>
   );

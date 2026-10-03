@@ -1,0 +1,246 @@
+/* AI token usage — dark dashboard card, sits under GitHub activity. */
+.aiu {
+  margin-top: var(--s-md);
+  border: 1px solid var(--c-line);
+  border-radius: 12px;
+  background: #0b0b0b;
+  padding: 16px;
+  color: #f5f5f5;
+  transition: border-color var(--dur) var(--ease);
+}
+
+[data-theme="light"] .aiu {
+  background: #101010;
+  color: #f5f5f5;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.aiu:hover {
+  border-color: var(--c-line-strong);
+}
+
+.aiu__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--s-md);
+  flex-wrap: wrap;
+  padding: 4px 4px 12px;
+}
+
+.aiu__fav {
+  color: #bdbdbd;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  font-size: 0.85rem;
+}
+
+.aiu__fav strong {
+  color: #fff;
+  font-weight: 700;
+}
+
+.aiu__range {
+  color: #bdbdbd;
+  letter-spacing: 0.04em;
+}
+
+.aiu__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.aiu__card {
+  background: #151515;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.aiu__card-label {
+  font-family: var(--f-sans);
+  font-size: 0.8rem;
+  color: #9a9a9a;
+}
+
+.aiu__card-value {
+  font-family: var(--f-mono);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+
+.aiu__card-sub {
+  font-family: var(--f-sans);
+  font-size: 0.78rem;
+  color: #9a9a9a;
+}
+
+.aiu__chart {
+  margin-top: 8px;
+  background: #151515;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 16px 12px 10px;
+}
+
+.aiu__chart svg {
+  width: 100%;
+  height: auto;
+}
+
+.aiu__grid {
+  stroke: rgba(255, 255, 255, 0.12);
+  stroke-width: 1;
+}
+
+.aiu__area {
+  fill: rgba(255, 255, 255, 0.04);
+}
+
+.aiu__line {
+  fill: none;
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.aiu__line--tokens {
+  stroke: #ffffff;
+}
+
+.aiu__line--cost {
+  stroke: rgba(255, 255, 255, 0.45);
+}
+
+.aiu__cursor {
+  stroke: rgba(255, 255, 255, 0.35);
+  stroke-width: 1;
+}
+
+.aiu__legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding-top: 8px;
+  font-family: var(--f-sans);
+  font-size: 0.78rem;
+  color: #9a9a9a;
+  flex-wrap: wrap;
+}
+
+.aiu__dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+
+.aiu__dot--tokens {
+  background: #fff;
+}
+
+.aiu__dot--cost {
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.aiu__hover {
+  font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
+  color: #e8e8e8;
+}
+
+.aiu__table {
+  margin-top: 8px;
+  background: #151515;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 4px 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.aiu__row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 16px;
+  align-items: center;
+  padding: 10px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  font-family: var(--f-mono);
+  font-size: 0.85rem;
+}
+
+.aiu__row:first-child {
+  border-top: 0;
+}
+
+.aiu__row--head {
+  font-family: var(--f-sans);
+  font-size: 0.8rem;
+  color: #9a9a9a;
+}
+
+.aiu__row span:nth-child(2),
+.aiu__row span:nth-child(3) {
+  text-align: right;
+  min-width: 88px;
+}
+
+.aiu__model {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.aiu__glyph {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  font-size: 0.65rem;
+  color: #d6d6d6;
+}
+
+.aiu__foot {
+  margin: 10px 4px 0;
+  font-family: var(--f-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  color: #7a7a7a;
+}
+
+@media (max-width: 720px) {
+  .aiu {
+    padding: 12px;
+  }
+  .aiu__stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .aiu__card-value {
+    font-size: 1.15rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aiu,
+  .aiu__card,
+  .aiu__chart {
+    transition: none;
+  }
+}

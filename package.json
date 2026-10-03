@@ -7,6 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
+    "usage": "node scripts/collect-ai-usage.mjs",
+    "prebuild": "node scripts/collect-ai-usage.mjs || echo \"usage-collect-skipped\"",
     "preview": "vite preview"
   },
   "dependencies": {
