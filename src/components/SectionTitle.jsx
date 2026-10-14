@@ -7,8 +7,13 @@ const container = {
   show: { transition: { staggerChildren: 0.08 } },
 };
 const item = {
-  hidden: { opacity: 0, y: 18 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
+  hidden: { opacity: 0, y: 18, filter: "blur(4px)" },
+  show: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.6, ease: EASE },
+  },
 };
 
 export default function SectionTitle({ index, label, title, lead }) {

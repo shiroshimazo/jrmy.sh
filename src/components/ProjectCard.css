@@ -59,6 +59,7 @@
 }
 
 .card__link {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -68,6 +69,18 @@
   text-transform: uppercase;
   color: var(--c-primary);
   transition: color var(--dur) var(--ease);
+}
+
+/* ~14px-tall mono link → extend the target to ~38px. The 32px action gap
+   leaves clearance, so the Open/Source hit areas never meet. */
+.card__link::before {
+  content: "";
+  position: absolute;
+  inset: -12px 0;
+}
+
+.card__link:active {
+  scale: 0.96;
 }
 
 .card__link--muted {

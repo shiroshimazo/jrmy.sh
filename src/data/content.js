@@ -20,9 +20,9 @@ export const profile = {
 export const skills = [
   { group: "Languages", items: ["Java", "C", "C++", "PHP", "JavaScript"] },
   { group: "Frontend", items: ["React", "Vite", "Next.js", "Tailwind"] },
-  { group: "Backend", items: ["Node.js", "Supabase", "mySQL"] },
+  { group: "Backend", items: ["Node.js", "Supabase", "MySQL"] },
   { group: "Design", items: ["Figma"] },
-  { group: "AI", items: ["Codex", "Claude Code", "Open Code"] },
+  { group: "AI", items: ["Codex", "Claude Code", "OpenCode"] },
   { group: "Tooling", items: ["Git"] },
 ];
 
@@ -102,8 +102,8 @@ export const projects = [
     year: "2026",
     description:
       "Desktop application for building quizzes, running timed attempts, and tracking scores.",
-    stack: ["Java", "JavaFX", "MySQL"],
-    repo: "https://github.com/shiroshimazo/Quiz-Application-System",
+    stack: ["Java", "JavaSwing", "SQLite"],
+    repo: "https://github.com/shiroshimazo/quizora",
   },
   {
     title: "RFID Student Attendance System",
@@ -119,6 +119,7 @@ export const projects = [
       "C++",
       "ESP32",
     ],
-    repo: "https://github.com/shiroshimazo/RFID-student-attendance-system",
+    repo: "https://github.com/shiroshimazo/rfid-attendance-web-system",
+    href: "https://rfid-attendance-web-system.vercel.app",
   },
 ];

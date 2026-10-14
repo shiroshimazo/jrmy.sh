@@ -16,8 +16,17 @@
   width: 120px;
 }
 
+.hero__portrait picture {
+  display: block;
+}
+
 .hero__portrait img {
   width: 100%;
+  /* The height attribute on the <img> is a presentational hint, so it makes
+     the height definite and aspect-ratio stops governing — the box went
+     120x360 and the 50% radius rendered an ellipse. height:auto hands the
+     ratio back while keeping the attribute for layout reservation. */
+  height: auto;
   aspect-ratio: 1 / 1;
   object-fit: cover;
   border-radius: 50%;

@@ -126,6 +126,7 @@
 }
 
 .timeline__cert-btn {
+  position: relative;
   align-self: flex-start;
   margin-top: 6px;
   padding: 0;
@@ -135,6 +136,17 @@
   color: var(--c-primary);
   text-transform: uppercase;
   transition: color var(--dur) var(--ease);
+}
+
+/* 19px-tall button → extend to ~39px without disturbing the row rhythm. */
+.timeline__cert-btn::before {
+  content: "";
+  position: absolute;
+  inset: -10px 0;
+}
+
+.timeline__cert-btn:active {
+  scale: 0.96;
 }
 
 .timeline__cert-btn svg {
@@ -177,15 +189,23 @@
 
 .cert-modal__close {
   position: absolute;
-  top: -36px;
-  right: 0;
+  top: -56px;
+  right: -10px;
+  padding: 12px 10px;
   color: var(--c-primary);
   text-transform: uppercase;
-  transition: opacity var(--dur) var(--ease);
+  transition:
+    color var(--dur) var(--ease),
+    opacity var(--dur) var(--ease),
+    scale var(--dur) var(--ease);
 }
 
 .cert-modal__close:hover {
   opacity: 0.6;
+}
+
+.cert-modal__close:active {
+  scale: 0.96;
 }
 
 @media (max-width: 600px) {

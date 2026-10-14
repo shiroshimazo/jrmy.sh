@@ -14,6 +14,12 @@
   --c-scrim: rgba(0, 0, 0, 0.7);
   --c-muted: rgba(255, 255, 255, 0.32);
   --c-muted-2: rgba(255, 255, 255, 0.45);
+  /* Image outline — pure white. A tinted neutral picks up the surface and
+     reads as dirt on the image edge. */
+  --c-outline-img: rgba(255, 255, 255, 0.1);
+  /* Depth via stacked transparent shadows instead of a solid border ring. */
+  --shadow-border: 0 0 0 1px rgba(255, 255, 255, 0.08);
+  --shadow-border-hover: 0 0 0 1px rgba(255, 255, 255, 0.13);
   color-scheme: dark;
 }
 
@@ -31,6 +37,15 @@
   --c-scrim: rgba(0, 0, 0, 0.35);
   --c-muted: rgba(0, 0, 0, 0.3);
   --c-muted-2: rgba(0, 0, 0, 0.45);
+  --c-outline-img: rgba(0, 0, 0, 0.1);
+  --shadow-border:
+    0 0 0 1px rgba(0, 0, 0, 0.06),
+    0 1px 2px -1px rgba(0, 0, 0, 0.06),
+    0 2px 4px 0 rgba(0, 0, 0, 0.04);
+  --shadow-border-hover:
+    0 0 0 1px rgba(0, 0, 0, 0.08),
+    0 1px 2px -1px rgba(0, 0, 0, 0.08),
+    0 2px 4px 0 rgba(0, 0, 0, 0.06);
   color-scheme: light;
 }
 
@@ -114,6 +129,13 @@ img,
 svg {
   display: block;
   max-width: 100%;
+}
+
+/* 1px ring so photography has a defined edge. Inset so it adds no layout,
+   and follows border-radius on circular crops. */
+img {
+  outline: 1px solid var(--c-outline-img);
+  outline-offset: -1px;
 }
 
 button {

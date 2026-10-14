@@ -6,6 +6,7 @@ export default function Button({
   variant = "primary",
   children,
   className = "",
+  static: isStatic = false,
   onClick,
   ...rest
 }) {
@@ -16,7 +17,9 @@ export default function Button({
   };
   return (
     <As
-      className={`btn btn--${variant} ${className}`.trim()}
+      className={`btn btn--${variant}${isStatic ? " btn--static" : ""} ${
+        className
+      }`.trim()}
       onClick={handleClick}
       {...rest}
     >

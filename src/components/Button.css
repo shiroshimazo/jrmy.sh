@@ -10,24 +10,30 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   line-height: 1;
-  transition:
-    background-color var(--dur) var(--ease),
-    color var(--dur) var(--ease),
-    border-color var(--dur) var(--ease),
-    transform var(--dur) var(--ease);
+  transition-property: background-color, color, border-color, box-shadow, scale;
+  transition-duration: var(--dur);
+  transition-timing-function: var(--ease);
   white-space: nowrap;
   user-select: none;
 }
 
+/* `scale` longhand, not `transform` — press feedback never fights a
+   transform the caller is already running on the element. */
 .btn:active {
-  transform: scale(0.96);
+  scale: 0.96;
 }
 
-/* primary — the single reserved interaction (tertiary white on black) */
+.btn--static:active {
+  scale: 1;
+}
+
+/* primary — the single reserved interaction (tertiary white on black).
+   Depth comes from a transparent shadow ring so the ring survives the
+   background going transparent on hover. */
 .btn--primary {
   background: var(--c-tertiary);
   color: var(--c-on-primary);
-  border: 1px solid var(--c-tertiary);
+  box-shadow: 0 0 0 1px var(--c-tertiary);
 }
 .btn--primary:hover {
   background: transparent;
@@ -38,19 +44,20 @@
 .btn--ghost {
   background: transparent;
   color: var(--c-primary);
-  border: 1px solid var(--c-line-strong);
+  box-shadow: 0 0 0 1px var(--c-line-strong);
 }
 .btn--ghost:hover {
-  border-color: var(--c-primary);
+  box-shadow: 0 0 0 1px var(--c-primary);
 }
 
-/* link — inline text-like */
+/* link — inline text-like. border-bottom is a divider, so it stays a border. */
 .btn--link {
   padding: 0;
   background: transparent;
   color: var(--c-primary);
   border: 0;
   border-bottom: 1px solid var(--c-line-strong);
+  transition-property: color, border-color, scale;
 }
 .btn--link:hover {
   border-bottom-color: var(--c-primary);

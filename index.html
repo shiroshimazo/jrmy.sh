@@ -2,20 +2,48 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/logo.png" />
+    <link rel="icon" type="image/png" sizes="256x256" href="/logo.png" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="color-scheme" content="dark" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="author" content="Jeremy" />
     <meta
       name="description"
-      content="Portfolio — software engineer. Stark, monochrome, minimal."
+      content="Jeremy — web developer building precise, minimal interfaces and resilient systems. Projects, stack, and contact."
     />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Jeremy — Web Developer" />
+    <meta
+      property="og:description"
+      content="Precise, minimal interfaces and resilient systems. Projects, stack, and contact."
+    />
+    <meta name="twitter:card" content="summary" />
+    <!-- Runs before first paint so a stored light preference never flashes the
+         dark default. Mirrors getInitialTheme() in ThemeToggle.jsx. -->
+    <script>
+      (function () {
+        var t = "dark";
+        try {
+          var s = localStorage.getItem("jrmy-theme");
+          t =
+            s === "light" || s === "dark"
+              ? s
+              : matchMedia("(prefers-color-scheme: light)").matches
+                ? "light"
+                : "dark";
+        } catch (e) {
+          /* private mode / storage blocked — dark default */
+        }
+        document.documentElement.setAttribute("data-theme", t);
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap"
     />
-    <title>Portfolio — Jeremy</title>
+    <title>Jeremy — Web Developer</title>
   </head>
   <body>
     <div id="root"></div>

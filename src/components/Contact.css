@@ -57,7 +57,7 @@
   border-bottom: 1px solid var(--c-line);
   font-family: var(--f-sans);
   font-size: 1.1rem;
-  transition: padding var(--dur) var(--ease);
+  transition: padding-left var(--dur) var(--ease);
 }
 
 .contact__social:hover {

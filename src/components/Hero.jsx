@@ -2,7 +2,10 @@ import { motion } from "framer-motion";
 import { useLenis } from "lenis/react";
 import Button from "./Button";
 import { profile } from "../data/content";
-import profileImg from "../assets/profile.jpg";
+import portrait240 from "../assets/profile-240.webp";
+import portrait360 from "../assets/profile-360.webp";
+import portrait240Jpg from "../assets/profile-240.jpg";
+import portrait360Jpg from "../assets/profile-360.jpg";
 import { EASE } from "./motion/motion-presets";
 import { scrollToSection } from "../utils/scrollToSection";
 import "./Hero.css";
@@ -12,8 +15,13 @@ const container = {
   show: { transition: { staggerChildren: 0.12, delayChildren: 0.1 } },
 };
 const item = {
-  hidden: { opacity: 0, y: 22 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE } },
+  hidden: { opacity: 0, y: 22, filter: "blur(4px)" },
+  show: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.7, ease: EASE },
+  },
 };
 
 export default function Hero() {
@@ -29,16 +37,30 @@ export default function Hero() {
       <div className="container hero__grid">
         <motion.figure
           className="hero__portrait"
-          initial={{ opacity: 0, y: 20, scale: 0.98 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
+initial={{ opacity: 0, y: 20, scale: 0.98, filter: "blur(4px)" }}
+          animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
           transition={{ duration: 0.75, ease: EASE, delay: 0.1 }}
         >
-          <img
-            src={profileImg}
-            alt={`Portrait of ${profile.name}`}
-            loading="eager"
-            decoding="async"
-          />
+          {/* 2.5 KB instead of 1.75 MB: the source is 1109x1419 but this
+              renders at 120 CSS px, so only 2x/3x squares ever get requested. */}
+          <picture>
+            <source
+              type="image/webp"
+              srcSet={`${portrait240} 240w, ${portrait360} 360w`}
+              sizes="120px"
+            />
+            <img
+              src={portrait360Jpg}
+              srcSet={`${portrait240Jpg} 240w, ${portrait360Jpg} 360w`}
+              sizes="120px"
+              width="360"
+              height="360"
+              alt={`Portrait of ${profile.name}`}
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
+            />
+          </picture>
           <figcaption className="label hero__portrait-cap">
             <span>Portrait</span>
             <span>— {new Date().getUTCFullYear()}</span>

@@ -148,13 +148,7 @@ export default function GithubContributions() {
         </p>
       )}
 
-      {!error && !data && (
-        <div className="ghc__grid ghc__grid--skeleton" aria-hidden="true">
-          {Array.from({ length: 53 * 7 }).map((_, i) => (
-            <span key={i} className="ghc__cell" data-level="0" />
-          ))}
-        </div>
-      )}
+      {!error && !data && <div className="ghc__skeleton" aria-hidden="true" />}
 
       {!error && data && (
         <motion.a

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { EASE } from "./motion/motion-presets";
 import { useClickSound } from "../hooks/useClickSound";
 import "./ThemeToggle.css";
 
@@ -21,6 +20,11 @@ export default function ThemeToggle() {
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
+    // Keep native UI (scrollbars, form controls, canvas) on the chosen theme
+    // rather than the OS one the index.html default advertises.
+    document
+      .querySelector('meta[name="color-scheme"]')
+      ?.setAttribute("content", theme);
     try {
       localStorage.setItem(STORAGE_KEY, theme);
     } catch {
@@ -39,7 +43,7 @@ export default function ThemeToggle() {
       aria-label={`Switch to ${next} theme`}
       title={`Switch to ${next} theme`}
     >
-      <AnimatePresence mode="wait" initial={false}>
+      <AnimatePresence initial={false}>
         {isDark ? (
           <motion.svg
             key="moon"
@@ -50,10 +54,10 @@ export default function ThemeToggle() {
             stroke="currentColor"
             strokeWidth="1.5"
             strokeLinecap="square"
-            initial={{ opacity: 0, rotate: -45, scale: 0.7 }}
-            animate={{ opacity: 1, rotate: 0, scale: 1 }}
-            exit={{ opacity: 0, rotate: 45, scale: 0.7 }}
-            transition={{ duration: 0.25, ease: EASE }}
+            initial={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
+            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+            exit={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
+            transition={{ type: "spring", duration: 0.3, bounce: 0 }}
             aria-hidden="true"
           >
             <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" />
@@ -68,10 +72,10 @@ export default function ThemeToggle() {
             stroke="currentColor"
             strokeWidth="1.5"
             strokeLinecap="square"
-            initial={{ opacity: 0, rotate: 45, scale: 0.7 }}
-            animate={{ opacity: 1, rotate: 0, scale: 1 }}
-            exit={{ opacity: 0, rotate: -45, scale: 0.7 }}
-            transition={{ duration: 0.25, ease: EASE }}
+            initial={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
+            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+            exit={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
+            transition={{ type: "spring", duration: 0.3, bounce: 0 }}
             aria-hidden="true"
           >
             <circle cx="12" cy="12" r="4" />

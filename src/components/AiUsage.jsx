@@ -41,6 +41,13 @@ function glyph(model) {
   return "○";
 }
 
+// Inverse of pathFor's x mapping: where the hovered day's line sits. Kept in
+// one place because the pointer handler has to agree with it exactly.
+function cursorX(i, len, w, pad) {
+  if (len < 2) return pad;
+  return pad + (i / (len - 1)) * (w - pad * 2);
+}
+
 function pathFor(values, w, h, pad) {
   const max = Math.max(...values, 1);
   const step = values.length > 1 ? (w - pad * 2) / (values.length - 1) : 0;
@@ -62,7 +69,7 @@ export default function AiUsage() {
     const cost = daily.map((d) => d.cost);
     const W = 640, H = 220, PAD = 8;
     return {
-      W, H,
+      W, H, PAD,
       tokensPath: pathFor(tokens, W, H, PAD),
       costPath: pathFor(cost, W, H, PAD),
       areaPath: `${pathFor(tokens, W, H, PAD)} L${W - PAD},${H - PAD} L${PAD},${H - PAD} Z`,
@@ -73,8 +80,12 @@ export default function AiUsage() {
 
   const onMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width;
-    const i = Math.round(x * (daily.length - 1));
+    // The plot is inset by PAD on both sides; the old full-width mapping put
+    // the cursor up to PAD*2 away from the day it was reporting.
+    const span = rect.width || 1;
+    const frac = (e.clientX - rect.left - (chart.PAD / chart.W) * span) /
+      (span * (1 - (2 * chart.PAD) / chart.W));
+    const i = Math.round(frac * (daily.length - 1));
     setHover(Math.max(0, Math.min(daily.length - 1, i)));
   };
 
@@ -126,8 +137,8 @@ export default function AiUsage() {
           <path d={chart.tokensPath} className="aiu__line aiu__line--tokens" />
           {hover !== null && (
             <line
-              x1={(hover / Math.max(daily.length - 1, 1)) * (chart.W - 16) + 8}
-              x2={(hover / Math.max(daily.length - 1, 1)) * (chart.W - 16) + 8}
+              x1={cursorX(hover, daily.length, chart.W, chart.PAD)}
+              x2={cursorX(hover, daily.length, chart.W, chart.PAD)}
               y1="0" y2={chart.H}
               className="aiu__cursor"
             />

@@ -13,7 +13,7 @@ export default function Loader() {
       aria-label="Loading"
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.5, ease: [0.2, 0.65, 0.3, 0.9] }}
+      transition={{ duration: 0.32, ease: [0.2, 0.65, 0.3, 0.9] }}
     >
       <div className="loader__inner">
         <span className="label loader__brand">{profile.name} / Portfolio</span>

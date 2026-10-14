@@ -1,8 +1,10 @@
-/* AI token usage — dark dashboard card, sits under GitHub activity. */
+/* AI token usage — dark dashboard card, sits under GitHub activity.
+   Radius matches .ghc (both are stacked panels in one column); the inset
+   surfaces are square so no inner curve ever meets the outer one. */
 .aiu {
   margin-top: var(--s-md);
   border: 1px solid var(--c-line);
-  border-radius: 12px;
+  border-radius: var(--r-lg);
   background: #0b0b0b;
   padding: 16px;
   color: #f5f5f5;
@@ -54,7 +56,7 @@
 .aiu__card {
   background: #151515;
   border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 10px;
+  border-radius: 0;
   padding: 12px 14px;
   display: flex;
   flex-direction: column;
@@ -87,7 +89,7 @@
   margin-top: 8px;
   background: #151515;
   border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 10px;
+  border-radius: 0;
   padding: 16px 12px 10px;
 }
 
@@ -163,7 +165,7 @@
   margin-top: 8px;
   background: #151515;
   border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 10px;
+  border-radius: 0;
   padding: 4px 14px;
   font-variant-numeric: tabular-nums;
 }
@@ -204,6 +206,9 @@
   white-space: nowrap;
 }
 
+/* Flex centering aligns the line box, not the ink — alphabetic glyphs like
+   "A" land a pixel low in the badge. Mono metrics + line-height 1 + a 1px
+   pad pulls the ink back to optical centre. */
 .aiu__glyph {
   width: 18px;
   height: 18px;
@@ -213,7 +218,10 @@
   justify-content: center;
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 50%;
+  font-family: var(--f-mono);
   font-size: 0.65rem;
+  line-height: 1;
+  padding-top: 1px;
   color: #d6d6d6;
 }
 

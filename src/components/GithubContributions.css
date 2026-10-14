@@ -1,17 +1,23 @@
-/* GitHub contributions — monochrome, matches the xAI design tokens. */
+/* GitHub contributions — monochrome, matches the xAI design tokens.
+   The panel is an elevated surface (the whole grid is one link), so its
+   depth ring is a stacked transparent shadow rather than a solid border —
+   it survives the theme switch without a separate colour per theme. */
 .ghc {
   margin-top: var(--s-lg);
-  border: 1px solid var(--c-line);
   border-radius: var(--r-lg);
   background: var(--c-surface);
   padding: 24px;
+  box-shadow: var(--shadow-border);
+  /* Isolate the 371-cell subtree: scrolling the page no longer invalidates
+     layout or paint outside this box. */
+  contain: layout paint style;
   transition:
-    border-color var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease),
     background-color var(--dur) var(--ease);
 }
 
 .ghc:hover {
-  border-color: var(--c-line-strong);
+  box-shadow: var(--shadow-border-hover);
 }
 
 .ghc__head {
@@ -81,7 +87,6 @@
   border-radius: var(--r-lg);
   /* Intensity lives on background so opacity is free for the fade-in. */
   background: color-mix(in srgb, var(--c-primary) 6%, transparent);
-  transition: filter 0.18s var(--ease);
 }
 
 /* Five intensity steps via color-mix of the primary ink. */
@@ -96,7 +101,8 @@
 /* Hovering a legend swatch isolates that shade: every other day recedes.
    The dimming rides on `filter`, not `opacity`, because the fade-in
    keyframes below own `opacity` and their `both` fill would outrank a
-   plain declaration. */
+   plain declaration. No transition on the cells — that meant 371 style
+   watchers and a 371-element transition batch on every legend hover. */
 .ghc__grid[data-focus="0"] .ghc__cell:not([data-level="0"]),
 .ghc__grid[data-focus="1"] .ghc__cell:not([data-level="1"]),
 .ghc__grid[data-focus="2"] .ghc__cell:not([data-level="2"]),
@@ -107,11 +113,13 @@
 
 /* Staggered fade-in — each cell lights up in turn, start → end.
    `both` keeps cells hidden through their delay and holds the final
-   state after, so the grid doesn't snap back to opacity 0. */
-.ghc__grid:not(.ghc__grid--skeleton) .ghc__cell {
+   state after, so the grid doesn't snap back to opacity 0.
+   2ms per cell: the last of 371 lands at 740ms. At the old 6ms the final
+   cell was still fading in 2.2s after the section scrolled into view. */
+.ghc__grid .ghc__cell {
   opacity: 0;
   animation: ghc-fade-in 0.45s var(--ease) both;
-  animation-delay: calc(var(--i, 0) * 6ms);
+  animation-delay: calc(var(--i, 0) * 2ms);
 }
 
 @keyframes ghc-fade-in {
@@ -125,14 +133,30 @@
   }
 }
 
-.ghc__grid--skeleton .ghc__cell {
-  background: color-mix(in srgb, var(--c-primary) 6%, transparent);
-  animation: ghc-pulse 1.4s var(--ease) infinite;
+/* One shimmer block instead of 371 placeholder cells. The old skeleton
+   mounted 371 nodes, then unmounted every one of them when the payload
+   landed — pure DOM churn during the slowest part of the load. */
+.ghc__skeleton {
+  height: 104px;
+  margin-top: 6px;
+  border-radius: var(--r-lg);
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--c-primary) 4%, transparent) 0%,
+    color-mix(in srgb, var(--c-primary) 10%, transparent) 50%,
+    color-mix(in srgb, var(--c-primary) 4%, transparent) 100%
+  );
+  background-size: 200% 100%;
+  animation: ghc-shimmer 1.4s var(--ease) infinite;
 }
 
-@keyframes ghc-pulse {
-  0%, 100% { opacity: 0.35; }
-  50% { opacity: 0.9; }
+@keyframes ghc-shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
 }
 
 .ghc__legend {

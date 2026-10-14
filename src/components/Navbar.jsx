@@ -145,7 +145,9 @@ export default function Navbar() {
 
         <div className="drawer__panel">
           <div className="drawer__top">
-            <span className="label">Menu — 04 / 04</span>
+            <span className="label">
+              Menu — {String(links.length).padStart(2, "0")} / {String(links.length).padStart(2, "0")}
+            </span>
           </div>
 
           <ul className="drawer__list">

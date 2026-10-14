@@ -12,7 +12,7 @@
   transition:
     color var(--dur) var(--ease),
     background-color var(--dur) var(--ease),
-    transform var(--dur) var(--ease);
+    scale var(--dur) var(--ease);
   cursor: pointer;
 }
 
@@ -31,7 +31,7 @@
 }
 
 .theme-toggle:active {
-  transform: scale(0.96);
+  scale: 0.96;
 }
 
 .theme-toggle svg {

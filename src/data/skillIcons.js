@@ -38,12 +38,12 @@ const icons = {
   Tailwind: SiTailwindcss,
   "Node.js": SiNodedotjs,
   Supabase: SiSupabase,
-  mySQL: SiMysql,
+  MySQL: SiMysql,
   ESP32: SiEspressif,
   Figma: SiFigma,
   Codex: RiOpenaiFill,
   "Claude Code": SiClaudecode,
-  "Open Code": SiOpencode,
+  OpenCode: SiOpencode,
   Git: SiGit,
 };
 
@@ -53,10 +53,12 @@ const aliases = {
   javaswing: FaJava,
   javafx: FaJava,
   "tailwind css": SiTailwindcss,
+  // Earlier copy of the site spelled it with a space.
+  "open code": SiOpencode,
 };
 
 // Project stacks and the skills list don't always agree on case
-// ("MySQL" vs "mySQL"), so resolve on a lowercased key.
+// ("MySQL" vs "mysql"), so resolve on a lowercased key.
 const byKey = new Map(
   Object.entries(icons).map(([label, Icon]) => [label.toLowerCase(), Icon])
 );

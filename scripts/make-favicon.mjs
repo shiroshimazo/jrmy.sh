@@ -1,5 +1,7 @@
 import sharp from "sharp";
 
+// Same as optimize-portrait: the full-size master isn't committed, only the
+// generated public/logo.png. Restore it here to re-run.
 const SRC = "src/assets/logo.png";
 const OUT = "public/logo.png";
 const SIZE = 256; // favicon canvas
@@ -16,6 +18,9 @@ const resized = await sharp(trimmed)
   .toBuffer();
 
 // 3) Center on a square transparent canvas.
+// Palette-quantised + max compression: this is a flat monochrome mark, so a
+// full RGBA PNG shipped 1.37 MB for a file that should be a few KB and is
+// fetched by every visitor as the favicon.
 await sharp({
   create: {
     width: SIZE,
@@ -25,7 +30,7 @@ await sharp({
   },
 })
   .composite([{ input: resized, gravity: "center" }])
-  .png()
+  .png({ compressionLevel: 9, palette: true, effort: 10 })
   .toFile(OUT);
 
 console.log(`Trimmed content: ${meta.width}x${meta.height} -> favicon ${SIZE}x${SIZE} (margin ${MARGIN * 100}%)`);

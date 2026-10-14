@@ -12,12 +12,16 @@ const LINGER = 2400;
 // Devtools / view-source shortcuts. Browsers own most of these and will open
 // their panel regardless of preventDefault — the warning is a speed bump for
 // the curious, not a lock. Anything shipped to a browser is readable.
+//
+// Save (Ctrl/Cmd+S) and the context menu are deliberately absent: they are
+// ordinary browser features that hijacking punishes users for. Right-click
+// warns without calling preventDefault, so the real menu still opens.
 function isPeeking(e) {
   const key = (e.key ?? "").toLowerCase();
   const mod = e.ctrlKey || e.metaKey;
   if (key === "f12") return true;
   if (mod && e.shiftKey && (key === "i" || key === "j" || key === "c")) return true;
-  if (mod && (key === "u" || key === "s")) return true;
+  if (mod && key === "u") return true;
   return false;
 }
 
@@ -39,10 +43,8 @@ export default function InspectGuard() {
       warn();
     };
 
-    const onContextMenu = (e) => {
-      e.preventDefault();
-      warn();
-    };
+    // No preventDefault — the browser's own menu stays reachable.
+    const onContextMenu = () => warn();
 
     window.addEventListener("keydown", onKey);
     window.addEventListener("contextmenu", onContextMenu);
@@ -69,8 +71,8 @@ export default function InspectGuard() {
       {caught && (
         <motion.div
           className="guard"
-          role="alertdialog"
-          aria-label="Inspection blocked"
+          role="alert"
+          aria-label="Inspection notice"
           onClick={() => setCaught(false)}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
