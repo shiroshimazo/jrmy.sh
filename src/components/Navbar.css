@@ -1,12 +1,18 @@
-/* No backdrop-filter at rest: a full-viewport-width blur layer over the hero
-   is recomposited on every scroll frame for a header that is transparent
-   anyway. The blur only earns its cost once there is content behind it. */
+/* No backdrop-filter, ever. A full-viewport-width blur sits directly over the
+   scrolling document, so the browser re-samples and re-blurs the whole strip
+   on every frame of every scroll — the single largest per-frame cost on the
+   site, and the reason it could not hold a high refresh rate. An opaque
+   surface reads nearly the same over this design's flat monochrome content
+   and costs one solid fill. */
 .nav {
   position: fixed;
   inset: 0 0 auto 0;
   z-index: 50;
   background: var(--c-overlay);
   border-bottom: 1px solid transparent;
+  /* Promoted once, not per frame: the header paints as its own layer instead
+     of being re-rastered inside the scrolling document. */
+  will-change: background-color;
   transition:
     border-color var(--dur) var(--ease),
     background-color var(--dur) var(--ease);
@@ -14,8 +20,10 @@
 
 .nav--scrolled {
   border-bottom-color: var(--c-line);
-  backdrop-filter: saturate(140%) blur(10px);
-  -webkit-backdrop-filter: saturate(140%) blur(10px);
+  /* Opaque once scrolled. --c-overlay is only 0.6 alpha over the hero, which
+     is what made the blur worth having; past the hero there is no image
+     behind it to soften anyway. */
+  background: color-mix(in srgb, var(--c-neutral) 92%, transparent);
 }
 
 .nav__row {

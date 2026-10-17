@@ -15,7 +15,9 @@ const MUTED = '.ghc, .drawer__scrim, [aria-disabled="true"], :disabled';
 // a still cursor and fires pointerover without the user aiming at anything.
 const MOVE_WINDOW = 120;
 // Floor between cues so a fast sweep across the nav doesn't stack into a buzz.
-const MIN_GAP = 45;
+// Each cue builds a fresh oscillator + gain graph on the main thread, so this
+// is also the main-thread cost of moving the cursor across the page.
+const MIN_GAP = 60;
 
 export function useHoverSound() {
   const patch = usePatch(minimal._patch);

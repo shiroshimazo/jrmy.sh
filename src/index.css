@@ -87,8 +87,11 @@
   text-rendering: optimizeLegibility;
 }
 
-/* Smooth theme transition on the elements that carry color. */
-html,
+/* Smooth theme transition on the elements that carry color.
+   Scoped off html/body deliberately: a color transition on the root element
+   invalidates paint for the entire document every frame it runs, so the page
+   re-rasterized top to bottom during each switch. `body` still animates its
+   own background, which is what the visible canvas actually is. */
 body,
 .app,
 .nav,

@@ -81,55 +81,72 @@
   min-width: 720px;
 }
 
+/* Shade is expressed as two numbers rather than a finished colour:
+   --tint is the step this cell belongs to, --dim scales it down when the
+   legend isolates another shade. Keeping the colour in terms of variables
+   means the dim below is a custom-property change on one background, with
+   no filter layer per cell. */
 .ghc__cell {
+  --tint: 6%;
+  --dim: 1;
   aspect-ratio: 1;
   width: 100%;
   border-radius: var(--r-lg);
-  /* Intensity lives on background so opacity is free for the fade-in. */
-  background: color-mix(in srgb, var(--c-primary) 6%, transparent);
+  background: color-mix(in srgb, var(--c-primary) calc(var(--tint) * var(--dim)), transparent);
 }
 
-/* Five intensity steps via color-mix of the primary ink. */
-.ghc__cell[data-level="0"] { background: color-mix(in srgb, var(--c-primary) 6%, transparent); }
-.ghc__cell[data-level="1"] { background: color-mix(in srgb, var(--c-primary) 28%, transparent); }
-.ghc__cell[data-level="2"] { background: color-mix(in srgb, var(--c-primary) 50%, transparent); }
-.ghc__cell[data-level="3"] { background: color-mix(in srgb, var(--c-primary) 72%, transparent); }
-.ghc__cell[data-level="4"] { background: var(--c-primary); }
+/* Five intensity steps. */
+.ghc__cell[data-level="0"] { --tint: 6%; }
+.ghc__cell[data-level="1"] { --tint: 28%; }
+.ghc__cell[data-level="2"] { --tint: 50%; }
+.ghc__cell[data-level="3"] { --tint: 72%; }
+.ghc__cell[data-level="4"] { --tint: 100%; }
 /* Padding cells before the first / after the last day stay invisible. */
-.ghc__cell[data-level="empty"] { background: transparent; }
+.ghc__cell[data-level="empty"] { --tint: 0%; }
 
 /* Hovering a legend swatch isolates that shade: every other day recedes.
-   The dimming rides on `filter`, not `opacity`, because the fade-in
-   keyframes below own `opacity` and their `both` fill would outrank a
-   plain declaration. No transition on the cells — that meant 371 style
-   watchers and a 371-element transition batch on every legend hover. */
+   This dims through --dim rather than `opacity` or `filter`. The fade-in
+   keyframes own `opacity` with a `both` fill that would outrank a plain
+   declaration, and `filter: opacity()` put a filter render surface on all
+   371 cells at once — for a hover effect with no transition on it.
+   No transition on the cells: that meant 371 style watchers and a
+   371-element transition batch on every legend hover. */
 .ghc__grid[data-focus="0"] .ghc__cell:not([data-level="0"]),
 .ghc__grid[data-focus="1"] .ghc__cell:not([data-level="1"]),
 .ghc__grid[data-focus="2"] .ghc__cell:not([data-level="2"]),
 .ghc__grid[data-focus="3"] .ghc__cell:not([data-level="3"]),
 .ghc__grid[data-focus="4"] .ghc__cell:not([data-level="4"]) {
-  filter: opacity(0.12);
+  --dim: 0.12;
 }
 
 /* Staggered fade-in — each cell lights up in turn, start → end.
    `both` keeps cells hidden through their delay and holds the final
    state after, so the grid doesn't snap back to opacity 0.
    2ms per cell: the last of 371 lands at 740ms. At the old 6ms the final
-   cell was still fading in 2.2s after the section scrolled into view. */
+   cell was still fading in 2.2s after the section scrolled into view.
+
+   Every cell with a running animation gets promoted to its own compositor
+   layer, so the number animating *at the same moment* is what costs — not
+   the 371 that exist. At 450ms per cell on a 2ms stagger, ~225 were
+   running simultaneously. The duration is what bounds that window:
+   240ms on the same 2ms stagger cuts it to ~120 live layers and still
+   lands the last cell at 740ms.
+
+   Opacity only, no scale. Both promote a layer, but opacity re-rasterizes
+   nothing per frame while a running transform re-uploads the cell
+   texture each frame. */
 .ghc__grid .ghc__cell {
   opacity: 0;
-  animation: ghc-fade-in 0.45s var(--ease) both;
+  animation: ghc-fade-in 240ms var(--ease) both;
   animation-delay: calc(var(--i, 0) * 2ms);
 }
 
 @keyframes ghc-fade-in {
   from {
     opacity: 0;
-    transform: scale(0.55);
   }
   to {
     opacity: 1;
-    transform: scale(1);
   }
 }
 

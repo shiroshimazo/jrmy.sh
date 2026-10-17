@@ -9,7 +9,9 @@
   justify-content: center;
   padding: var(--s-lg);
   background: var(--c-scrim);
-  backdrop-filter: blur(6px);
+  /* No blur: this can appear over an animating page, and the guard is an
+     interruption — a filter over live content costs frames during the one
+     moment the user is trying to read the message. */
 }
 
 .guard__panel {

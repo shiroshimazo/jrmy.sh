@@ -1,5 +1,16 @@
 import { motion } from "framer-motion";
+import { HugeiconsIcon } from "@hugeicons/react";
+import {
+  FacebookIcon,
+  GithubIcon,
+  InstagramIcon,
+  LinkedinIcon,
+} from "@hugeicons/core-free-icons";
 import { profile } from "../data/content";
+import portrait240 from "../assets/profile-240.webp";
+import portrait360 from "../assets/profile-360.webp";
+import portrait240Jpg from "../assets/profile-240.jpg";
+import portrait360Jpg from "../assets/profile-360.jpg";
 import { EASE, VIEWPORT } from "./motion/motion-presets";
 import { useClickSound } from "../hooks/useClickSound";
 import "./Footer.css";
@@ -13,9 +24,35 @@ const col = {
   show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: EASE } },
 };
 
+// Looked up by the display label in profile.socials, so these keys must match
+// those labels exactly — case included. Hugeicons spells two of them
+// GithubIcon / LinkedinIcon, so the imports are aliased rather than keyed as
+// they come. A casing drift here does not throw; it just makes a brand quietly
+// disappear from the footer, which is why the dev check below exists.
+const SOCIAL_ICONS = {
+  Facebook: FacebookIcon,
+  GitHub: GithubIcon,
+  Instagram: InstagramIcon,
+  LinkedIn: LinkedinIcon,
+};
+
+if (import.meta.env.DEV) {
+  const unmapped = profile.socials
+    .filter((s) => !SOCIAL_ICONS[s.label])
+    .map((s) => s.label);
+  if (unmapped.length) {
+    console.warn(
+      `Footer: SOCIAL_ICONS has no icon for ${unmapped.join(", ")} — ` +
+        "key it exactly as the label in profile.socials."
+    );
+  }
+}
+
 export default function Footer() {
   const year = new Date().getFullYear();
   const play = useClickSound();
+  const marked = profile.socials.filter((s) => SOCIAL_ICONS[s.label]);
+
   return (
     <footer className="footer">
       <motion.div
@@ -25,49 +62,46 @@ export default function Footer() {
         whileInView="show"
         viewport={VIEWPORT}
       >
-        <motion.div className="footer__col" variants={col}>
-          <span className="label">Index</span>
-          <span className="h2 footer__brand">{profile.name}.</span>
-        </motion.div>
+        <motion.figure className="footer__portrait" variants={col}>
+          <picture>
+            <source
+              type="image/webp"
+              srcSet={`${portrait240} 240w, ${portrait360} 360w`}
+              sizes="54px"
+            />
+            <img
+              src={portrait360Jpg}
+              srcSet={`${portrait240Jpg} 240w, ${portrait360Jpg} 360w`}
+              sizes="54px"
+              width="360"
+              height="360"
+              alt={`Portrait of ${profile.name}`}
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+        </motion.figure>
 
-        <motion.div className="footer__col" variants={col}>
-          <span className="label">Sections</span>
-          <ul className="footer__list">
-            <li>
-              <a href="#home" onClick={() => play("tap")}>Home</a>
-            </li>
-            <li>
-              <a href="#about" onClick={() => play("tap")}>About</a>
-            </li>
-            <li>
-              <a href="#projects" onClick={() => play("tap")}>Projects</a>
-            </li>
-            <li>
-              <a href="#contact" onClick={() => play("tap")}>Contact</a>
-            </li>
-          </ul>
-        </motion.div>
+        <motion.p className="body footer__copy" variants={col}>
+          Copyright © {year} {profile.name}
+        </motion.p>
 
-        <motion.div className="footer__col" variants={col}>
-          <span className="label">Elsewhere</span>
-          <ul className="footer__list">
-            {profile.socials.map((s) => (
-              <li key={s.label}>
-                <a href={s.href} target="_blank" rel="noreferrer" onClick={() => play("tap")}>
-                  {s.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </motion.div>
-
-        <motion.div className="footer__col footer__col--end" variants={col}>
-          <span className="label">Meta</span>
-          <span className="body footer__meta">
-            © {year} {profile.name}
-          </span>
-          <span className="body footer__meta">All rights reserved</span>
-        </motion.div>
+        <motion.ul className="footer__socials" variants={col} role="list">
+          {marked.map((s) => (
+            <li key={s.label}>
+              <a
+                className="footer__social"
+                href={s.href}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => play("tap")}
+                aria-label={s.label}
+              >
+                <HugeiconsIcon icon={SOCIAL_ICONS[s.label]} size={22} strokeWidth={1.5} />
+              </a>
+            </li>
+          ))}
+        </motion.ul>
       </motion.div>
     </footer>
   );

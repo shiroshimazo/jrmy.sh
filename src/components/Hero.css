@@ -31,10 +31,13 @@
   object-fit: cover;
   border-radius: 50%;
   background: var(--c-surface);
+  /* Desaturating on a filter transition re-rasterizes the image every frame
+     of the hover. Composited on its own layer it still costs a texture
+     upload per frame, so the static filter stays — only the transition does
+     not. The visual change is the portrait snapping to colour on hover
+     instead of fading; the filter itself is unchanged at rest. */
   filter: grayscale(1) contrast(1.05);
-  transition:
-    filter var(--dur) var(--ease),
-    transform var(--dur) var(--ease);
+  transition: transform var(--dur) var(--ease);
 }
 
 .hero__portrait:hover img {

@@ -14,12 +14,15 @@ const container = {
   hidden: {},
   show: { transition: { staggerChildren: 0.12, delayChildren: 0.1 } },
 };
+// Transform + opacity only. These are the two properties the compositor can
+// animate on its own thread. `filter: blur()` cannot: it forces a re-raster
+// of the text on every frame, which on a high-refresh display means paying
+// for 120 of them per second during the reveal.
 const item = {
-  hidden: { opacity: 0, y: 22, filter: "blur(4px)" },
+  hidden: { opacity: 0, y: 22 },
   show: {
     opacity: 1,
     y: 0,
-    filter: "blur(0px)",
     transition: { duration: 0.7, ease: EASE },
   },
 };
@@ -37,8 +40,8 @@ export default function Hero() {
       <div className="container hero__grid">
         <motion.figure
           className="hero__portrait"
-initial={{ opacity: 0, y: 20, scale: 0.98, filter: "blur(4px)" }}
-          animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+initial={{ opacity: 0, y: 20, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.75, ease: EASE, delay: 0.1 }}
         >
           {/* 2.5 KB instead of 1.75 MB: the source is 1109x1419 but this

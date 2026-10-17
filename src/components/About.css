@@ -166,7 +166,9 @@
   justify-content: center;
   padding: var(--s-lg);
   background: var(--c-scrim);
-  backdrop-filter: blur(4px);
+  /* No backdrop-filter here. The cert opens while the page behind is
+     scroll-locked, so a blur re-processed the same frozen frame on every
+     tick for no visual gain — the scrim already carries the separation. */
 }
 
 .cert-modal__frame {

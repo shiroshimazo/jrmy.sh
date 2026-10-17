@@ -153,6 +153,11 @@ export default function GithubContributions() {
       {!error && data && (
         <motion.a
           className="ghc__scroll"
+          // With syncTouch on, Lenis preventDefaults the touchmove and would
+          // swallow the sideways drag on this strip. Horizontal-only opt-out:
+          // the graph still scrolls natively under a finger, while a vertical
+          // drag over it keeps scrolling the page.
+          data-lenis-prevent-horizontal
           href={githubUrl}
           target="_blank"
           rel="noreferrer"

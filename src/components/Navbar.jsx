@@ -124,8 +124,9 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* Drawer is rendered as a sibling so backdrop-filter on .nav
-          does not create a containing block that traps position:fixed. */}
+      {/* Drawer is a sibling of .nav, not a child: the header is position:fixed
+          and would otherwise become the containing block for the drawer's
+          fixed positioning too. */}
       <div
         id="nav-drawer"
         className={`drawer ${open ? "is-open" : ""}`}

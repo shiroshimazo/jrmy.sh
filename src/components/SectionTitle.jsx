@@ -6,12 +6,13 @@ const container = {
   hidden: {},
   show: { transition: { staggerChildren: 0.08 } },
 };
+// Transform + opacity only — `filter: blur()` here would re-raster the
+// heading and lead on every frame of the reveal instead of compositing.
 const item = {
-  hidden: { opacity: 0, y: 18, filter: "blur(4px)" },
+  hidden: { opacity: 0, y: 18 },
   show: {
     opacity: 1,
     y: 0,
-    filter: "blur(0px)",
     transition: { duration: 0.6, ease: EASE },
   },
 };
