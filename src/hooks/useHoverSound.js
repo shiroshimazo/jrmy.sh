@@ -7,9 +7,8 @@ import { minimal } from "../../audio/index";
 const CUE = 'a[href], button, [role="button"], .hero__portrait';
 
 // Muted zones. The contribution grid is 371 hoverable cells inside a single
-// link — a cue per cell would be a machine gun. The drawer scrim is an
-// invisible full-screen button that slides under a resting cursor.
-const MUTED = '.ghc, .drawer__scrim, [aria-disabled="true"], :disabled';
+// link — a cue per cell would be a machine gun.
+const MUTED = '.ghc, [aria-disabled="true"], :disabled';
 
 // A cue needs recent pointer travel behind it: scrolling slides elements under
 // a still cursor and fires pointerover without the user aiming at anything.

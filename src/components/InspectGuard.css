@@ -1,5 +1,5 @@
-/* Warning shell for the inspect deterrent — sits above the drawer and the
-   cert modal (200), below the intro loader (1000). */
+/* Warning shell for the inspect deterrent — sits above the nav dock (50) and
+   the cert modal (200), below the intro loader (1000). */
 .guard {
   position: fixed;
   inset: 0;

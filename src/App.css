@@ -2,6 +2,10 @@
   position: relative;
   min-height: 100svh;
   background: var(--c-neutral);
+  /* Reserve clearance for the floating dock. Without this the dock sits on top
+     of the last row of the footer at full scroll, and the social marks become
+     unclickable. */
+  padding-bottom: calc(var(--dock-h) + var(--dock-gap) + env(safe-area-inset-bottom, 0px));
 }
 
 /* fade-up reveal */
@@ -44,7 +48,6 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 72px;
   scrollbar-gutter: stable;
 }
 @media (prefers-reduced-motion: reduce) {

@@ -36,7 +36,7 @@ const LENIS_OPTIONS = {
   // is where native momentum is replaced by Lenis's.
   syncTouch: true,
   syncTouchLerp: 0.075,
-  anchors: { offset: -72 },
+  anchors: { offset: 0 },
   stopInertiaOnNavigate: true,
 };
 

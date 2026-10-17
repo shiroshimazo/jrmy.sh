@@ -13,7 +13,7 @@ export const profile = {
   socials: [
     { label: "Facebook", href: "https://www.facebook.com/yosh1mur4h" },
     { label: "GitHub", href: "https://github.com/shiroshimazo" },
-    { label: "Instagram", href: "https://www.instagram.com/jrmymlna" },
+    { label: "Instagram", href: "https://www.instagram.com/jrmy.xsh/" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/jrmymlna/" },
   ],
 };

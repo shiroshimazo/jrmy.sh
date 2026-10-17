@@ -38,6 +38,7 @@
   margin: 0;
   text-align: center;
   color: var(--c-secondary);
+  text-wrap: balance;
 }
 
 .footer__socials {
@@ -51,28 +52,48 @@
   padding: 0;
 }
 
+/* The glyph is 22px, the box is 44px — WCAG 2.5.5 target size and the iOS
+   minimum. At the old 22px box the marks were technically tappable but a
+   miss landed on the neighbouring one, which is the worst way for them to
+   fail on a phone. */
 .footer__social {
   display: grid;
   place-items: center;
+  width: 44px;
+  height: 44px;
   color: var(--c-primary);
+  border-radius: var(--r-lg);
   transition:
     color var(--dur) var(--ease),
-    transform var(--dur) var(--ease);
+    background-color var(--dur) var(--ease),
+    scale var(--dur) var(--ease);
 }
 
 .footer__social:hover {
-  color: var(--c-primary);
-  transform: translateY(-2px);
+  background: var(--c-surface);
 }
 
-/* 24px portrait + four 22px marks leave little slack on a phone once the
-   copyright is in the middle, so the gutters tighten rather than wrapping. */
-@media (max-width: 480px) {
+.footer__social:active {
+  scale: 0.92;
+}
+
+/* Phone: the three-across row cannot hold. 54px portrait + the copyright line
+   + four 44px marks is ~400px of content inside a 328px box at 360px wide, so
+   the auto column wrapped the copyright and the 1fr columns squeezed instead.
+   Stacked, it reads portrait → caption → marks, the same order as the desktop
+   row, and each piece can be as large as it likes. */
+@media (max-width: 640px) {
   .footer__row {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "portrait"
+      "copy"
+      "socials";
+    justify-items: center;
     gap: var(--s-md);
   }
 
   .footer__socials {
-    gap: var(--s-xs);
+    justify-content: center;
   }
 }

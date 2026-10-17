@@ -73,6 +73,12 @@
   --r-md: 0px;
   --r-lg: 2px;
 
+  /* floating bottom dock — height of the bar, and its stand-off from the
+     bottom edge. App.css reserves clearance of both so the dock never covers
+     the end of the footer. */
+  --dock-h: 56px;
+  --dock-gap: var(--s-lg);
+
   /* motion */
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
   --dur: 320ms;
@@ -98,7 +104,6 @@ body,
 .card,
 .about__pane,
 .contact__mail,
-.drawer__panel,
 .footer {
   transition:
     background-color 280ms var(--ease),
@@ -213,7 +218,9 @@ button {
 .section {
   width: 100%;
   padding-block: var(--s-2xl);
-  scroll-margin-top: 72px;
+  /* No scroll-margin: the nav floats at the bottom, so a section aligned to
+     the top of the viewport is already clear of it. */
+  scroll-margin-top: 0;
 }
 
 .section--hero {

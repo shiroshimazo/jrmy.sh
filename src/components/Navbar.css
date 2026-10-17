@@ -1,78 +1,43 @@
-/* No backdrop-filter, ever. A full-viewport-width blur sits directly over the
-   scrolling document, so the browser re-samples and re-blurs the whole strip
-   on every frame of every scroll — the single largest per-frame cost on the
-   site, and the reason it could not hold a high refresh rate. An opaque
-   surface reads nearly the same over this design's flat monochrome content
-   and costs one solid fill. */
+/* No backdrop-filter, ever. A blurred element sitting over the scrolling
+   document makes the browser re-sample and re-blur it on every frame of every
+   scroll. The dock is small, but the rule held for the old full-width header
+   and nothing here is worth a per-frame raster cost: an opaque surface reads
+   the same over this design's flat monochrome content and costs one fill. */
 .nav {
   position: fixed;
-  inset: 0 0 auto 0;
+  left: 50%;
+  /* --dock-gap clears the viewport edge; env() keeps it off the iOS home
+     indicator and the Android gesture bar. */
+  bottom: calc(var(--dock-gap) + env(safe-area-inset-bottom, 0px));
+  /* translateX only — a transform on a fixed element is compositor work, and
+     the dock never reflows. */
+  transform: translateX(-50%);
   z-index: 50;
-  background: var(--c-overlay);
-  border-bottom: 1px solid transparent;
-  /* Promoted once, not per frame: the header paints as its own layer instead
-     of being re-rastered inside the scrolling document. */
-  will-change: background-color;
-  transition:
-    border-color var(--dur) var(--ease),
-    background-color var(--dur) var(--ease);
-}
 
-.nav--scrolled {
-  border-bottom-color: var(--c-line);
-  /* Opaque once scrolled. --c-overlay is only 0.6 alpha over the hero, which
-     is what made the blur worth having; past the hero there is no image
-     behind it to soften anyway. */
-  background: color-mix(in srgb, var(--c-neutral) 92%, transparent);
-}
-
-.nav__row {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 64px;
-}
-
-.nav__brand {
-  display: inline-flex;
   align-items: center;
   gap: var(--s-sm);
-  position: relative;
-  z-index: 2;
-}
+  height: var(--dock-h);
+  padding-inline: var(--s-sm);
 
-/* 19px-tall brand lockup → extend the target to ~43px without moving it. */
-.nav__brand::after {
-  content: "";
-  position: absolute;
-  inset: -12px 0;
-}
-
-.nav__brand-mark {
-  width: 10px;
-  height: 10px;
-  background: var(--c-primary);
-  display: inline-block;
-}
-
-.nav__brand-name {
-  color: var(--c-primary);
-}
-
-.nav__cluster {
-  display: flex;
-  align-items: center;
-  gap: var(--s-md);
-}
-
-.nav__menu {
-  display: block;
+  background: var(--c-neutral);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-lg);
+  /* No box-shadow. A cast shadow is the wrong signal here — this design is
+     flat by construction (--r-md is 0px), so a soft elevation gradient under
+     the dock reads as a rendering artefact rather than depth. The 1px hairline
+     border is the only edge it gets, and it separates cleanly against
+     --c-neutral content because the surface behind it differs. */
+  /* Never wider than the viewport minus its own stand-off, or a wide dock
+     would push itself off-screen on a narrow one. */
+  max-width: calc(100vw - var(--dock-gap) * 2);
 }
 
 .nav__list {
   list-style: none;
   display: flex;
-  gap: var(--s-lg);
+  align-items: center;
+  gap: 2px;
   margin: 0;
   padding: 0;
 }
@@ -80,231 +45,41 @@
 .nav__link {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 0;
+  padding: var(--s-sm) var(--s-md);
+  white-space: nowrap;
   color: var(--c-secondary);
-  transition: color var(--dur) var(--ease);
-  position: relative;
+  transition:
+    color var(--dur) var(--ease),
+    background-color var(--dur) var(--ease);
 }
 
-/* 31px-tall link → extend to ~51px. The 32px nav gap keeps 4px of
-   horizontal clearance either side, so hit areas never overlap. */
-.nav__link::before {
-  content: "";
-  position: absolute;
-  inset: -10px -4px;
+.nav__link:hover {
+  color: var(--c-primary);
 }
 
-.nav__link::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 1px;
-  background: var(--c-primary);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform var(--dur) var(--ease);
-}
-
-.nav__link:hover,
+/* Active section reads as a filled pill. The old header used an underline
+   scaleX, which has nowhere to sit in a horizontally-laid-out dock. */
 .nav__link.is-active {
   color: var(--c-primary);
+  background: var(--c-surface);
 }
 
-.nav__link.is-active::after {
-  transform: scaleX(1);
+.nav__divider {
+  width: 1px;
+  align-self: stretch;
+  margin-block: var(--s-md);
+  background: var(--c-line);
 }
 
-.nav__num {
-  color: var(--c-secondary);
-  font-family: var(--f-mono);
-}
-
-/* Hamburger button — 3 lines, animates to an X. */
-.nav__toggle {
-  display: none;
-  width: 40px;
-  height: 40px;
-  position: relative;
-  z-index: 2;
-  border: 1px solid var(--c-line-strong);
-  border-radius: var(--r-md);
-  background: transparent;
-  transition:
-    border-color var(--dur) var(--ease),
-    scale var(--dur) var(--ease);
-}
-
-.nav__toggle:hover {
-  border-color: var(--c-primary);
-}
-
-.nav__toggle:active {
-  scale: 0.96;
-}
-
-/* Visible control stays 40×40; touch gets the full 44×44. */
-@media (pointer: coarse) {
-  .nav__toggle::after {
-    content: "";
-    position: absolute;
-    inset: -2px;
+/* Narrow phones: tighten the gutters so all four links and the toggle stay on
+   one row at 360px. */
+@media (max-width: 520px) {
+  .nav {
+    gap: 2px;
+    padding-inline: var(--s-sm);
   }
-}
 
-/* All three bars share one baseline and separate by transform only —
-   animating `top` re-ran layout on every frame of the X transition. */
-.nav__toggle-bar {
-  position: absolute;
-  left: 9px;
-  right: 9px;
-  top: 13px;
-  height: 1px;
-  background: var(--c-primary);
-  transition:
-    transform var(--dur) var(--ease),
-    opacity var(--dur) var(--ease);
-}
-
-.nav__toggle-bar:nth-child(2) {
-  transform: translateY(6px);
-}
-.nav__toggle-bar:nth-child(3) {
-  transform: translateY(12px);
-}
-
-.nav__toggle.is-open .nav__toggle-bar:nth-child(1) {
-  transform: translateY(6px) rotate(45deg);
-}
-.nav__toggle.is-open .nav__toggle-bar:nth-child(2) {
-  transform: translateY(6px) scaleX(0);
-  opacity: 0;
-}
-.nav__toggle.is-open .nav__toggle-bar:nth-child(3) {
-  transform: translateY(6px) rotate(-45deg);
-}
-
-/* --- Mobile drawer (rendered as sibling, outside .nav) --- */
-.drawer {
-  position: fixed;
-  inset: 0;
-  z-index: 60;
-  pointer-events: none;
-  visibility: hidden;
-}
-
-.drawer.is-open {
-  pointer-events: auto;
-  visibility: visible;
-}
-
-.drawer__scrim {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  background: var(--c-scrim);
-  border: 0;
-  padding: 0;
-  cursor: pointer;
-  opacity: 0;
-  transition: opacity var(--dur) var(--ease);
-}
-
-.drawer.is-open .drawer__scrim {
-  opacity: 1;
-}
-
-.drawer__panel {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: min(420px, 100%);
-  background: var(--c-neutral);
-  border-left: 1px solid var(--c-line);
-  display: flex;
-  flex-direction: column;
-  padding: calc(64px + var(--s-lg)) var(--s-lg) var(--s-lg);
-  transform: translateX(100%);
-  transition: transform var(--dur) var(--ease);
-  overflow-y: auto;
-  overscroll-behavior: contain;
-}
-
-.drawer.is-open .drawer__panel {
-  transform: none;
-}
-
-.drawer__top {
-  padding-bottom: var(--s-md);
-  border-bottom: 1px solid var(--c-line);
-  margin-bottom: var(--s-md);
-}
-
-.drawer__list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.drawer__link {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: baseline;
-  gap: var(--s-md);
-  padding-block: var(--s-md);
-  border-bottom: 1px solid var(--c-line);
-  color: var(--c-primary);
-  transition: padding-left var(--dur) var(--ease);
-}
-
-.drawer__link:hover {
-  padding-left: var(--s-sm);
-}
-
-.drawer__num {
-  color: var(--c-secondary);
-}
-
-.drawer__label {
-  font-family: var(--f-sans);
-  font-size: clamp(1.75rem, 8vw, 2.4rem);
-  font-weight: 300;
-  letter-spacing: -0.03em;
-  line-height: 1;
-}
-
-.drawer__arrow {
-  color: var(--c-secondary);
-  font-family: var(--f-mono);
-}
-
-.drawer__foot {
-  margin-top: auto;
-  padding-top: var(--s-md);
-  border-top: 1px solid var(--c-line);
-  display: flex;
-  justify-content: space-between;
-}
-
-@media (max-width: 720px) {
-  .nav__menu {
-    display: none;
-  }
-  .nav__toggle {
-    display: inline-block;
-  }
-}
-
-@media (min-width: 721px) {
-  /* Make absolutely sure the drawer never appears on desktop, even if
-     React state somehow gets toggled (e.g. resize from mobile). */
-  .drawer {
-    display: none;
+  .nav__link {
+    padding: var(--s-sm);
   }
 }
