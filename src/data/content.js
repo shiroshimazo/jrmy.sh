@@ -2,12 +2,17 @@ import gr11cert from "../assets/gr11cert.jpg";
 import gr12cert from "../assets/gr12cert.jpg";
 
 export const profile = {
-  name: "Jeremy",
+  name: "Jeremy Malana",
   role: "Web Developer",
   status: "Student",
-  tagline: "Building precise, minimal interfaces and resilient systems.",
+  // The single line under the name in the hero.
+  heroRole: "Web Development | Student",
+  // Hero copy: one lead paragraph, one supporting paragraph. Kept out of the
+  // component so the words live with the rest of the profile data.
+  introLead:
+    "Remote from the Philippines — I build web interfaces that stay fast and legible under real use.",
   intro:
-    "I design and ship full-stack products with an emphasis on clarity, performance, and craft. Currently focused on developer-facing tools and interface systems.",
+    "Second-year BSIT student at BestLink College, shipping full-stack work with React, Node and MySQL. Alongside coursework I run product listings and paid campaigns for a small e-commerce brand, which is where I learned that polish and performance are the same problem.",
   location: "Remote",
   email: "jrmymln@gmail.com",
   socials: [
@@ -20,11 +25,11 @@ export const profile = {
 
 export const skills = [
   { group: "Languages", items: ["Java", "C", "C++", "PHP", "JavaScript"] },
-  { group: "Frontend", items: ["React", "Vite", "Next.js", "Tailwind"] },
+  { group: "Frameworks", items: ["React", "Vite", "Next.js", "Tailwind"] },
   { group: "Backend", items: ["Node.js", "Supabase", "MySQL"] },
   { group: "Design", items: ["Figma"] },
   { group: "AI", items: ["Codex", "Claude Code", "OpenCode"] },
-  { group: "Tooling", items: ["Git"] },
+  { group: "VCS Tool", items: ["Git"] },
 ];
 
 export const experience = [
@@ -36,11 +41,17 @@ export const experience = [
       "Currently pursuing a Bachelor of Science in Information Technology, focusing on software development and digital technologies.",
   },
   {
-    period: "2024 — Present",
-    role: "V.A / Freelancing",
-    company: "Product Listing · Ads (Pinterest & Facebook) · Creatives",
+    period: "Oct 2024 — Now",
+    role: "E-commerce Marketing Specialist",
+    tag: "V.A",
+    company:
+      "Products Listings, Facebook Ads Manager, Pinterest Ads Manager and Products Creatives Making",
     summary:
-      "Managing online product listings, creating engaging ads, and designing visual content for social media platforms.",
+      "Running product listings and paid campaigns end to end — building the catalogue, producing the creatives, and reading the numbers back to decide what runs next.",
+    // `work: true` surfaces this row in the hero's Work list as professional
+    // work; the school entries stay in the About timeline only. One array, two
+    // renderers — so the hero and About can never disagree about the dates.
+    work: true,
   },
   {
     period: "2024 — 2025",

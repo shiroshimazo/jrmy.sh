@@ -68,10 +68,12 @@
   --s-xl: 64px;
   --s-2xl: 112px;
 
-  /* radii (flat by design) */
-  --r-sm: 0px;
-  --r-md: 0px;
-  --r-lg: 2px;
+  /* radii — every box rounds to 3px. Kept as three tokens rather than one
+     value so a larger radius can be introduced later without hunting down
+     every rule that hardcodes it. */
+  --r-sm: 3px;
+  --r-md: 3px;
+  --r-lg: 3px;
 
   /* floating bottom dock — height of the bar, and its stand-off from the
      bottom edge. App.css reserves clearance of both so the dock never covers
@@ -82,6 +84,11 @@
   /* motion */
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
   --dur: 320ms;
+  /* Symmetric eases like .65,0,.35,1 hold still, then lurch through the middle
+     of the wipe. This one starts moving sooner and bleeds off, so the reveal
+     reads as one continuous gesture rather than two halves. */
+  --theme-wipe: 600ms;
+  --ease-wipe: cubic-bezier(0.4, 0, 0.2, 1);
 
   font-family: var(--f-sans);
   font-size: var(--t-body);
@@ -109,6 +116,59 @@ body,
     background-color 280ms var(--ease),
     color 280ms var(--ease),
     border-color 280ms var(--ease);
+}
+
+/* Theme wipe — a View Transitions swap. The browser snapshots the old root,
+   ThemeToggle applies the new theme inside startViewTransition, and the new
+   snapshot is then revealed by a clip-path rising from the bottom edge.
+
+   `animation: none` on both is the load-bearing part: the UA default for a root
+   transition is a cross-fade, and a cross-fade between two opaque themes just
+   blends them — the wipe would never be visible. Pinning the z-indexes keeps
+   old under new so the reveal reads as the incoming theme arriving. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 2;
+  animation: theme-wipe var(--theme-wipe) var(--ease-wipe);
+}
+
+@keyframes theme-wipe {
+  from {
+    clip-path: inset(100% 0 0);
+  }
+  to {
+    clip-path: inset(0);
+  }
+}
+
+/* Users who asked for less motion get the cut, not the travel. */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
+
+/* Set by ThemeToggle for exactly as long as the wipe is running. The colour
+   transitions further up would otherwise repaint these elements every frame
+   behind the snapshot overlay, where none of it is visible — competing with
+   the wipe for main-thread time. Only set when View Transitions exist, so the
+   fallback path keeps its plain cross-fade. */
+html[data-wiping] .app,
+html[data-wiping] .nav,
+html[data-wiping] .card,
+html[data-wiping] .about__pane,
+html[data-wiping] .contact__mail,
+html[data-wiping] .footer {
+  transition: none;
 }
 
 * {
@@ -227,7 +287,9 @@ button {
   min-height: 100svh;
   display: flex;
   align-items: center;
-  padding-block: calc(var(--s-2xl) + var(--s-lg)) var(--s-2xl);
+  /* Was calc(112 + 32) / 112 to clear the old fixed top header. The nav floats
+     at the bottom now, so none of that clearance is earned. */
+  padding-block: var(--s-xl) var(--s-lg);
 }
 
 .container {

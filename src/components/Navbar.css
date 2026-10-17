@@ -23,11 +23,10 @@
   background: var(--c-neutral);
   border: 1px solid var(--c-line);
   border-radius: var(--r-lg);
-  /* No box-shadow. A cast shadow is the wrong signal here — this design is
-     flat by construction (--r-md is 0px), so a soft elevation gradient under
-     the dock reads as a rendering artefact rather than depth. The 1px hairline
-     border is the only edge it gets, and it separates cleanly against
-     --c-neutral content because the surface behind it differs. */
+  /* No box-shadow. A soft elevation gradient under a floating dock reads as a
+     rendering artefact against this monochrome content — the 1px hairline
+     border is the only edge it needs, and it already separates from whatever
+     scrolls past behind it. */
   /* Never wider than the viewport minus its own stand-off, or a wide dock
      would push itself off-screen on a narrow one. */
   max-width: calc(100vw - var(--dock-gap) * 2);
@@ -45,6 +44,7 @@
 .nav__link {
   display: inline-flex;
   align-items: center;
+  border-radius: var(--r-md);
   padding: var(--s-sm) var(--s-md);
   white-space: nowrap;
   color: var(--c-secondary);

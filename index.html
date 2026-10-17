@@ -35,6 +35,11 @@
           /* private mode / storage blocked — dark default */
         }
         document.documentElement.setAttribute("data-theme", t);
+        // Owned here rather than in ThemeToggle: the toggle only runs on click,
+        // and leaving this to a React effect meant the first paint advertised
+        // the OS scheme instead of the stored one.
+        var m = document.querySelector('meta[name="color-scheme"]');
+        if (m) m.setAttribute("content", t);
       })();
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />

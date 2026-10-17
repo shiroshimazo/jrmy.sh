@@ -63,6 +63,7 @@
   align-items: center;
   gap: 7px;
   border: 1px solid var(--c-line-strong);
+  border-radius: var(--r-md);
   padding: 4px 10px;
   font-family: var(--f-mono);
   font-size: var(--t-label);

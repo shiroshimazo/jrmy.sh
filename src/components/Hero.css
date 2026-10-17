@@ -3,17 +3,19 @@
   overflow: hidden;
 }
 
-.hero__grid {
-  position: relative;
+/* Single column, left-aligned. The whole hero runs on one 8px gap — every
+   element below adds only a margin where it genuinely needs extra air, so the
+   vertical rhythm stays a single value instead of drifting per-element. */
+.hero__inner {
   display: flex;
   flex-direction: column;
-  gap: var(--s-xl);
-  padding-block: var(--s-2xl);
+  align-items: flex-start;
+  gap: var(--s-sm);
 }
 
 .hero__portrait {
-  margin: 0;
-  width: 120px;
+  margin: 0 0 var(--s-sm);
+  width: 96px;
 }
 
 .hero__portrait picture {
@@ -24,54 +26,89 @@
   width: 100%;
   /* The height attribute on the <img> is a presentational hint, so it makes
      the height definite and aspect-ratio stops governing — the box went
-     120x360 and the 50% radius rendered an ellipse. height:auto hands the
-     ratio back while keeping the attribute for layout reservation. */
+     96x360 and the 50% radius rendered an ellipse. height:auto hands the ratio
+     back while keeping the attribute for layout reservation. */
   height: auto;
   aspect-ratio: 1 / 1;
   object-fit: cover;
   border-radius: 50%;
   background: var(--c-surface);
-  /* Desaturating on a filter transition re-rasterizes the image every frame
-     of the hover. Composited on its own layer it still costs a texture
-     upload per frame, so the static filter stays — only the transition does
-     not. The visual change is the portrait snapping to colour on hover
-     instead of fading; the filter itself is unchanged at rest. */
+  /* Desaturating on a filter transition re-rasterizes the image every frame of
+     the hover, so the static filter stays and only the transform transitions.
+     The portrait snaps to colour instead of fading — same end state, cheaper. */
   filter: grayscale(1) contrast(1.05);
   transition: transform var(--dur) var(--ease);
 }
 
 .hero__portrait:hover img {
   filter: grayscale(0) contrast(1);
+  transform: scale(1.02);
 }
 
 .hero__portrait-cap {
   display: none;
 }
 
-.hero__body {
+.hero__name {
+  /* Sans, not the Instrument Serif display face. A serif name fights the body
+     copy underneath it; the sans keeps the hero reading as one voice and puts
+     the contrast on the bio instead. */
+  font-family: var(--f-sans);
+  font-weight: 500;
+  /* Undersized on purpose. This hero is a profile card: the bio carries the
+     reading, so the name's job is to be findable, not to dominate the fold. */
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+}
+
+.hero__role {
+  margin: 2px 0 0;
+  color: var(--c-secondary);
+  font-size: 0.95rem;
+}
+
+.hero__bio {
   display: flex;
   flex-direction: column;
-  gap: var(--s-md);
-  align-items: flex-start;
+  gap: var(--s-sm);
+  max-width: 62ch;
+  margin-top: var(--s-sm);
 }
 
-.hero__eyebrow {
+.hero__lead {
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
+.hero__note {
   color: var(--c-secondary);
-}
-
-.hero__display {
-  text-transform: none;
-}
-
-.hero__dot {
-  color: var(--c-secondary);
-}
-
-.hero__tagline {
-  max-width: 52ch;
   font-size: 1rem;
-  line-height: 1.65;
+  line-height: 1.5;
+}
+
+.hero__socials {
+  display: flex;
+  align-items: center;
+  gap: var(--s-md);
+  list-style: none;
+  margin: var(--s-sm) 0 0;
+  padding: 0;
+}
+
+/* The glyph is 20px; the padding is invisible and exists only so the hit
+   target clears 32px on a phone. Visual spacing between marks is unchanged —
+   the flex gap already provides it. */
+.hero__social {
+  display: grid;
+  place-items: center;
+  padding: 6px;
   color: var(--c-secondary);
+  transition: color var(--dur) var(--ease);
+}
+
+.hero__social:hover {
+  color: var(--c-primary);
 }
 
 .hero__cta {
@@ -79,4 +116,96 @@
   gap: var(--s-md);
   flex-wrap: wrap;
   margin-top: var(--s-sm);
+}
+
+/* --- Work --- */
+/* Still a real break from the buttons above — halving 64px to 32px was the
+   single biggest win, but collapsing it entirely loses the section change. */
+.hero__work {
+  width: 100%;
+  margin-top: var(--s-lg);
+}
+
+.hero__work-head {
+  color: var(--c-secondary);
+  margin-bottom: var(--s-sm);
+}
+
+.work {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* period — dotted leader — role. The leader takes the slack so the role lands
+   hard against the right edge however long the period string is. */
+.work__item {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.work__period {
+  color: var(--c-secondary);
+  font-family: var(--f-mono);
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.work__leader {
+  flex: 1 1 auto;
+  min-width: 16px;
+  border-bottom: 1px dotted var(--c-line-strong);
+  transform: translateY(-3px);
+}
+
+.work__details {
+  text-align: right;
+  font-size: 0.9rem;
+}
+
+/* Same chip treatment as .skills__item and .card__chip so the tag reads as
+   part of the site's vocabulary rather than a one-off badge. */
+.work__tag {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 8px;
+  padding: 1px 6px;
+  border: 1px solid var(--c-line-strong);
+  border-radius: var(--r-md);
+  color: var(--c-secondary);
+  font-family: var(--f-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  vertical-align: 2px;
+}
+
+.work__role {
+  color: var(--c-primary);
+}
+
+.work__at,
+.work__company {
+  color: var(--c-secondary);
+}
+
+@media (max-width: 600px) {
+  /* No room for period — leader — role on one line; the period becomes a
+     caption above the role. */
+  .work__item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+
+  .work__leader {
+    display: none;
+  }
+
+  .work__details {
+    text-align: left;
+  }
 }
