@@ -5,6 +5,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  /* Beside flexible siblings it must hold its size rather than absorb the
+     shrink they hand it. */
+  flex: none;
   color: var(--c-primary);
   border: none;
   border-radius: var(--r-md);

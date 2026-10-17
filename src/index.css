@@ -100,6 +100,18 @@
   text-rendering: optimizeLegibility;
 }
 
+/* Phone dock metrics. Overridden here rather than in Navbar.css because .app
+   spends the same two values reserving clearance below the footer — setting
+   them on one side only would leave the dock sitting in the gap it reserved
+   for itself. 56px + 32px of stand-off is a lot of a small viewport spent on
+   chrome that earns none of it back. */
+@media (max-width: 520px) {
+  :root {
+    --dock-h: 52px;
+    --dock-gap: 16px;
+  }
+}
+
 /* Smooth theme transition on the elements that carry color.
    Scoped off html/body deliberately: a color transition on the root element
    invalidates paint for the entire document every frame it runs, so the page

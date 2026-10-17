@@ -69,17 +69,44 @@
   align-self: stretch;
   margin-block: var(--s-md);
   background: var(--c-line);
+  flex: none;
 }
 
-/* Narrow phones: tighten the gutters so all four links and the toggle stay on
-   one row at 360px. */
+/* Phone: the dock stops hugging its content and stretches to the viewport,
+   with the four links sharing the slack as equal cells. That is what makes it
+   flexible — a longer label ("Projects") takes its share and the others give
+   up a little, instead of the dock overflowing or a label being truncated.
+   `min-width: 0` is what lets the cells shrink past their content width at
+   all; without it flex items refuse to go below min-content. */
 @media (max-width: 520px) {
   .nav {
+    width: calc(100vw - var(--dock-gap) * 2);
+    max-width: none;
+    gap: var(--s-sm);
+  }
+
+  .nav__list {
+    flex: 1;
+    min-width: 0;
     gap: 2px;
-    padding-inline: var(--s-sm);
   }
 
   .nav__link {
-    padding: var(--s-sm);
+    flex: 1;
+    min-width: 0;
+    justify-content: center;
+    padding: var(--s-sm) 4px;
+  }
+
+  .nav__divider {
+    margin-block: var(--s-sm);
+  }
+}
+
+/* Smallest common phones. Four labels plus a toggle is genuinely tight at
+   320px, so the label steps down rather than letting the cells clip. */
+@media (max-width: 380px) {
+  .nav__link {
+    font-size: 0.68rem;
   }
 }
