@@ -76,8 +76,11 @@
    with the four links sharing the slack as equal cells. That is what makes it
    flexible — a longer label ("Projects") takes its share and the others give
    up a little, instead of the dock overflowing or a label being truncated.
-   `min-width: 0` is what lets the cells shrink past their content width at
-   all; without it flex items refuse to go below min-content. */
+
+   The flex items of .nav__list are the <li>s, not the anchors inside them.
+   flex: 1 on .nav__link alone does nothing: the list grows, the anchors stay
+   content-sized, and all the slack pools at one end as a dead gap. `min-width:
+   0` is what lets the cells shrink past min-content at all. */
 @media (max-width: 520px) {
   .nav {
     width: calc(100vw - var(--dock-gap) * 2);
@@ -89,6 +92,12 @@
     flex: 1;
     min-width: 0;
     gap: 2px;
+  }
+
+  .nav__list > li {
+    display: flex;
+    flex: 1 1 0;
+    min-width: 0;
   }
 
   .nav__link {
