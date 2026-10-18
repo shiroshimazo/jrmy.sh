@@ -3,14 +3,19 @@ import { useClickSound } from "../hooks/useClickSound";
 import "./ProjectCard.css";
 
 export default function ProjectCard({ project }) {
-  const { title, tag, year, description, stack, href, repo, upcoming } =
+  const { title, category, tag, year, description, stack, href, repo, upcoming } =
     project;
   const play = useClickSound();
 
   return (
     <article className={`card ${upcoming ? "card--upcoming" : ""}`}>
       <div className="card__head">
-        <span className="label">{tag}</span>
+        <div className="card__badges">
+          {category && (
+            <span className="label card__category">{category}</span>
+          )}
+          <span className="label">{tag}</span>
+        </div>
         <span className="label card__year">{year}</span>
       </div>
 

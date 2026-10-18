@@ -25,7 +25,7 @@ export const profile = {
 
 export const skills = [
   { group: "Languages", items: ["Java", "C", "C++", "PHP", "JavaScript"] },
-  { group: "Frameworks", items: ["React", "Vite", "Next.js", "Tailwind"] },
+  { group: "Frameworks", items: ["React", "Next.js", "Tailwind"] },
   { group: "Backend", items: ["Node.js", "Supabase", "MySQL"] },
   { group: "Design", items: ["Figma"] },
   { group: "AI", items: ["Codex", "Claude Code", "OpenCode"] },
@@ -74,6 +74,7 @@ export const experience = [
 export const projects = [
   {
     title: "Order Management System",
+    category: "School Projects",
     tag: "Application System",
     year: "2024",
     description:
@@ -83,6 +84,7 @@ export const projects = [
   },
   {
     title: "Employee Management System",
+    category: "School Projects",
     tag: "CLI-Based System",
     year: "2026",
     description:
@@ -92,6 +94,7 @@ export const projects = [
   },
   {
     title: "Order Management System V2",
+    category: "School Projects",
     tag: "Web-Based System",
     year: "2026",
     description:
@@ -101,6 +104,7 @@ export const projects = [
   },
   {
     title: "Pet Adoption System",
+    category: "School Projects",
     tag: "UI Mockup",
     year: "2026",
     description:
@@ -110,6 +114,7 @@ export const projects = [
   },
   {
     title: "Quiz Application System",
+    category: "School Projects",
     tag: "Application System",
     year: "2026",
     description:
@@ -119,6 +124,7 @@ export const projects = [
   },
   {
     title: "RFID Student Attendance System",
+    category: "School Projects",
     tag: "IoT-Based System",
     year: "2026",
     description:

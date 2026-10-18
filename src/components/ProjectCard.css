@@ -13,6 +13,23 @@
   display: flex;
   justify-content: space-between;
   align-items: baseline;
+  gap: var(--s-md);
+}
+
+.card__badges {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--s-sm);
+}
+
+/* The broad category (e.g. School Projects) reads as a badge; the per-project
+   tag stays plain text so the two don't compete at the same weight. */
+.card__category {
+  color: var(--c-secondary);
+  border: 1px solid var(--c-line-strong);
+  border-radius: var(--r-md);
+  padding: 2px 8px;
 }
 
 .card__year {

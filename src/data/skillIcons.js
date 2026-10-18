@@ -16,7 +16,6 @@ import {
   React,
   Supabase,
   Tailwind,
-  Vite,
 } from "../components/BrandMarks";
 
 // TypeScript and ESP32 have no inlined mark yet, so they still come from the
@@ -28,7 +27,6 @@ const icons = {
   PHP: Php,
   "JavaScript": Javascript,
   React,
-  Vite,
   "Next.js": Nextjs,
   Tailwind,
   "Node.js": Nodedotjs,

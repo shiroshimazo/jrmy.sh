@@ -1,65 +1,72 @@
-/* Full-screen intro loader — wave bars in the monochrome design language. */
+/* Intro curtain — greetings, then the portrait and name, then the page lifts
+   into view from the top edge. */
 .loader {
   position: fixed;
   inset: 0;
   z-index: 1000;
+}
+
+/* One flat colour, so the wipe is a translate and nothing repaints. */
+.loader__curtain {
+  position: absolute;
+  inset: 0;
+  background: var(--c-neutral);
+  will-change: transform;
+}
+
+.loader__stage {
+  position: absolute;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--c-neutral);
+  color: var(--c-primary);
+  font-size: clamp(1.35rem, 4vw, 2rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
 }
 
-.loader__inner {
-  display: flex;
-  flex-direction: column;
+.loader__line {
+  display: inline-flex;
   align-items: center;
-  gap: var(--s-md);
+  gap: 10px;
+  margin: 0;
 }
 
-.loader__brand {
+.loader__word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.loader__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.loader__pronoun {
   color: var(--c-secondary);
 }
 
-/* Wave — 5 bars, ~12.5% wide each, scaling vertically. */
-.loader__wave {
-  --duration: 1s;
-  --delay: 110ms;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  width: 88px;
-  height: 44px;
-  color: var(--c-primary);
+/* Same desaturated portrait treatment as the hero, so the reveal doesn't snap
+   from grey to colour the moment the curtain clears. */
+.loader__avatar {
+  width: 48px;
+  height: 48px;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--c-surface);
+  filter: grayscale(1) contrast(1.05);
 }
 
-.loader__bar {
-  display: inline-block;
-  width: 7px;
-  border-radius: 999px;
-  background: currentColor;
-  transform-origin: center;
-  animation: loader-wave var(--duration) ease-in-out infinite;
+.loader__avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-@keyframes loader-wave {
-  0%,
-  100% {
-    transform: scaleY(1);
-  }
-  50% {
-    transform: scaleY(0.6);
-  }
-}
-
-.loader__caption {
-  color: var(--c-muted-2);
-  letter-spacing: 0.2em;
-}
-
-/* Reduced motion — hold bars steady, the brand/caption still convey state. */
-@media (prefers-reduced-motion: reduce) {
-  .loader__bar {
-    animation: none;
-  }
+.loader__name {
+  font-weight: 500;
 }
