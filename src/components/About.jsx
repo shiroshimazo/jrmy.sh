@@ -48,7 +48,7 @@ export default function About() {
           whileInView="show"
           viewport={VIEWPORT}
         >
-          <span className="label about__pane-title">Tech Stack</span>
+          <h3 className="about__pane-title">Tech Stack</h3>
           <ul className="skills">
             {skills.map((g) => (
               <li key={g.group} className="skills__group">

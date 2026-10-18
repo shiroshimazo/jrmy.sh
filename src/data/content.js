@@ -25,9 +25,12 @@ export const profile = {
 
 export const skills = [
   { group: "Languages", items: ["Java", "C", "C++", "PHP", "JavaScript"] },
-  { group: "Frameworks", items: ["React", "Next.js", "Tailwind"] },
+  {
+    group: "Frameworks & Libraries",
+    items: ["React", "Next.js", "Tailwind CSS", "Motion", "shadcn/ui"],
+  },
   { group: "Backend", items: ["Node.js", "Supabase", "MySQL"] },
-  { group: "Design", items: ["Figma"] },
+  { group: "Design", items: ["Figma", "Canva"] },
   { group: "AI", items: ["Codex", "Claude Code", "OpenCode"] },
   { group: "VCS Tool", items: ["Git"] },
 ];

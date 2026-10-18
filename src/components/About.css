@@ -1,13 +1,25 @@
 .about__pane {
   display: flex;
   flex-direction: column;
-  gap: var(--s-md);
+  /* The heading carries its own bottom margin, so the gap between it and the
+     groups below is that one value rather than gap + margin stacked. */
+  gap: 0;
   margin-bottom: var(--s-xl);
 }
 
+/* Same hand as the section headings — display serif, weight 400 — so the stack
+   block announces itself the way Projects and Contact do. The UA bold and
+   margin-top a bare h3 would bring are both cancelled. */
 .about__pane-title {
-  color: var(--c-secondary);
-  margin-bottom: var(--s-sm);
+  font-family: var(--f-display);
+  font-size: var(--t-h1);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  color: var(--c-primary);
+  max-width: 28ch;
+  margin: 0 0 var(--s-lg);
+  text-wrap: balance;
 }
 
 .skills {
@@ -20,7 +32,10 @@
 
 .skills__group {
   display: grid;
-  grid-template-columns: 110px 1fr;
+  /* Wide enough for the longest group label ("Frameworks & Libraries") to set
+     on one line. Every group shares this track, so the chip columns below stay
+     on one left edge instead of going ragged per group. */
+  grid-template-columns: 172px 1fr;
   gap: var(--s-md);
   align-items: baseline;
   padding-block: var(--s-sm);
