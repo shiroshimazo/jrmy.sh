@@ -95,7 +95,7 @@ export default function Hero() {
                   rel="noreferrer"
                   aria-label={s.label}
                 >
-                  <HugeiconsIcon icon={Icon} size={20} strokeWidth={1.5} />
+                  <HugeiconsIcon icon={Icon} size={29} strokeWidth={1.5} />
                 </a>
               </li>
             );

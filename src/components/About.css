@@ -164,21 +164,27 @@
      tick for no visual gain — the scrim already carries the separation. */
 }
 
+/* No fixed aspect ratio: the certs are not all the same shape (the school ones
+   are 4:5 portrait, the seminar certificate is landscape) and a hard ratio
+   letterboxes whichever one it was not drawn for. The frame hugs the image
+   instead and both axes are capped, so the tall ones are unchanged from here. */
 .cert-modal__frame {
   position: relative;
-  aspect-ratio: 4 / 5;
-  height: min(86vh, 760px);
-  max-width: 100%;
+  max-width: min(100%, 1100px);
+  max-height: min(86vh, 760px);
   background: var(--c-surface);
   border: 1px solid var(--c-line-strong);
   border-radius: var(--r-lg);
   box-shadow: 0 24px 80px var(--c-scrim);
+  overflow: hidden;
 }
 
 .cert-modal__img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+  display: block;
+  max-width: 100%;
+  max-height: min(86vh, 760px);
+  width: auto;
+  height: auto;
   border-radius: var(--r-lg);
 }
 

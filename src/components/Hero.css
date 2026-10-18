@@ -1,20 +1,24 @@
 .hero {
   position: relative;
   overflow: hidden;
+  /* Tighter than the site-wide --s-sm. The hero stacks seven blocks and has to
+     read as one profile card, so the rhythm between them is 2px under the
+     section default rather than the section default itself. */
+  --hero-gap: 6px;
 }
 
-/* Single column, left-aligned. The whole hero runs on one 8px gap — every
-   element below adds only a margin where it genuinely needs extra air, so the
-   vertical rhythm stays a single value instead of drifting per-element. */
+/* Single column, left-aligned. Every element below adds only a margin where it
+   genuinely needs extra air, so the vertical rhythm stays one value instead of
+   drifting per-element. */
 .hero__inner {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--s-sm);
+  gap: var(--hero-gap);
 }
 
 .hero__portrait {
-  margin: 0 0 var(--s-sm);
+  margin: 0 0 var(--hero-gap);
   width: 96px;
 }
 
@@ -71,9 +75,9 @@
 .hero__bio {
   display: flex;
   flex-direction: column;
-  gap: var(--s-sm);
+  gap: var(--hero-gap);
   max-width: 62ch;
-  margin-top: var(--s-sm);
+  margin-top: var(--hero-gap);
 }
 
 .hero__lead {
@@ -92,17 +96,18 @@
   align-items: center;
   gap: var(--s-md);
   list-style: none;
-  margin: var(--s-sm) 0 0;
+  margin: var(--hero-gap) 0 0;
   padding: 0;
 }
 
-/* The glyph is 20px; the padding is invisible and exists only so the hit
-   target clears 32px on a phone. Visual spacing between marks is unchanged —
-   the flex gap already provides it. */
+/* The glyph is 29px; the padding is invisible and exists only so the hit
+   target clears 32px on a phone — 29 + 6 lands at 35, and a 29px box is under
+   the recommended minimum. Visual spacing between marks is unchanged; the flex
+   gap already provides it. */
 .hero__social {
   display: grid;
   place-items: center;
-  padding: 6px;
+  padding: 3px;
   color: var(--c-secondary);
   transition: color var(--dur) var(--ease);
 }
@@ -115,26 +120,28 @@
   display: flex;
   gap: var(--s-md);
   flex-wrap: wrap;
-  margin-top: var(--s-sm);
+  margin-top: var(--hero-gap);
 }
 
 /* --- Work --- */
 /* Still a real break from the buttons above — halving 64px to 32px was the
-   single biggest win, but collapsing it entirely loses the section change. */
+   single biggest win, and the 24px here keeps that break while staying in the
+   same range as the tightened rhythm above. */
 .hero__work {
   width: 100%;
-  margin-top: var(--s-lg);
+  margin-top: 24px;
 }
 
 .hero__work-head {
   color: var(--c-secondary);
-  margin-bottom: var(--s-sm);
+  font-size: 0.78rem;
+  margin-bottom: var(--s-md);
 }
 
 .work {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -151,7 +158,7 @@
 .work__period {
   color: var(--c-secondary);
   font-family: var(--f-mono);
-  font-size: 0.75rem;
+  font-size: 0.82rem;
   white-space: nowrap;
 }
 
@@ -164,7 +171,7 @@
 
 .work__details {
   text-align: right;
-  font-size: 0.9rem;
+  font-size: 1.02rem;
 }
 
 /* Same chip treatment as .skills__item and .card__chip so the tag reads as
@@ -172,13 +179,13 @@
 .work__tag {
   display: inline-flex;
   align-items: center;
-  margin-right: 8px;
-  padding: 1px 6px;
+  margin-right: 10px;
+  padding: 2px 7px;
   border: 1px solid var(--c-line-strong);
   border-radius: var(--r-md);
   color: var(--c-secondary);
   font-family: var(--f-mono);
-  font-size: 0.68rem;
+  font-size: 0.74rem;
   letter-spacing: 0.06em;
   vertical-align: 2px;
 }

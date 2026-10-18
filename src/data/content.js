@@ -1,5 +1,6 @@
 import gr11cert from "../assets/gr11cert.jpg";
 import gr12cert from "../assets/gr12cert.jpg";
+import ncbaPmCert from "../assets/ncba-pm-cert.png";
 
 export const profile = {
   name: "Jeremy Malana",
@@ -42,6 +43,14 @@ export const experience = [
     company: "BestLink College of the Philippines",
     summary:
       "Currently pursuing a Bachelor of Science in Information Technology, focusing on software development and digital technologies.",
+  },
+  {
+    period: "Oct 2026",
+    role: "Project Management 101 — ClickUp",
+    company: "National College of Business and Arts (NCBA), Fairview Campus",
+    summary:
+      "Seminar certificate covering the fundamentals of project management — how to plan, organize and track projects and tasks with ClickUp.",
+    cert: ncbaPmCert,
   },
   {
     period: "Oct 2024 — Now",
