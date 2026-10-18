@@ -1,36 +1,13 @@
-.about__grid {
-  display: flex;
-  flex-direction: column;
-  gap: var(--s-xl);
-  margin-bottom: var(--s-xl);
-}
-
 .about__pane {
   display: flex;
   flex-direction: column;
   gap: var(--s-md);
+  margin-bottom: var(--s-xl);
 }
 
 .about__pane-title {
   color: var(--c-secondary);
   margin-bottom: var(--s-sm);
-}
-
-.about__facts {
-  margin: var(--s-md) 0 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--s-lg);
-}
-
-.about__facts div {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.about__fact {
-  color: var(--c-primary);
 }
 
 .skills {

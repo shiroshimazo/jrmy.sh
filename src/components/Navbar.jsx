@@ -7,7 +7,7 @@ import "./Navbar.css";
 
 const links = [
   { id: "home", label: "Home" },
-  { id: "about", label: "About" },
+  { id: "about", label: "Skill" },
   { id: "projects", label: "Projects" },
   { id: "contact", label: "Contact" },
 ];

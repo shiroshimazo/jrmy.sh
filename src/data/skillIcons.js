@@ -1,60 +1,56 @@
+import { SiEspressif, SiTypescript } from "react-icons/si";
 import {
-  SiC,
-  SiCplusplus,
-  SiPhp,
-  SiJavascript,
-  SiTypescript,
-  SiReact,
-  SiVite,
-  SiNextdotjs,
-  SiTailwindcss,
-  SiNodedotjs,
-  SiSupabase,
-  SiMysql,
-  SiEspressif,
-  SiFigma,
-  SiClaudecode,
-  SiOpencode,
-  SiGit,
-} from "react-icons/si";
-import { FaJava } from "react-icons/fa";
-// Simple Icons carries no OpenAI mark, so Codex borrows Remix's.
-import { RiOpenaiFill } from "react-icons/ri";
+  C,
+  ClaudeCode,
+  Codex,
+  Cplusplus,
+  Figma,
+  Git,
+  Java,
+  Javascript,
+  Mysql,
+  Nextjs,
+  Nodedotjs,
+  Opencode,
+  Php,
+  React,
+  Supabase,
+  Tailwind,
+  Vite,
+} from "../components/BrandMarks";
 
-/**
- * Maps a skill label to its brand icon. Keys mirror the strings in
- * `skills[].items` and `projects[].stack` from content.js.
- */
+// TypeScript and ESP32 have no inlined mark yet, so they still come from the
+// icon package rather than being drawn here.
 const icons = {
-  Java: FaJava,
-  C: SiC,
-  "C++": SiCplusplus,
-  PHP: SiPhp,
-  JavaScript: SiJavascript,
+  Java,
+  C,
+  "C++": Cplusplus,
+  PHP: Php,
+  "JavaScript": Javascript,
+  React,
+  Vite,
+  "Next.js": Nextjs,
+  Tailwind,
+  "Node.js": Nodedotjs,
+  Supabase,
+  MySQL: Mysql,
+  Figma,
+  Codex,
+  "Claude Code": ClaudeCode,
+  OpenCode: Opencode,
+  Git,
   TypeScript: SiTypescript,
-  React: SiReact,
-  Vite: SiVite,
-  "Next.js": SiNextdotjs,
-  Tailwind: SiTailwindcss,
-  "Node.js": SiNodedotjs,
-  Supabase: SiSupabase,
-  MySQL: SiMysql,
   ESP32: SiEspressif,
-  Figma: SiFigma,
-  Codex: RiOpenaiFill,
-  "Claude Code": SiClaudecode,
-  OpenCode: SiOpencode,
-  Git: SiGit,
 };
 
 /** Labels that share a mark with an entry above. */
 const aliases = {
   // Java's UI toolkits ship with the language and have no separate brand mark.
-  javaswing: FaJava,
-  javafx: FaJava,
-  "tailwind css": SiTailwindcss,
+  javaswing: Java,
+  javafx: Java,
+  "tailwind css": Tailwind,
   // Earlier copy of the site spelled it with a space.
-  "open code": SiOpencode,
+  "open code": Opencode,
 };
 
 // Project stacks and the skills list don't always agree on case
@@ -63,7 +59,10 @@ const byKey = new Map(
   Object.entries(icons).map(([label, Icon]) => [label.toLowerCase(), Icon])
 );
 
-/** Returns the icon component for a label, or undefined if it has none. */
+/**
+ * Maps a skill label to its brand mark. Keys mirror the strings in
+ * `skills[].items` and `projects[].stack` from content.js.
+ */
 export function getSkillIcon(label) {
   const key = label.toLowerCase();
   return byKey.get(key) ?? aliases[key];

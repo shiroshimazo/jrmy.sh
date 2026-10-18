@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
-import SectionTitle from "./SectionTitle";
-import { profile, skills, experience } from "../data/content";
+import { skills, experience } from "../data/content";
 import { getSkillIcon } from "../data/skillIcons";
 import { EASE, VIEWPORT } from "./motion/motion-presets";
 import { useClickSound } from "../hooks/useClickSound";
@@ -42,64 +41,32 @@ export default function About() {
   return (
     <section id="about" className="section about">
       <div className="container">
-        <SectionTitle
-          index="02"
-          label="About"
-          title="A designer-engineer focused on clarity and craft."
-          lead={profile.intro}
-        />
-
         <motion.div
-          className="about__grid"
-          variants={grid}
+          className="about__pane"
+          variants={cell}
           initial="hidden"
           whileInView="show"
           viewport={VIEWPORT}
         >
-          <motion.div className="about__pane" variants={cell}>
-            <span className="label about__pane-title">Profile</span>
-            <p className="body">
-              I work across the stack but care most about the surface where
-              software meets people. My approach is restrained: clear types,
-              tight spacing, considered motion.
-            </p>
-            <dl className="about__facts">
-              <div>
-                <dt className="label">Based</dt>
-                <dd className="body about__fact">{profile.location}</dd>
-              </div>
-              <div>
-                <dt className="label">Focus</dt>
-                <dd className="body about__fact">Interface systems</dd>
-              </div>
-              <div>
-                <dt className="label">Available</dt>
-                <dd className="body about__fact">Selective freelance</dd>
-              </div>
-            </dl>
-          </motion.div>
-
-          <motion.div className="about__pane" variants={cell}>
-            <span className="label about__pane-title">Skills</span>
-            <ul className="skills">
-              {skills.map((g) => (
-                <li key={g.group} className="skills__group">
-                  <span className="label skills__group-title">{g.group}</span>
-                  <ul className="skills__items">
-                    {g.items.map((s) => {
-                      const Icon = getSkillIcon(s);
-                      return (
-                        <li key={s} className="skills__item">
-                          {Icon && <Icon className="skills__icon" aria-hidden="true" />}
-                          {s}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
+          <span className="label about__pane-title">Tech Stack</span>
+          <ul className="skills">
+            {skills.map((g) => (
+              <li key={g.group} className="skills__group">
+                <span className="label skills__group-title">{g.group}</span>
+                <ul className="skills__items">
+                  {g.items.map((s) => {
+                    const Icon = getSkillIcon(s);
+                    return (
+                      <li key={s} className="skills__item">
+                        {Icon && <Icon className="skills__icon" aria-hidden="true" />}
+                        {s}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </li>
+            ))}
+          </ul>
         </motion.div>
 
         <div className="about__timeline">
