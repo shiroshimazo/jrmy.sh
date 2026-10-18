@@ -19,6 +19,7 @@ import {
   Shadcnui,
   Supabase,
   Tailwind,
+  Vite,
 } from "../components/BrandMarks";
 
 // TypeScript and ESP32 have no inlined mark yet, so they still come from the
@@ -30,6 +31,7 @@ const icons = {
   PHP: Php,
   "JavaScript": Javascript,
   React,
+  Vite,
   Motion,
   "shadcn/ui": Shadcnui,
   "Next.js": Nextjs,

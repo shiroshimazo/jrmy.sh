@@ -76,6 +76,17 @@ export const experience = [
 
 export const projects = [
   {
+    title: "Paperly",
+    category: "Personal Projects",
+    tag: "Notes App",
+    year: "2026",
+    description:
+      "A local-first Markdown notes app — no account, no server, no network calls. Notes live in the browser, sync across tabs, and install as an offline PWA.",
+    stack: ["React", "Vite", "Tailwind CSS", "Motion"],
+    repo: "https://github.com/shiroshimazo/paperly",
+    href: "https://paperly-notes.vercel.app/",
+  },
+  {
     title: "Order Management System",
     category: "School Projects",
     tag: "Application System",
