@@ -122,7 +122,7 @@ body,
 .nav,
 .card,
 .about__pane,
-.contact__mail,
+.contact__form,
 .footer {
   transition:
     background-color 280ms var(--ease),
@@ -178,7 +178,7 @@ html[data-wiping] .app,
 html[data-wiping] .nav,
 html[data-wiping] .card,
 html[data-wiping] .about__pane,
-html[data-wiping] .contact__mail,
+html[data-wiping] .contact__form,
 html[data-wiping] .footer {
   transition: none;
 }

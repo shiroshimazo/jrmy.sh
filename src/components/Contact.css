@@ -5,28 +5,111 @@
   align-items: stretch;
 }
 
-.contact__mail {
+.contact__form {
   display: flex;
   flex-direction: column;
-  gap: var(--s-md);
+  gap: var(--s-lg);
 }
 
-.contact__email {
-  font-size: clamp(1.5rem, 5vw, 2.6rem);
-  font-family: var(--f-display);
-  font-weight: 400;
-  letter-spacing: -0.02em;
+.contact__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-sm);
+}
+
+/* Surface + a transparent ring rather than a border — the ring survives the
+   background changing on hover, and follows the 3px radius token. */
+.contact__input {
+  width: 100%;
+  min-height: 44px;
+  padding: 12px 14px;
+  font-family: var(--f-sans);
+  font-size: var(--t-body);
+  line-height: 1.5;
+  color: var(--c-primary);
+  background: var(--c-surface);
+  border: 0;
+  border-radius: var(--r-md);
+  box-shadow: 0 0 0 1px var(--c-line);
+  transition: box-shadow var(--dur) var(--ease);
+}
+
+.contact__input::placeholder {
+  color: var(--c-muted);
+}
+
+.contact__input:hover {
+  box-shadow: 0 0 0 1px var(--c-line-strong);
+}
+
+/* Focus keeps the global :focus-visible outline — the ring above is a hover
+   cue, the outline is the keyboard indicator. */
+.contact__input:focus-visible {
+  outline: 1px solid var(--c-primary);
+  outline-offset: 3px;
+}
+
+.contact__input--area {
+  min-height: 160px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.contact__submit {
+  display: flex;
+  align-items: center;
+  gap: var(--s-md);
+  flex-wrap: wrap;
+}
+
+/* Reserved height so the line appearing after a submit does not shove the
+   section below it. */
+.contact__status {
+  margin: 0;
+  min-height: 1.5em;
+  font-family: var(--f-sans);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--c-secondary);
+  text-wrap: pretty;
+}
+
+.contact__status--sent,
+.contact__status--error,
+.contact__status--inactive {
+  color: var(--c-primary);
+}
+
+/* Escape hatch shown when the post fails — same message, same fields, opened
+   in the visitor's own mail client. */
+.contact__fallback {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-sm);
+  padding-bottom: 4px;
+  font-family: var(--f-mono);
+  font-size: var(--t-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-primary);
   border-bottom: 1px solid var(--c-line-strong);
-  padding-bottom: var(--s-sm);
-  word-break: break-word;
   transition: border-color var(--dur) var(--ease);
 }
-.contact__email:hover {
+
+.contact__fallback:hover {
   border-bottom-color: var(--c-primary);
 }
 
-.contact__actions {
-  margin-top: var(--s-md);
+/* Honeypot — kept in the layout tree so bots fill it, but out of sight and
+   out of the tab order. */
+.contact__trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .contact__side {
@@ -39,6 +122,19 @@
   display: flex;
   flex-direction: column;
   gap: var(--s-sm);
+}
+
+.contact__email {
+  font-family: var(--f-mono);
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+  word-break: break-word;
+  border-bottom: 1px solid var(--c-line-strong);
+  padding-bottom: var(--s-sm);
+  transition: border-color var(--dur) var(--ease);
+}
+.contact__email:hover {
+  border-bottom-color: var(--c-primary);
 }
 
 .contact__socials {

@@ -15,13 +15,21 @@ export const profile = {
   intro:
     "Second-year BSIT student at BestLink College, shipping full-stack work with React, Node and MySQL. Alongside coursework I run product listings and paid campaigns for a small e-commerce brand, which is where I learned that polish and performance are the same problem.",
   location: "Remote",
-  email: "jrmymln@gmail.com",
+  email: "jrmymlna@gmail.com",
   socials: [
     { label: "Facebook", href: "https://www.facebook.com/yosh1mur4h" },
     { label: "GitHub", href: "https://github.com/shiroshimazo" },
     { label: "Instagram", href: "https://www.instagram.com/jrmy.xsh/" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/jrmymlna/" },
   ],
+};
+
+// Contact form delivery — FormSubmit. No account, no API key, no backend:
+// the endpoint is just the destination address, and the browser posts the
+// fields straight to it. The first submission sends a confirmation email to
+// profile.email — click that link once and the form is live.
+export const contact = {
+  endpoint: `https://formsubmit.co/ajax/${profile.email}`,
 };
 
 export const skills = [

@@ -27,6 +27,15 @@
   scale: 1;
 }
 
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn:disabled:active {
+  scale: 1;
+}
+
 /* primary — the single reserved interaction (tertiary white on black).
    Depth comes from a transparent shadow ring so the ring survives the
    background going transparent on hover. */
