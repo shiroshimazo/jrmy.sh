@@ -1,14 +1,22 @@
-/* GitHub contributions — monochrome, matches the xAI design tokens.
-   The panel is an elevated surface (the whole grid is one link), so its
+/* GitHub contributions — monochrome, matches the xAI design tokens. */
+
+/* The panel is an elevated surface (the whole grid is one link), so its
    depth ring is a stacked transparent shadow rather than a solid border —
    it survives the theme switch without a separate colour per theme. */
 .ghc {
+  /* Cell metrics — the graph is a fixed-size strip that scrolls sideways
+     rather than reflowing, so every month group keeps the same cell size
+     and the rows stay aligned across groups. */
+  --ghc-cell-w: 10px;
+  --ghc-cell-h: 14px;
+  --ghc-cell-gap: 3px;
+  --ghc-month-gap: 12px;
   margin-top: var(--s-lg);
   border-radius: var(--r-lg);
   background: var(--c-surface);
   padding: 24px;
   box-shadow: var(--shadow-border);
-  /* Isolate the 371-cell subtree: scrolling the page no longer invalidates
+  /* Isolate the cell subtree: scrolling the page no longer invalidates
      layout or paint outside this box. */
   contain: layout paint style;
   transition:
@@ -53,14 +61,46 @@
   padding-bottom: 4px;
   color: inherit;
   scrollbar-width: thin;
+  scrollbar-color: var(--c-line-strong) transparent;
 }
 
-.ghc__months {
+/* Thin bar under the strip — the stock scrollbar eats a chunk of the
+   panel and breaks the grid's rhythm. */
+.ghc__scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.ghc__scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ghc__scroll::-webkit-scrollbar-thumb {
+  background: var(--c-line-strong);
+  border-radius: 999px;
+}
+
+/* The chart is a row of month groups. Each group holds its week-columns
+   (7 rows, Sun–Sat) with the month label centred underneath — the wider
+   gap between groups is what separates one month from the next. */
+.ghc__chart {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ghc-month-gap);
+  width: max-content;
+}
+
+.ghc__group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ghc__weeks {
   display: grid;
-  grid-template-columns: repeat(53, 1fr);
-  gap: 3px;
-  min-width: 720px;
-  margin-bottom: 6px;
+  grid-template-rows: repeat(7, var(--ghc-cell-h));
+  grid-auto-flow: column;
+  grid-auto-columns: var(--ghc-cell-w);
+  gap: var(--ghc-cell-gap);
 }
 
 .ghc__month {
@@ -70,15 +110,7 @@
   text-transform: uppercase;
   color: var(--c-secondary);
   white-space: nowrap;
-}
-
-.ghc__grid {
-  display: grid;
-  grid-template-rows: repeat(7, 1fr);
-  grid-auto-flow: column;
-  grid-auto-columns: 1fr;
-  gap: 3px;
-  min-width: 720px;
+  text-align: center;
 }
 
 /* Shade is expressed as two numbers rather than a finished colour:
@@ -89,8 +121,8 @@
 .ghc__cell {
   --tint: 6%;
   --dim: 1;
-  aspect-ratio: 1;
-  width: 100%;
+  width: var(--ghc-cell-w);
+  height: var(--ghc-cell-h);
   border-radius: var(--r-lg);
   background: color-mix(in srgb, var(--c-primary) calc(var(--tint) * var(--dim)), transparent);
 }
@@ -108,34 +140,34 @@
    This dims through --dim rather than `opacity` or `filter`. The fade-in
    keyframes own `opacity` with a `both` fill that would outrank a plain
    declaration, and `filter: opacity()` put a filter render surface on all
-   371 cells at once — for a hover effect with no transition on it.
-   No transition on the cells: that meant 371 style watchers and a
-   371-element transition batch on every legend hover. */
-.ghc__grid[data-focus="0"] .ghc__cell:not([data-level="0"]),
-.ghc__grid[data-focus="1"] .ghc__cell:not([data-level="1"]),
-.ghc__grid[data-focus="2"] .ghc__cell:not([data-level="2"]),
-.ghc__grid[data-focus="3"] .ghc__cell:not([data-level="3"]),
-.ghc__grid[data-focus="4"] .ghc__cell:not([data-level="4"]) {
+   427 cells at once — for a hover effect with no transition on it.
+   No transition on the cells: that meant 427 style watchers and a
+   427-element transition batch on every legend hover. */
+.ghc__chart[data-focus="0"] .ghc__cell:not([data-level="0"]),
+.ghc__chart[data-focus="1"] .ghc__cell:not([data-level="1"]),
+.ghc__chart[data-focus="2"] .ghc__cell:not([data-level="2"]),
+.ghc__chart[data-focus="3"] .ghc__cell:not([data-level="3"]),
+.ghc__chart[data-focus="4"] .ghc__cell:not([data-level="4"]) {
   --dim: 0.12;
 }
 
 /* Staggered fade-in — each cell lights up in turn, start → end.
    `both` keeps cells hidden through their delay and holds the final
    state after, so the grid doesn't snap back to opacity 0.
-   2ms per cell: the last of 371 lands at 740ms. At the old 6ms the final
+   2ms per cell: the last of 427 lands at 854ms. At the old 6ms the final
    cell was still fading in 2.2s after the section scrolled into view.
 
    Every cell with a running animation gets promoted to its own compositor
    layer, so the number animating *at the same moment* is what costs — not
-   the 371 that exist. At 450ms per cell on a 2ms stagger, ~225 were
+   the 427 that exist. At 450ms per cell on a 2ms stagger, ~225 were
    running simultaneously. The duration is what bounds that window:
    240ms on the same 2ms stagger cuts it to ~120 live layers and still
-   lands the last cell at 740ms.
+   lands the last cell at 854ms.
 
    Opacity only, no scale. Both promote a layer, but opacity re-rasterizes
    nothing per frame while a running transform re-uploads the cell
    texture each frame. */
-.ghc__grid .ghc__cell {
+.ghc__chart .ghc__cell {
   opacity: 0;
   animation: ghc-fade-in 240ms var(--ease) both;
   animation-delay: calc(var(--i, 0) * 2ms);
@@ -150,12 +182,12 @@
   }
 }
 
-/* One shimmer block instead of 371 placeholder cells. The old skeleton
-   mounted 371 nodes, then unmounted every one of them when the payload
+/* One shimmer block instead of 427 placeholder cells. The old skeleton
+   mounted 427 nodes, then unmounted every one of them when the payload
    landed — pure DOM churn during the slowest part of the load. */
 .ghc__skeleton {
-  height: 104px;
-  margin-top: 6px;
+  height: 140px;
+  margin-top: 0;
   border-radius: var(--r-lg);
   background: linear-gradient(
     90deg,
@@ -189,10 +221,10 @@
   color: var(--c-secondary);
 }
 
+/* The legend swatch mirrors the cell shape, scaled down. */
 .ghc__legend .ghc__cell {
-  width: 11px;
-  height: 11px;
-  aspect-ratio: auto;
+  width: 9px;
+  height: 12px;
 }
 
 /* Swatches are hoverable, so they lift a little under the cursor. */
@@ -209,6 +241,11 @@
 @media (max-width: 720px) {
   .ghc {
     padding: 16px;
+    /* Smaller cells so more of the year fits before the sideways scroll. */
+    --ghc-cell-w: 9px;
+    --ghc-cell-h: 12px;
+    --ghc-cell-gap: 3px;
+    --ghc-month-gap: 10px;
   }
 }
 

@@ -13,36 +13,55 @@ const MONTHS = [
   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
 ];
 
-// Group the flat day list into week-columns (rows 0–6 = Sun–Sat).
-function toWeeks(days) {
-  const weeks = [];
-  let week = new Array(7).fill(null);
-  for (const day of days) {
-    const dow = new Date(day.date).getDay();
-    week[dow] = day;
-    if (dow === 6) {
-      weeks.push(week);
-      week = new Array(7).fill(null);
-    }
-  }
-  if (week.some(Boolean)) weeks.push(week);
-  return weeks;
+// "2025-10-19" → local Date. `new Date(str)` parses as UTC midnight, which
+// lands on the previous day for anyone west of UTC — that shifts every cell
+// one row and moves the month boundaries with it.
+function parseDay(str) {
+  const [y, m, d] = str.split("-").map(Number);
+  return new Date(y, m - 1, d);
 }
 
-// A month label sits above the first week-column that opens a new month.
-function monthLabels(weeks) {
-  const labels = [];
-  let last = -1;
-  weeks.forEach((week, i) => {
-    const first = week.find(Boolean);
-    if (!first) return;
-    const m = new Date(first.date).getMonth();
-    if (m !== last) {
-      labels.push({ col: i, name: MONTHS[m] });
-      last = m;
+// The API hands back a trailing 365-day window, which starts mid-month.
+// Trim the ragged head so the chart opens on a month boundary — Nov → Oct
+// — and every group is a whole month.
+function trimToWholeMonths(days) {
+  if (!days.length) return days;
+  const first = parseDay(days[0].date);
+  if (first.getDate() === 1) return days;
+  const start = new Date(first.getFullYear(), first.getMonth() + 1, 1);
+  return days.filter((d) => parseDay(d.date) >= start);
+}
+
+// Group the days into months, and inside each month into the week-columns
+// that month touches. A week straddling two months shows up in both —
+// March's column holds the 29th–31st, April's column holds the 1st–4th —
+// so a month's boxes never hold a day that isn't its own.
+function toMonthGroups(days) {
+  const groups = [];
+  let col = 0;
+  for (const day of days) {
+    const d = parseDay(day.date);
+    const key = `${d.getFullYear()}-${d.getMonth()}`;
+    let group = groups[groups.length - 1];
+    if (!group || group.key !== key) {
+      group = { key, name: MONTHS[d.getMonth()], columns: new Map() };
+      groups.push(group);
     }
-  });
-  return labels;
+    // Sunday of this day's week — the column the day sits in.
+    const sunday = new Date(d.getFullYear(), d.getMonth(), d.getDate() - d.getDay());
+    const weekKey = `${sunday.getFullYear()}-${sunday.getMonth()}-${sunday.getDate()}`;
+    let column = group.columns.get(weekKey);
+    if (!column) {
+      column = { week: new Array(7).fill(null), col };
+      group.columns.set(weekKey, column);
+      col += 1;
+    }
+    column.week[d.getDay()] = day;
+  }
+  return groups.map((g) => ({
+    name: g.name,
+    weeks: [...g.columns.values()],
+  }));
 }
 
 const githubUrl =
@@ -51,7 +70,7 @@ const githubUrl =
 
 // "3 contributions on Jun 17, 2025"
 function tipText(date, count) {
-  const when = new Date(date).toLocaleDateString("en-US", {
+  const when = parseDay(date).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
     year: "numeric",
@@ -119,10 +138,12 @@ export default function GithubContributions() {
     };
   }, []);
 
-  const weeks = data ? toWeeks(data.contributions) : [];
-  const labels = data ? monthLabels(weeks) : [];
-  const ranges = data ? levelRanges(data.contributions) : {};
-  const total = data?.total?.lastYear ?? 0;
+  // The trimmed window is what the graph shows, so the headline counts
+  // what is actually on screen.
+  const days = data ? trimToWholeMonths(data.contributions) : [];
+  const groups = toMonthGroups(days);
+  const ranges = levelRanges(days);
+  const total = days.reduce((sum, d) => sum + Number(d.count || 0), 0);
 
   return (
     <motion.section
@@ -166,35 +187,34 @@ export default function GithubContributions() {
           onViewportEnter={() => setRunId((n) => n + 1)}
           viewport={{ once: true, margin: "0px 0px -8% 0px" }}
         >
-          <div className="ghc__months" aria-hidden="true">
-            {labels.map(({ col, name }) => (
-              <span key={`${name}-${col}`} className="ghc__month" style={{ gridColumn: col + 1 }}>
-                {name}
-              </span>
-            ))}
-          </div>
-
           <div
             key={runId}
-            className="ghc__grid"
+            className="ghc__chart"
             role="img"
             aria-label={`${total} contributions`}
             data-focus={focus === null ? undefined : focus}
             onPointerMove={handlePointer}
             onPointerLeave={() => setTip(null)}
           >
-            {weeks.map((week, w) =>
-              week.map((day, d) => (
-                <span
-                  key={`${w}-${d}`}
-                  className="ghc__cell"
-                  style={{ "--i": w * 7 + d }}
-                  data-level={day ? day.level : "empty"}
-                  data-date={day ? day.date : undefined}
-                  data-count={day ? day.count : undefined}
-                />
-              ))
-            )}
+            {groups.map((group) => (
+              <div className="ghc__group" key={group.name}>
+                <div className="ghc__weeks">
+                  {group.weeks.map(({ week, col }) =>
+                    week.map((day, d) => (
+                      <span
+                        key={`${col}-${d}`}
+                        className="ghc__cell"
+                        style={{ "--i": col * 7 + d }}
+                        data-level={day ? day.level : "empty"}
+                        data-date={day ? day.date : undefined}
+                        data-count={day ? day.count : undefined}
+                      />
+                    ))
+                  )}
+                </div>
+                <span className="ghc__month">{group.name}</span>
+              </div>
+            ))}
           </div>
         </motion.a>
       )}
