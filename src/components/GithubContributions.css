@@ -6,9 +6,10 @@
 .ghc {
   /* Cell metrics — the graph is a fixed-size strip that scrolls sideways
      rather than reflowing, so every month group keeps the same cell size
-     and the rows stay aligned across groups. */
-  --ghc-cell-w: 10px;
-  --ghc-cell-h: 14px;
+     and the rows stay aligned across groups.
+     One size token for both axes: a square cell is the whole look, and
+     separate width/height tokens is how it drifted into 10x14 bars. */
+  --ghc-cell: 10px;
   --ghc-cell-gap: 3px;
   --ghc-month-gap: 12px;
   margin-top: var(--s-lg);
@@ -97,9 +98,9 @@
 
 .ghc__weeks {
   display: grid;
-  grid-template-rows: repeat(7, var(--ghc-cell-h));
+  grid-template-rows: repeat(7, var(--ghc-cell));
   grid-auto-flow: column;
-  grid-auto-columns: var(--ghc-cell-w);
+  grid-auto-columns: var(--ghc-cell);
   gap: var(--ghc-cell-gap);
 }
 
@@ -121,8 +122,8 @@
 .ghc__cell {
   --tint: 6%;
   --dim: 1;
-  width: var(--ghc-cell-w);
-  height: var(--ghc-cell-h);
+  width: var(--ghc-cell);
+  height: var(--ghc-cell);
   border-radius: var(--r-lg);
   background: color-mix(in srgb, var(--c-primary) calc(var(--tint) * var(--dim)), transparent);
 }
@@ -186,7 +187,7 @@
    mounted 427 nodes, then unmounted every one of them when the payload
    landed — pure DOM churn during the slowest part of the load. */
 .ghc__skeleton {
-  height: 140px;
+  height: 116px;
   margin-top: 0;
   border-radius: var(--r-lg);
   background: linear-gradient(
@@ -224,7 +225,7 @@
 /* The legend swatch mirrors the cell shape, scaled down. */
 .ghc__legend .ghc__cell {
   width: 9px;
-  height: 12px;
+  height: 9px;
 }
 
 /* Swatches are hoverable, so they lift a little under the cursor. */
@@ -242,8 +243,7 @@
   .ghc {
     padding: 16px;
     /* Smaller cells so more of the year fits before the sideways scroll. */
-    --ghc-cell-w: 9px;
-    --ghc-cell-h: 12px;
+    --ghc-cell: 9px;
     --ghc-cell-gap: 3px;
     --ghc-month-gap: 10px;
   }
