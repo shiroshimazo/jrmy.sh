@@ -4,16 +4,15 @@ import ncbaPmCert from "../assets/ncba-pm-cert.png";
 
 export const profile = {
   name: "Jeremy Malana",
-  role: "Web Developer",
-  status: "Student",
+  role: "Frontend Developer",
   // The single line under the name in the hero.
-  heroRole: "Web Development | Student",
+  heroRole: "Frontend Developer",
   // Hero copy: one lead paragraph, one supporting paragraph. Kept out of the
   // component so the words live with the rest of the profile data.
   introLead:
     "Remote from the Philippines — I build web interfaces that stay fast and legible under real use.",
   intro:
-    "Second-year BSIT student at BestLink College, shipping full-stack work with React, Node and MySQL. Alongside coursework I run product listings and paid campaigns for a small e-commerce brand, which is where I learned that polish and performance are the same problem.",
+    "Second-year BSIT at BestLink College, shipping full-stack work with React, Node and MySQL. Alongside coursework I run product listings and paid campaigns for a small e-commerce brand, which is where I learned that polish and performance are the same problem.",
   location: "Remote",
   email: "jrmymlna@gmail.com",
   socials: [
