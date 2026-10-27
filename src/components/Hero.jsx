@@ -74,7 +74,7 @@ export default function Hero() {
 
         <motion.header className="hero__header" variants={item}>
           <h6 className="hero__name">{profile.name}</h6>
-          <h2 className="hero__role">{profile.heroRole}</h2>
+          <h1 className="hero__role">{profile.heroRole}</h1>
         </motion.header>
 
         <motion.div className="hero__bio" variants={item}>

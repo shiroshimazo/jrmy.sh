@@ -61,10 +61,10 @@
   /* Zero the UA heading margins — h6's default 2.33em block margin is what
      pushed the name away from the portrait and the role line. */
   margin: 0;
-  /* Sans, not the Instrument Serif display face. A serif name fights the body
-     copy underneath it; the sans keeps the hero reading as one voice and puts
-     the contrast on the bio instead. */
-  font-family: var(--f-sans);
+  /* Heading face — Satoshi. A serif name fought the body copy underneath it;
+     the geometric sans keeps the hero reading as one voice and puts the
+     contrast on the bio instead. */
+  font-family: var(--f-display);
   font-weight: 500;
   /* h6 scale: small, understated. The role line is the prominent heading. */
   font-size: clamp(1.05rem, 2.5vw, 1.25rem);
@@ -75,6 +75,7 @@
 .hero__role {
   margin: 0;
   color: var(--c-secondary);
+  font-family: var(--f-display);
   /* h2 scale: the prominent line under the name. */
   font-size: clamp(1.5rem, 3.5vw, 2rem);
   font-weight: 600;

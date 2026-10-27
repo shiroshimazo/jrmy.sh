@@ -7,7 +7,7 @@
   margin-bottom: var(--s-xl);
 }
 
-/* Same hand as the section headings — display serif, weight 400 — so the stack
+/* Same hand as the section headings — Satoshi, weight 400 — so the stack
    block announces itself the way Projects and Contact do. The UA bold and
    margin-top a bare h3 would bring are both cancelled. */
 .about__pane-title {

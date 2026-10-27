@@ -53,7 +53,11 @@
   /* typography */
   --f-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --f-mono: "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
-  --f-display: "Instrument Serif", Georgia, serif;
+  /* Headings — Satoshi (Fontshare), variable weight. Inter stays as the
+     fallback so the first paint before the webfont lands keeps the same
+     geometric-grotesque voice. */
+  --f-display: "Satoshi", "Inter", system-ui, -apple-system, "Segoe UI", Roboto,
+    sans-serif;
 
   --t-display: clamp(3.25rem, 10vw, 6.25rem);
   --t-h1: clamp(1.75rem, 4vw, 2.4rem);
@@ -249,7 +253,7 @@ button {
 }
 
 .h1 {
-  font-family: var(--f-sans);
+  font-family: var(--f-display);
   font-size: var(--t-h1);
   font-weight: 400;
   letter-spacing: -0.02em;
@@ -259,7 +263,7 @@ button {
 }
 
 .h2 {
-  font-family: var(--f-sans);
+  font-family: var(--f-display);
   font-size: var(--t-h2);
   font-weight: 400;
   letter-spacing: -0.01em;
