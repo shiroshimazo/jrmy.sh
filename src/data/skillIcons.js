@@ -1,4 +1,4 @@
-import { SiEspressif, SiTypescript } from "react-icons/si";
+import { SiEspressif, SiRust, SiTauri, SiTypescript } from "react-icons/si";
 import {
   C,
   Canva,
@@ -22,8 +22,8 @@ import {
   Vite,
 } from "../components/BrandMarks";
 
-// TypeScript and ESP32 have no inlined mark yet, so they still come from the
-// icon package rather than being drawn here.
+// TypeScript, ESP32, Tauri and Rust have no inlined mark yet, so they still
+// come from the icon package rather than being drawn here.
 const icons = {
   Java,
   C,
@@ -47,6 +47,8 @@ const icons = {
   Git,
   TypeScript: SiTypescript,
   ESP32: SiEspressif,
+  Tauri: SiTauri,
+  Rust: SiRust,
 };
 
 /** Labels that share a mark with an entry above. */
