@@ -103,14 +103,14 @@ export const projects = [
     href: "https://paperly-notes.vercel.app/",
   },
   {
-    title: "Personal IDE",
+    title: "Sprig",
     category: "Personal Projects",
     tag: "Desktop App",
     year: "2026",
     description:
       "A personal desktop IDE — a Tauri shell over a React frontend, with a CodeMirror editor, multi-file tabs, a folder tree and an xterm.js terminal wired to a Rust PTY.",
     stack: ["Tauri", "React", "TypeScript", "Rust", "Vite"],
-    repo: "https://github.com/shiroshimazo/personal-IDE",
+    repo: "https://github.com/shiroshimazo/sprig",
   },
   {
     title: "Order Management System",
