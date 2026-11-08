@@ -35,7 +35,7 @@ export const skills = [
   { group: "Languages", items: ["Java", "C", "C++", "PHP", "JavaScript"] },
   {
     group: "Frameworks & Libraries",
-    items: ["React", "Next.js", "Tailwind CSS", "Motion", "shadcn/ui"],
+    items: ["React", "Next.js", "Tailwind CSS", "Motion", "shadcn/ui", "Tauri"],
   },
   { group: "Backend", items: ["Node.js", "Supabase", "MySQL"] },
   { group: "Design", items: ["Figma", "Canva"] },
