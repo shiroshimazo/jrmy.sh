@@ -1,20 +1,32 @@
 .activity-grid {
+  --ag-surface: #fff;
   --ag-ink: #171d18;
   --ag-muted: #606862;
   --ag-well: #f3f5f3;
   --ag-empty: #e9ece9;
   --ag-color: var(--ag-ink);
+  --ag-tint-base: var(--ag-empty);
+  --ag-today: var(--ag-color);
   --step: calc(var(--cell) + 3px);
   padding: clamp(16px, 3vw, 26px);
   border-radius: 16px;
-  background: #fff;
+  background: var(--ag-surface);
   color: var(--ag-ink);
   box-shadow: var(--shadow-border);
-  color-scheme: light;
+}
+
+[data-theme="dark"] .activity-grid {
+  --ag-surface: var(--c-surface);
+  --ag-ink: var(--c-primary);
+  --ag-muted: var(--c-secondary);
+  --ag-well: #202020;
+  --ag-empty: #2d2d2d;
+  --ag-today: var(--ag-ink);
 }
 
 .activity-grid[data-palette="green"] {
   --ag-color: #166534;
+  --ag-tint-base: #e9ece9;
 }
 
 .activity-grid__heading,
@@ -63,7 +75,7 @@
 }
 
 .activity-grid__chip--change[data-negative] {
-  color: var(--ag-muted);
+  color: #606862;
 }
 
 .activity-grid__calendar {
@@ -124,17 +136,17 @@
   background: var(--fill);
 }
 
-.activity-grid__cell[data-level="1"] { --fill: color-mix(in srgb, var(--ag-color) 25%, var(--ag-empty)); }
-.activity-grid__cell[data-level="2"] { --fill: color-mix(in srgb, var(--ag-color) 48%, var(--ag-empty)); }
-.activity-grid__cell[data-level="3"] { --fill: color-mix(in srgb, var(--ag-color) 72%, var(--ag-empty)); }
+.activity-grid__cell[data-level="1"] { --fill: color-mix(in srgb, var(--ag-color) 25%, var(--ag-tint-base)); }
+.activity-grid__cell[data-level="2"] { --fill: color-mix(in srgb, var(--ag-color) 48%, var(--ag-tint-base)); }
+.activity-grid__cell[data-level="3"] { --fill: color-mix(in srgb, var(--ag-color) 72%, var(--ag-tint-base)); }
 .activity-grid__cell[data-level="4"] { --fill: var(--ag-color); }
 
 .activity-grid__cell[data-dimmed] {
-  background: color-mix(in srgb, var(--fill) 42%, white);
+  background: color-mix(in srgb, var(--fill) 42%, var(--ag-surface));
 }
 
 .activity-grid__cell[aria-current="date"] {
-  box-shadow: inset 0 0 0 1px var(--ag-color);
+  box-shadow: inset 0 0 0 1px var(--ag-today);
 }
 
 .activity-grid :focus-visible {
@@ -152,8 +164,9 @@
   transform: translate(-50%, -100%);
   padding: 6px 9px;
   border-radius: 6px;
-  background: var(--ag-ink);
+  background: #171d18;
   color: #fff;
+  box-shadow: var(--shadow-border);
   font-size: 0.7rem;
   line-height: 1.35;
   pointer-events: none;
