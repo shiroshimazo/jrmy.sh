@@ -6,8 +6,7 @@ import { minimal } from "../../audio/index";
 // anything that visibly reacts to the cursor gets an audible cue too.
 const CUE = 'a[href], button, [role="button"], .hero__portrait';
 
-// Muted zones. The contribution grid is 371 hoverable cells inside a single
-// link — a cue per cell would be a machine gun.
+// Keep contribution-grid interactions silent.
 const MUTED = '.ghc, [aria-disabled="true"], :disabled';
 
 // A cue needs recent pointer travel behind it: scrolling slides elements under

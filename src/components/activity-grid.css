@@ -1,0 +1,255 @@
+.activity-grid {
+  --ag-ink: #171d18;
+  --ag-muted: #606862;
+  --ag-well: #f3f5f3;
+  --ag-empty: #e9ece9;
+  --ag-color: var(--ag-ink);
+  --step: calc(var(--cell) + 3px);
+  padding: clamp(16px, 3vw, 26px);
+  border-radius: 16px;
+  background: #fff;
+  color: var(--ag-ink);
+  box-shadow: var(--shadow-border);
+  color-scheme: light;
+}
+
+.activity-grid[data-palette="green"] {
+  --ag-color: #166534;
+}
+
+.activity-grid__heading,
+.activity-grid__summary {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.activity-grid__heading {
+  justify-content: space-between;
+}
+
+.activity-grid__heading h2 {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 650;
+}
+
+.activity-grid__summary {
+  margin-block: 5px 20px;
+}
+
+.activity-grid__total {
+  margin-right: 4px;
+  font-family: var(--f-display);
+  font-size: clamp(2rem, 6vw, 2.7rem);
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.05;
+}
+
+.activity-grid__chip {
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--ag-well);
+  color: var(--ag-muted);
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.activity-grid__chip--change {
+  background: #e6f4ea;
+  color: #1a6333;
+}
+
+.activity-grid__chip--change[data-negative] {
+  color: var(--ag-muted);
+}
+
+.activity-grid__calendar {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 9px;
+}
+
+.activity-grid__months,
+.activity-grid__weekdays,
+.activity-grid__legend {
+  color: var(--ag-muted);
+  font: 0.68rem/1 var(--f-mono);
+}
+
+.activity-grid__months {
+  position: relative;
+  height: 20px;
+}
+
+.activity-grid__months span {
+  position: absolute;
+  top: 2px;
+  left: calc(var(--column) * var(--step));
+}
+
+.activity-grid__weekdays {
+  display: grid;
+  grid-template-rows: repeat(7, var(--cell));
+  align-items: center;
+  gap: 3px;
+  margin-top: 20px;
+}
+
+.activity-grid__weekdays span:nth-child(1) { grid-row: 2; }
+.activity-grid__weekdays span:nth-child(2) { grid-row: 4; }
+.activity-grid__weekdays span:nth-child(3) { grid-row: 6; }
+
+.activity-grid__days {
+  position: relative;
+  display: grid;
+  gap: 3px;
+}
+
+.activity-grid__row {
+  display: grid;
+  grid-template-columns: repeat(var(--weeks), var(--cell));
+  grid-template-rows: var(--cell);
+  gap: 3px;
+}
+
+.activity-grid__cell {
+  --fill: var(--ag-empty);
+  display: block;
+  width: var(--cell);
+  height: var(--cell);
+  border-radius: min(var(--r-sm), calc(var(--cell) / 4));
+  background: var(--fill);
+}
+
+.activity-grid__cell[data-level="1"] { --fill: color-mix(in srgb, var(--ag-color) 25%, var(--ag-empty)); }
+.activity-grid__cell[data-level="2"] { --fill: color-mix(in srgb, var(--ag-color) 48%, var(--ag-empty)); }
+.activity-grid__cell[data-level="3"] { --fill: color-mix(in srgb, var(--ag-color) 72%, var(--ag-empty)); }
+.activity-grid__cell[data-level="4"] { --fill: var(--ag-color); }
+
+.activity-grid__cell[data-dimmed] {
+  background: color-mix(in srgb, var(--fill) 42%, white);
+}
+
+.activity-grid__cell[aria-current="date"] {
+  box-shadow: inset 0 0 0 1px var(--ag-color);
+}
+
+.activity-grid :focus-visible {
+  outline: 1px solid var(--ag-ink);
+  outline-offset: 1px;
+}
+
+.activity-grid__tip {
+  position: absolute;
+  z-index: 1;
+  width: max-content;
+  max-width: min(190px, 100%);
+  top: calc(var(--row) * var(--step) - 6px);
+  left: clamp(min(95px, 50%), calc(var(--column) * var(--step) + var(--cell) / 2), max(50%, 100% - 95px));
+  transform: translate(-50%, -100%);
+  padding: 6px 9px;
+  border-radius: 6px;
+  background: var(--ag-ink);
+  color: #fff;
+  font-size: 0.7rem;
+  line-height: 1.35;
+  pointer-events: none;
+}
+
+.activity-grid__legend {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 2px;
+  margin-block: 8px 14px;
+}
+
+.activity-grid__legend > span {
+  padding-inline: 4px;
+}
+
+.activity-grid__step {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 28px;
+  padding: 0;
+  border-radius: 4px;
+}
+
+.activity-grid__step .activity-grid__cell {
+  --cell: 10px;
+}
+
+.activity-grid__step:is(:hover, :focus-visible) {
+  background: var(--ag-well);
+}
+
+.activity-grid__stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(5px, 1.2vw, 10px);
+  margin: 0;
+}
+
+.activity-grid__stats > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  padding: clamp(8px, 1.8vw, 14px);
+  border-radius: 9px;
+  background: var(--ag-well);
+}
+
+.activity-grid__icon {
+  display: block;
+  color: var(--ag-color);
+}
+
+.activity-grid__stats dt {
+  margin-top: auto;
+  color: var(--ag-muted);
+  font-size: 0.72rem;
+  line-height: 1.2;
+  text-transform: capitalize;
+  overflow-wrap: anywhere;
+}
+
+.activity-grid__stats dd {
+  margin: 0;
+  font: 650 clamp(1rem, 3vw, 1.3rem)/1.05 var(--f-display);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .activity-grid__row .activity-grid__cell,
+  .activity-grid__icon {
+    opacity: 0;
+  }
+
+  .activity-grid[data-entered] :is(.activity-grid__row .activity-grid__cell, .activity-grid__icon) {
+    animation: activity-grid-enter 300ms var(--ease) var(--delay) both;
+    /* Sampled from a Motion spring with a 260ms duration and 0.16 bounce. */
+    animation-timing-function: linear(0, 0.335, 0.7264, 0.926, 0.9943, 1.0076, 1.0057, 1.0025, 1, 1);
+  }
+
+  .activity-grid .activity-grid__days:focus-within .activity-grid__cell {
+    opacity: 1 !important;
+  }
+}
+
+@keyframes activity-grid-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
